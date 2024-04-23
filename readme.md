@@ -6,3 +6,5 @@
 - Gáspár Mihály
 - Kluitenberg Alex
 - Tatár Mátyás Bence
+
+# Sikeres commit - Alex
