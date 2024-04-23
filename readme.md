@@ -7,7 +7,8 @@
 - Kluitenberg Alex
 - Tatár Mátyás Bence
 
-# Sikeres commit - Alex
+## Sikeres commit - Alex
 
+## Szeretem a tejet - Misi
 
-# Szeretem a tejet - Misi
+# Valami Commit
