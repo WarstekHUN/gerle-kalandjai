@@ -19,10 +19,10 @@ A szereplők maguk
 
 Megfogja az alap Actort és kibővíti a következőkkel:
 
-- CurrHP: `ushort` *private*
-- CurrMana:`ushort` *private*
-- Opponent: `ref:FightingActor` *private*
-- SetOpponent(`ref:FightingActor`): *public*
+- *private* CurrHP: `ushort`
+- *private* CurrMana: `ushort`
+- *private* Opponent: `ref:FightingActor`
+- *public* SetOpponent(`ref:FightingActor`):
 - Think(): Az NPC-k nél releváns, ez dönti el, hogy milyen támadást használjon
 - Attack(kepesseg)
 - DealDemage(ushort)
@@ -35,9 +35,9 @@ Megfogja az alap Actort és kibővíti a következőkkel:
 ### Line
 
 - text: `string`
-- ActorRef?: `ref:Actor` Ha nincs akkor ez egy narrátor
-- voiceFile?: `string`
-- zajFile?: `string`
+- ActorRef: `ref:Actor?` Ha nincs akkor ez egy narrátor
+- voiceFiles: `string?`
+- zajFile: `string?`
 
 ### StoryController: *static*
 
