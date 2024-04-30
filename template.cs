@@ -42,12 +42,12 @@ namespace GameModel
 
         public void Think()
         {
-            // Implement AI thinking logic for NPC attacks
+            
         }
 
         public void Attack(Power power)
         {
-            // Implement attacking logic here
+            
         }
 
         public void DealDamage(ushort damage)
@@ -55,5 +55,40 @@ namespace GameModel
             currHP = (ushort)(currHP > damage ? currHP - damage : 0);
         }
     }
+    public class Story
+    {
+        public Line[] Lines { get; set; }
+        public bool IsFight { get; set; }
 
+        public Story(Line[] lines, bool isFight)
+        {
+            Lines = lines;
+            IsFight = isFight;
+        }
+    }
+
+
+
+    public static class StoryController
+    {
+        public static void InitFight()
+        {
+            
+        }
+
+        public static void PlayStory()
+        {
+            
+        }
+    }
+
+    public static class ProgressController
+    {
+        
+    }
+
+    public class Power
+    {
+        
+    }
 }
