@@ -1,32 +1,33 @@
 ﻿public class FightingActor : Actor
 {
-    private ushort currHP;
-    private ushort currMana;
-    private FightingActor opponent;
+    private ushort Health;
+    private ushort Mana;
+    private FightingActor Opponent;
 
-    public FightingActor(Power[] powers) : base(powers)
+    public FightingActor(string name, ref Actor opponent, Power[] powers) : base(name, powers)
     {
-        currHP = MaxHP;
-        currMana = MaxMana;
-    }
-
-    public void SetOpponent(FightingActor newOpponent)
-    {
-        opponent = newOpponent;
+        Health = MaxHealth;
+        Mana = MaxMana;
+        Opponent = (FightingActor)opponent;
     }
 
     public void Think()
     {
-
+        throw new NotImplementedException();
     }
 
-    public void Attack(Power power)
+    public bool Attack(Power power)
     {
+        if (Mana - power.Mana < 0) return false;
 
+        Opponent.DealDamage(power.Damage);
+        return true;
     }
 
     public void DealDamage(ushort damage)
     {
-        currHP = (ushort)(currHP > damage ? currHP - damage : 0);
+        Health = (ushort)Math.Max(Health -  damage, 0);
+        //TODO: Hangeffekt lejátszás
+        throw new NotImplementedException("Hangeffekt-lejátszás hiányzik");
     }
 }

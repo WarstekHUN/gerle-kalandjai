@@ -1,53 +1,58 @@
 # UML vazlat
 
-asfd
-
-## teszt
-
-asd
-
-### Actor
+## Actor
 
 A szereplők maguk
 
-- Name: `string` *public* const
-- MaxHP: `ushort` *public* const
-- MaxMana:`ushort` *public* const
-- Powers: `Power[]` *public*
+- Name: `public get; private set; string` A szerplő neve
+- MaxHealth: `public const ushort` A szereplő maximális életereje
+- MaxMana:`public const ushort` A szereplő maximális manaszintje
+- Powers: `public get; protected set; Power[]` A szerplő képességei
 
-### FightingActor
+## Power
 
-Megfogja az alap Actort és kibővíti a következőkkel:
+- Name: `public get; init; string` a képesség neve
+- Damage: `public get; init; ushort` a képesség sebzése
+- Mana: `public get; init; ushort` a képesség mana-szükséglete
+- DodgeText: `public get; init; string` A minigame elején jelenhet meg. Pl.: "Védd ki a XY ütéseit!"
+- IsDodgeAble: `public get; bool` Számított mező, megadja, hogy a támadás dodgeolható-e. Hogyha van DodgeText, akkor igen
+- Power(name: `string`, damage: `ushort`, mana: `ushort`)
+- Minigame(): `public virtual void?` Elindítja a képesség elhárításához a minigamet
 
-- *private* CurrHP: `ushort`
-- *private* CurrMana: `ushort`
-- *private* Opponent: `ref:FightingActor`
-- *public* SetOpponent(`ref:FightingActor`):
-- Think(): Az NPC-k nél releváns, ez dönti el, hogy milyen támadást használjon
-- Attack(kepesseg)
-- DealDemage(ushort)
+## FightingActor : Actor
 
-### Story
+- Health: `public get; private set; ushort`
+- Mana: `publoc get; protected set; ushort`
+- Opponent: `public get; init; ref:FightingActor` Az adott épp harocoló karakter ellensége
+<!--  SetOpponent(`ref:FightingActor`): `void` Beállítja az adott éppen harcoló karakter ellenségét -->
+- Think(): `public void` Az NPC-k nél releváns, ez dönti el, hogy milyen támadást használjon
+- Attack(kepesseg): `public bool` Megsebzi az Opponent karaktert a képesség sebzésével, levonja a manat. Ha true, volt elég mana. Ha false, nem volt.
+- DealDemage(ushort): `public void` Sebez a FightingActoron
 
-- Lines: `Line[]`
-- isFight: `bool`
+## Scene
 
-### Line
+- Lines: `Line[]` A szerplők által elmondott sorok
+- IsFight: `bool` Van-e az adott jelent végén harc
+- PlayScene(): `void` Lejátsza az adott jelenetet
+- Scene(lines: `Line[]`, isFight: `bool`)
 
-- text: `string`
-- ActorRef: `ref:Actor?` Ha nincs akkor ez egy narrátor
-- voiceFiles: `string?`
-- zajFile: `string?`
+## Line
 
-### StoryController: *static*
+- Text: `string` A sor szövege
+- Talker: `ref:Actor` A sor beszélője - Ha nincs, akkor ez a narrátor
+- VoiceFile: `string` A hangfelvétel fájlja
+- NoiseFile: `string?` A háttérzaj fájlja
+- PlayLine(): `void` Lejátsza az adott sort
+- Line(text: `string`, talker: `ref Actor`, voiceFile: `string`, noiseFile: `string?`)
 
-- InitFight()
-- PlayStory()
+## SceneController: *static*
 
-### ProgressController: *static*
+- Scenes: `private static Scene[]` A játék jeleneteinek tömbje
+- CurrentCheckpoint(): `public get; private set; static uint` Megadja, hogy a játékos hanyadik jeleneten, és veleegyütt harcon jutott túl.
+- InitFight(): `public static void` Elkezd egy harcot
+- PlayScenes(checkpoint: `uint`): `public static void` Elkezdi lejátszani a jeleneteket a checkpoint-tól.
 
-majd
+## ProgressController: *static*
 
-## Változók
-
-- storytomb[]: `Story[]`
+- LoadFromSaveFile(): `public static bool` Megpróbálja megkeresni és kiolvasni a mentésfájl tartalmát és betölteni. True, ha sikerült. False, ha nem.
+- SaveToFile(): `public static void` Lementi a felhasználó AppData mappájába az állást
