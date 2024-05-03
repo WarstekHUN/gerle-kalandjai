@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -8,9 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="template.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    <ProjectReference Include="..\Gerle_Lib\Gerle_Lib.csproj" />
   </ItemGroup>
 
 </Project>
