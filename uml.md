@@ -62,3 +62,20 @@ A szereplők maguk
 - MusicVolume: `public static float` Minimum értéke: 0, Maximum értéke: 1.
 - FXVolume: `public static float` Minimum értéke: 0, Maximum értéke: 1.
 - DialogueVolume: `public static float` Minimum értéke: 0, Maximum értéke: 1.
+
+## MenuItem
+- Szöveg: `public string` A menüelem megjelenített szövege.
+- Ikon: `public string` Az ikon a menüelem szövege mellett.
+- Szín: `public ConsoleColor` A menüelem szövegének színe.
+- Almenü: `public List<MenuItem>` A menüelem alá tartozó almenük listája.
+- Művelet: `public Action` A menüelem kiválasztásakor végrehajtandó művelet.
++ MenuItem(szöveg: `string`, ikon: `string`, szín: `ConsoleColor`, művelet: `Action` = null, almenü: `List<`MenuItem`> = null`): `public` Konstruktor a menüelem inicializálásához szöveggel, ikonnal, színnel, opcionálisan művelettel és almenü listával.
+
+## Screen
+- menüElemek: `private List<MenuItem>` A képernyőn megjelenített menüelemek listája.
+- főKiválasztottIndex: `private int` Az aktuálisan kiválasztott fő menüelem indexe.
+- alMenüKiválasztottIndex: `private int` Az aktuálisan kiválasztott almenü elem indexe.
+- alMenüAktív: `private bool` Jelző, amely megmutatja, hogy az almenü jelenleg aktív-e.
++ Screen(menüElemek: `List<`MenuItem`>`): `public` Konstruktor a képernyő inicializálásához menüelemek listájával.
++ MenütMegjelenít(): `public void` Metódus a menüelemek megjelenítésére a képernyőn, kezeli mind a fő, mind az almenü megjelenítését.
++ MenütFuttat(): `public void` Metódus a felhasználói bemenetek kezelésére és a menüelemek közötti navigálásra.
