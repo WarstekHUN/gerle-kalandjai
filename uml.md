@@ -56,3 +56,9 @@ A szereplők maguk
 
 - LoadFromSaveFile(): `public static bool` Megpróbálja megkeresni és kiolvasni a mentésfájl tartalmát és betölteni. True, ha sikerült. False, ha nem.
 - SaveToFile(): `public static void` Lementi a felhasználó AppData mappájába az állást
+
+## SettingsController: *static*
+- MasterVolume: `public static float` Minimum értéke: 0, Maximum értéke: 1.
+- MusicVolume: `public static float` Minimum értéke: 0, Maximum értéke: 1.
+- FXVolume: `public static float` Minimum értéke: 0, Maximum értéke: 1.
+- DialogueVolume: `public static float` Minimum értéke: 0, Maximum értéke: 1.
