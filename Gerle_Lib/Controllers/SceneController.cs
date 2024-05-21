@@ -34,6 +34,15 @@ public static class SceneController
     #endregion
     public static void PlayScenes(uint checkpoint)
     {
-        throw new NotImplementedException();
+        if (checkpoint >= Scenes.Length)
+        {
+            Console.WriteLine("Hibás checkpoint.");
+            return;
+        }
+        for (uint i = checkpoint; i < Scenes.Length; i++)
+        {
+            Scenes[i].PlayScene();
+        }
+        CurrentCheckpoint = (uint)Scenes.Length;
     }
 }
