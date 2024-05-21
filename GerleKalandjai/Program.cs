@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Gerle_Lib.BaseClasses;
+﻿using Gerle_Lib.BaseClasses;
 List<MenuItem> menuItems = new List<MenuItem>
         {
             new MenuItem("Játék", "📁", ConsoleColor.Green, () => Console.WriteLine("Játék"), new List<MenuItem> {
