@@ -20,6 +20,7 @@
 
 //Screen screen = new Screen(menuItems);
 //screen.RunMenu();
+using Gerle_Lib.BaseClasses;
 using MenuSystem;
 using Spectre.Console;
 
@@ -28,12 +29,17 @@ class Program
     private static Menu mainMenu;
     private static Action<string> WriteAction;
 
+    private static BeautyWriter bw = new BeautyWriter();
+
     static void Main(string[] args)
     {
-        void Write(string text) => AnsiConsole.Write(new Markup(text));
-        WriteAction = text => Write(text);
+        Console.OutputEncoding = System.Text.Encoding.Unicode;
+        
+        
+        WriteAction = text => bw.Write(text);
 
         Menu.SetCreator("Tatár Mátyás Bence, Kluitenberg Alex, Gáspár Mihály, Balogh Levente");
+        
         mainMenu = new Menu(new[] { "Játék 📁", "Beállítások 📝", "Kilépés 🚪" }, new Action[] {
             GameMenu,
             SettingsMenu,
