@@ -12,3 +12,13 @@
 ## Szeretem a tejet - Misi
 
 # Valami Commit
+
+## Felhasznált források
+
+### Nuget csomagok
+
+#### `Spectre.Console`
+
+https://spectreconsole.net/cli/getting-started
+
+Ez egy olyan csomag, amivel a konzolos alkalmazásunkat színesíthetjük, és sokkal szebbé tehetjük, tartalmaz rengeteg UI toolt.
