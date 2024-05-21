@@ -22,3 +22,9 @@
 https://spectreconsole.net/cli/getting-started
 
 Ez egy olyan csomag, amivel a konzolos alkalmazásunkat színesíthetjük, és sokkal szebbé tehetjük, tartalmaz rengeteg UI toolt.
+
+#### `AdvancedMenu`
+
+https://www.nuget.org/packages/AdvancedMenu
+
+Ez pedig egy összetett menürendszeres dolog.
