@@ -1,26 +1,4 @@
-﻿//using Gerle_Lib.BaseClasses;
-//List<MenuItem> menuItems = new List<MenuItem>
-//        {
-//            new MenuItem("Játék", "📁", ConsoleColor.Green, () => Console.WriteLine("Játék"), new List<MenuItem> {
-//                new MenuItem("Meglévő folytatása", "🆕", ConsoleColor.Cyan, () => Console.WriteLine("Meglévő folytatása")),
-//                new MenuItem("Új játék", "📂", ConsoleColor.Magenta, () => Console.WriteLine("Új játék")),
-//                new MenuItem("Kilépés", "🚪", ConsoleColor.Red, () => Environment.Exit(0))
-//            }),
-//            new MenuItem("Beállítások", "📝", ConsoleColor.Yellow, () => Console.WriteLine("Edit"), new List<MenuItem> {
-//                new MenuItem("Nehézség", "✂️", ConsoleColor.Blue, () => Console.WriteLine("Cut")),
-//                new MenuItem("Hang", "📋", ConsoleColor.Blue, () => Console.WriteLine("Hang")),
-//                new MenuItem("Zene", "📥", ConsoleColor.Blue, () => Console.WriteLine("Zene"))
-//            }),
-//            new MenuItem("Példa", "👀", ConsoleColor.Blue, () => Console.WriteLine("View"), new List<MenuItem> {
-//                new MenuItem("Pont", "+", ConsoleColor.Green, () => Console.WriteLine("Pont")),
-//                new MenuItem("Pont", "-", ConsoleColor.Green,  () => Console.WriteLine("Pont")),
-//                new MenuItem("Resszőcske", "🔄", ConsoleColor.Green, () => Console.WriteLine("Resszőcske"))
-//            })
-//        };
-
-//Screen screen = new Screen(menuItems);
-//screen.RunMenu();
-using Gerle_Lib.BaseClasses;
+﻿using Gerle_Lib.BaseClasses;
 using MenuSystem;
 using Spectre.Console;
 
@@ -31,15 +9,18 @@ class Program
 
     private static BeautyWriter bw = new BeautyWriter();
 
+    /// <summary>
+    /// A program belépési pontja.
+    /// </summary>
+    /// <param name="args">A parancssori argumentumok.</param>
     static void Main(string[] args)
     {
         Console.OutputEncoding = System.Text.Encoding.Unicode;
-        
-        
+
         WriteAction = text => bw.Write(text);
 
         Menu.SetCreator("Tatár Mátyás Bence, Kluitenberg Alex, Gáspár Mihály, Balogh Levente");
-        
+
         mainMenu = new Menu(new[] { "Játék 📁", "Beállítások 📝", "Kilépés 🚪" }, new Action[] {
             GameMenu,
             SettingsMenu,
@@ -47,6 +28,9 @@ class Program
         });
     }
 
+    /// <summary>
+    /// A játék menü megjelenítése.
+    /// </summary>
     static void GameMenu()
     {
         Menu sm = new Menu(new string[] { "Meglévő folytatása 🆕", "Új játék 📂" }, new Action[] {
@@ -55,6 +39,9 @@ class Program
         }, true, mainMenu);
     }
 
+    /// <summary>
+    /// Az új játék menü megjelenítése.
+    /// </summary>
     static void NewGameMenu()
     {
         Menu sm = new Menu(new string[] { "Nehézség ✂️", "Játék neve🔤" }, new Action[] {
@@ -63,11 +50,17 @@ class Program
         }, true, mainMenu);
     }
 
+    /// <summary>
+    /// A beállítások menü megjelenítése.
+    /// </summary>
     static void SettingsMenu()
     {
         Menu sm = new Menu(new string[] { "Hang 📋" }, new Action[] { SoundSettingsMenu }, true, mainMenu);
     }
 
+    /// <summary>
+    /// A hangbeállítások menü megjelenítése.
+    /// </summary>
     static void SoundSettingsMenu()
     {
         Menu sm = new Menu(new string[] { "Zene hangereje🎵", "Szinkron hangereje 🗣️" }, new Action[] {
@@ -76,6 +69,9 @@ class Program
         }, true, mainMenu);
     }
 
+    /// <summary>
+    /// Kilép a programból.
+    /// </summary>
     static void Exit()
     {
         WriteAction("[bold yellow on blue]Kilépés![/] :globe_showing_europe_africa:");
