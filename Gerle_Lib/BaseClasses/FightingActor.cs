@@ -41,7 +41,10 @@ public class FightingActor : Actor
     #endregion
     public void Think()
     {
-        throw new NotImplementedException();
+        if (Mana >= Powers[0].Mana)
+        {
+            Attack(Powers[0]);
+        }
     }
     #region Attack (metódus) - comment
     /// <summary>
