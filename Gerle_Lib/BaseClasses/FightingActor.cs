@@ -1,8 +1,9 @@
 ﻿#region FightingActor (osztály) - comment
+#endregion
+using Gerle_Lib.BaseClasses;
 /// <summary>
 /// <c>FightingActor</c> osztály az éppen lezajló harc résztvevőinek (<c>Actor</c>) adatait, a harc menetét kezeli (<c>FightingActor.cs</c>). Az <c>Actor</c> osztály tulajdonságait konstruktorait örökli meg.
 /// </summary>
-#endregion
 public class FightingActor : Actor
 {
     #region Health (mező) - comment
@@ -53,10 +54,17 @@ public class FightingActor : Actor
     #endregion
     public bool Attack(Power power)
     {
-        if (Mana - power.Mana < 0) return false;
-
+        BeautyWriter bw = new BeautyWriter();
+        if (Mana - power.Mana < 0) { 
+            bw.Write(($"{Name} próbált támadni a {power.Name} képességgel, de nem volt elég mana!")); 
+            return false; 
+        }
+        else {
+        Mana -= power.Mana;
         Opponent.DealDamage(power.Damage);
+        bw.Write($"{Name} támadott a {power.Name} képességgel, {power.Damage} sebzést okozva!");
         return true;
+        }
     }
     #region DealDamage (metódus) - comment
     /// <summary>
@@ -65,7 +73,9 @@ public class FightingActor : Actor
     #endregion
     public void DealDamage(ushort damage)
     {
+        BeautyWriter bw = new BeautyWriter();
         Health = (ushort)Math.Max(Health -  damage, 0);
+        bw.Write($"{Name} {damage} sebzést szenvedett el. Hátralevő életereje: {Health}");
         //TODO: Hangeffekt lejátszás
         throw new NotImplementedException("Hangeffekt-lejátszás hiányzik");
     }
