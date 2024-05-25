@@ -1,4 +1,5 @@
-﻿#region SceneController (osztály) - comment
+﻿using Gerle_Lib.BaseClasses;
+#region SceneController (osztály) - comment
 /// <summary>
 /// <c>SceneController</c> osztály tárolja, kezeli a jeleneteket, harcokat, valamint tárolja hol tart a játékos a forgatókönyvben (<c>SceneController.cs</c>).
 /// </summary>
@@ -25,7 +26,14 @@ public static class SceneController
     #endregion
     public static void InitFight()
     {
-        throw new NotImplementedException();
+        Scene currentscene = Scenes[CurrentCheckpoint];
+        if (!currentscene.IsFight)
+        {
+            BeautyWriter bw = new BeautyWriter();
+            bw.Write("Nincs harc az aktuális jelenetben.");
+            return;
+        }
+        
     }
     #region PlayScenes (metódus) - comment
     /// <summary>
@@ -36,7 +44,8 @@ public static class SceneController
     {
         if (checkpoint >= Scenes.Length)
         {
-            Console.WriteLine("Hibás checkpoint.");
+            BeautyWriter bw = new BeautyWriter();
+            bw.Write("Hibás checkpoint.");
             return;
         }
         for (uint i = checkpoint; i < Scenes.Length; i++)
