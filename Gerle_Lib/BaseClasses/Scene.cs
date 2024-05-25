@@ -34,6 +34,9 @@ public class Scene
     #endregion
     public void PlayScene()
     {
-        throw new NotImplementedException();
+        foreach (var line in Lines)
+        {
+            line.PlayLine();
+        }
     }
 }
