@@ -17,38 +17,36 @@ public class Power
     /// </summary>
     #endregion
     public ushort Damage { get; init; }
+    #region DamageText (mező) - comment
+    /// <summary>
+    /// <c>DamageText</c> mező tartalmazza, 
+    /// </summary>
+    #endregion
+    public string DamageText { get; init; }
     #region Mana (tulajdonság) - comment
     /// <summary>
     /// <c>Mana</c> tulajdonság a képesség mana-szükségletét tartalmazza. Pl: "5". Ezt az értéket csak konstruktor állíthatja!
     /// </summary>
     #endregion
     public ushort Mana { get; init; }
-    #region DodgeText (tulajdonság) - comment
-    /// <summary>
-    /// <c>DodgeText</c> tulajdonság a "minigame" / harc elején jelenik meg, figyelmeztető jelleggel. Pl: "Védd ki a XY ütéseit!". Ezt az értéket csak konstruktor állíthatja!
-    /// </summary>
-    #endregion
-    public string? DodgeText { get; init; }
     #region IsDodgeable (mező) - comment
     /// <summary>
-    /// <c>IsDodgeable</c> egy számított mező, amely megadja / eldönti, hogy ki lehet-e védeni az ellenség támadását. Ha van <c>DodgeText</c>, akkor ki lehet. Csak olvasható!
+    /// <c>IsDodgeable</c> egy mező, amely megadja / eldönti, hogy ki lehet-e védeni az ellenség támadását. Csak olvasható!
     /// </summary>
     #endregion
-    public bool IsDodgeable
-    {
-        get => DodgeText is not null;
-    }
+    public bool IsDodgeable { get; init; }
     #region Power (paraméteres konstruktor) - comment
     /// <summary>
     /// <c>Power</c> paraméteres konstruktor beállítja a képességek nevét, sebzéseiknek mértékét, manaszükségletüket valamint azt, hogy ki lehet-e térni előle.
     /// </summary>
     #endregion
-    public Power(string name, ushort damage, ushort mana, string? dodgeText)
+    public Power(string name, ushort damage, ushort mana, bool isDodgeable, string damageText)
     {
         Name = name;
         Damage = damage;
         Mana = mana;
-        DodgeText = dodgeText;
+        IsDodgeable = isDodgeable;
+        DamageText = damageText;
     }
     #region Minigame (virtuális metódus) - comment
     /// <summary>

@@ -14,8 +14,7 @@ A szereplők maguk
 - Name: `public get; init; string` a képesség neve
 - Damage: `public get; init; ushort` a képesség sebzése
 - Mana: `public get; init; ushort` a képesség mana-szükséglete
-- DodgeText: `public get; init; string` A minigame elején jelenhet meg. Pl.: "Védd ki a XY ütéseit!"
-- IsDodgeAble: `public get; bool` Számított mező, megadja, hogy a támadás dodgeolható-e. Hogyha van DodgeText, akkor igen
+- IsDodgeAble: `public get; bool` Megadja, hogy a támadás dodgeolható-e
 - Power(name: `string`, damage: `ushort`, mana: `ushort`)
 - Minigame(): `public virtual void?` Elindítja a képesség elhárításához a minigamet
 
@@ -49,7 +48,7 @@ A szereplők maguk
 
 - Scenes: `private static Scene[]` A játék jeleneteinek tömbje
 - CurrentCheckpoint(): `public get; private set; static uint` Megadja, hogy a játékos hanyadik jeleneten, és veleegyütt harcon jutott túl.
-- InitFight(): `public static void` Elkezd egy harcot
+- InitFight(Actor opponent): `public static void` Elkezd egy harcot, megvan adva ki az ellenfél.
 - PlayScenes(checkpoint: `uint`): `public static void` Elkezdi lejátszani a jeleneteket a checkpoint-tól.
 
 ## ProgressController: *static*

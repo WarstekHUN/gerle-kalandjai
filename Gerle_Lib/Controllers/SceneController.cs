@@ -24,15 +24,11 @@ public static class SceneController
     /// <c>InitFight</c> metódus elindítja a játékos számára a harcot. 
     /// </summary>
     #endregion
-    public static void InitFight()
+    public static void InitFight(Actor opponent)
     {
+        BeautyWriter bw = new BeautyWriter();
         Scene currentscene = Scenes[CurrentCheckpoint];
-        if (!currentscene.IsFight)
-        {
-            BeautyWriter bw = new BeautyWriter();
-            bw.Write("Nincs harc az aktuális jelenetben.");
-            return;
-        }
+        
         
     }
     #region PlayScenes (metódus) - comment
@@ -51,6 +47,10 @@ public static class SceneController
         for (uint i = checkpoint; i < Scenes.Length; i++)
         {
             Scenes[i].PlayScene();
+            if (Scenes[i].Opponent is not null)
+            {
+                InitFight(Scenes[i].Opponent!);
+            }
         }
         CurrentCheckpoint = (uint)Scenes.Length;
     }

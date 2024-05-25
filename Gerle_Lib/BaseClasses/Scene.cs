@@ -16,13 +16,13 @@ public class Scene
     /// <c>Opponent</c> Amennyiben nem null, a jelenet után harc kezdődik az adott karakterrel.
     /// </summary>
     #endregion
-    public Actor Opponent { get; init; }
+    public Actor? Opponent { get; init; }
     #region Scene (paraméteres konstruktor) - comment
     /// <summary>
     /// <c>Scene</c> paraméteres konstruktor a fentebb lévő tulajdonságoknak állítja be a megfelelő értéket.
     /// </summary>
     #endregion
-    public Scene(Line[] lines, ref Actor opponent)
+    public Scene(Line[] lines, ref Actor? opponent)
     {
         Lines = lines;
         Opponent = opponent;

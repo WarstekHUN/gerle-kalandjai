@@ -1,6 +1,6 @@
-﻿#region FightingActor (osztály) - comment
+﻿using Gerle_Lib.BaseClasses;
+#region FightingActor (osztály) - comment
 #endregion
-using Gerle_Lib.BaseClasses;
 /// <summary>
 /// <c>FightingActor</c> osztály az éppen lezajló harc résztvevőinek (<c>Actor</c>) adatait, a harc menetét kezeli (<c>FightingActor.cs</c>). Az <c>Actor</c> osztály tulajdonságait konstruktorait örökli meg.
 /// </summary>
