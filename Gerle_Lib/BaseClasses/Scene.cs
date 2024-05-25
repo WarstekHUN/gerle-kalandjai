@@ -11,21 +11,21 @@ public class Scene
     /// </summary>
     #endregion
     public Line[] Lines { get; set; }
-    #region IsFight (tulajdonság) - comment
+    #region Opponent (tulajdonság) - comment
     /// <summary>
-    /// <c>IsFight</c> meghatározza, hogy van-e az adott jelenet végén harc.
+    /// <c>Opponent</c> Amennyiben nem null, a jelenet után harc kezdődik az adott karakterrel.
     /// </summary>
     #endregion
-    public bool IsFight { get; set; }
+    public Actor? Opponent { get; init; }
     #region Scene (paraméteres konstruktor) - comment
     /// <summary>
     /// <c>Scene</c> paraméteres konstruktor a fentebb lévő tulajdonságoknak állítja be a megfelelő értéket.
     /// </summary>
     #endregion
-    public Scene(Line[] lines, bool isFight)
+    public Scene(Line[] lines, ref Actor? opponent)
     {
         Lines = lines;
-        IsFight = isFight;
+        Opponent = opponent;
     }
     #region PlayScene (metódus) - comment
     /// <summary>

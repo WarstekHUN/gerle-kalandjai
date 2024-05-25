@@ -31,8 +31,8 @@ A szereplők maguk
 
 ## Scene
 
-- Lines: `Line[]` A szerplők által elmondott sorok
-- IsFight: `bool` Van-e az adott jelent végén harc
+- Lines: `Line[]` A szereplők által elmondott sorok
+- Opponent: `ref Actor` Amenyniben van opponent, van a scene végén fight
 - PlayScene(): `void` Lejátsza az adott jelenetet
 - Scene(lines: `Line[]`, isFight: `bool`)
 
