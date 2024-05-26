@@ -18,7 +18,7 @@ namespace Gerle_Lib.Controllers
                 SettingsController.DialogueVolume
                 );
 
-                string json = JsonConvert.SerializeObject(gameData, Formatting.Indented);
+                string json = JsonConvert.SerializeObject(gameData);
                 Console.WriteLine(json);
         }
     }
