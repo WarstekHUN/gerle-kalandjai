@@ -29,7 +29,6 @@ public static class SceneController
         BeautyWriter bw = new BeautyWriter();
         Scene currentscene = Scenes[CurrentCheckpoint];
         
-        
     }
     #region PlayScenes (metódus) - comment
     /// <summary>

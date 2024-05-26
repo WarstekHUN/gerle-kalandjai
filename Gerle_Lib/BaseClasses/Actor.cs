@@ -28,7 +28,7 @@ public class Actor
     /// <c>Powers</c> tulajdonság a szereplők képességeit tartalmazza (Power.cs).
     /// </summary>
     #endregion
-    public Power[] Powers { get; set; }
+    public Power[]? Powers { get; set; }
     #region Actor (paraméteres konstruktor) - comment
     /// <summary>
     /// <c>Actor</c> paraméteres konstruktorral beállíthatjuk a szereplők nevét, képességeit.
