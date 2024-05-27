@@ -17,7 +17,6 @@ namespace Gerle_Lib.Controllers
                 SettingsController.FXVolume,
                 SettingsController.DialogueVolume
                 );
-
                 string json = JsonConvert.SerializeObject(gameData);
                 Console.WriteLine(json);
         }

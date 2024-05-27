@@ -12,9 +12,9 @@ namespace Gerle_Lib.BaseClasses
         public string Icon { get; set; }
         public ConsoleColor Color { get; set; }
         public List<MenuItem> SubMenu { get; set; }
-        public Action Action { get; set; }
+        public Action? Action { get; set; }
 
-        public MenuItem(string text, string icon, ConsoleColor color, Action action = null, List<MenuItem> subMenu = null)
+        public MenuItem(string text, string icon, ConsoleColor color, Action? action = null, List<MenuItem>? subMenu = null)
         {
             Text = text;
             Icon = icon;

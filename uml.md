@@ -16,12 +16,13 @@ A szereplők maguk
 - Mana: `public get; init; ushort` a képesség mana-szükséglete
 - IsDodgeAble: `public get; bool` Megadja, hogy a támadás dodgeolható-e
 - Power(name: `string`, damage: `ushort`, mana: `ushort`)
-- Minigame(): `public virtual void?` Elindítja a képesség elhárításához a minigamet
+- Minigame(): `public PowerEvent?` Elindítja a képesség elhárításához a minigamet
+- SpecialAbility(): `public PowerEvent?` Akkor fut le, ha az adott képesség különleges, tehát nem csak simán sebez
 
 ## FightingActor : Actor
 
 - Health: `public get; private set; ushort`
-- Mana: `publoc get; protected set; ushort`
+- Mana: `public get; protected set; ushort`
 - Opponent: `public get; init; ref:FightingActor` Az adott épp harocoló karakter ellensége
 <!--  SetOpponent(`ref:FightingActor`): `void` Beállítja az adott éppen harcoló karakter ellenségét -->
 - Think(): `public void` Az NPC-k nél releváns, ez dönti el, hogy milyen támadást használjon

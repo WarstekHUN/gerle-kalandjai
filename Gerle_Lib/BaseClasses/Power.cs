@@ -1,4 +1,6 @@
-﻿#region Power (osztály) - comment
+﻿public delegate void PowerEvent(FightingActor currentActor, FightingActor opponent);
+
+#region Power (osztály) - comment
 /// <summary>
 /// <c>Power</c> osztály a szereplők képességinek, azok adatainak az osztálya (<c>Power.cs</c>).
 /// </summary>
@@ -48,13 +50,17 @@ public class Power
         IsDodgeable = isDodgeable;
         DamageText = damageText;
     }
-    #region Minigame (virtuális metódus) - comment
+    #region Minigame - comment
     /// <summary>
-    /// <c>Minigame</c> egy virtuális metódus amely elindítja a "minigame"-et, amely során eldől, hárítható-e a támadás.
+    /// <c>Minigame</c> elindítja a "minigame"-et, amely során eldől, hárítható-e a támadás.
     /// </summary>
     #endregion
-    public virtual void Minigame()
-    {
-        throw new NotImplementedException();
-    }
+    public PowerEvent? Minigame;
+
+    #region SpecialAbility
+    /// <summary>
+    /// Akkor fut le, hogyha az adott képesség különleges, tehát nem csak simán sebez
+    /// </summary>
+    #endregion
+    public PowerEvent? SpecialAbility;
 }
