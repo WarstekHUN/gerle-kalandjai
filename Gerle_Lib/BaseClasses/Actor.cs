@@ -34,7 +34,7 @@ public class Actor
     /// <c>Actor</c> paraméteres konstruktorral beállíthatjuk a szereplők nevét, képességeit.
     /// </summary>
     #endregion
-    public Actor(string name, Power[]? powers)
+    public Actor(string name, Power[]? powers = null)
     {
         Name = name;
         Powers = powers;

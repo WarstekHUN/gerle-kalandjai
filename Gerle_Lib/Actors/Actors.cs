@@ -2,6 +2,7 @@
 {
     public static class Actors
     {
+        public static Actor Narrator = new Actor("Narrátor");
         public static Actor Gerle = new Actor("Gerle", new Power[] {
             new Power("Kajakommandó",20,50,false,"Gerle készített egy almás pitét ami megfeküdte az ellenfele gyomrát, ezért 50 életerőt veszetett."),
             new Power("Pálcasuhintás",20,50,false,"Gerle megsuhintotta pálcáját, amitől ellenfele varázsütésre 50 életerőt vesztett."),
