@@ -1,4 +1,7 @@
-﻿#region ProgressController (osztály) - comment
+﻿using Gerle_Lib.Controllers;
+using Newtonsoft.Json;
+
+#region ProgressController (osztály) - comment
 /// <summary>
 /// <c>ProgressController</c> osztály a játékos játékbeli eredményeit, teljesítményét, valamint előrehaladását kezeli, tárolja (<c>ProgressController.cs</c>). 
 /// </summary>
@@ -21,6 +24,17 @@ public static class ProgressController
     #endregion
     public static void SaveToFile()
     {
-        throw new NotImplementedException();
+        GameData gameData = new GameData(
+                SceneController.CurrentCheckpoint,
+                SettingsController.MusicVolume,
+                SettingsController.FXVolume,
+                SettingsController.DialogueVolume
+                );
+
+        string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        string fullPath = Path.Combine(documentsPath, "Gerle");
+
+        string jsonData = JsonConvert.SerializeObject(gameData, Formatting.None);
+        File.WriteAllText(fullPath, jsonData);
     }
 }
