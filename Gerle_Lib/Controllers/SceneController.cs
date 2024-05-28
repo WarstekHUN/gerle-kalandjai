@@ -21,7 +21,7 @@ namespace Gerle_Lib.Controllers
         /// <c>CurrentCheckpoint</c> tulajdonság tartalmazza, a játékos hanyadik jeleneten, illetve harcon van túl.
         /// </summary>
         #endregion
-        public static uint CurrentCheckpoint { get; private set; } = 0;
+        public static uint CurrentCheckpoint { get; set; } = 0;
         #region InitFight (metódus) - comment
         /// <summary>
         /// <c>InitFight</c> metódus elindítja a játékos számára a harcot. 
