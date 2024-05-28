@@ -1,6 +1,6 @@
 ﻿using Gerle_Lib.BaseClasses;
 
-namespace Gerle_Lib.Actors
+namespace Gerle_Lib.Data
 {
     public static class Actors
     {
@@ -43,6 +43,6 @@ namespace Gerle_Lib.Actors
             //TODO: new Power("A Férj",70% heal,50,,"Ha sokáig húzódik a csata (10 kör), a dajkának a férje képes megvédeni őt. Ez időt ad a dajka számára, aki így képes visszatölteni teljes életerőének 70%-át."),
             new Power("Plüssmackó",45,45,true,"A dajka két kővel kitömött plüssmackót vágott Gerléhez amitől Gerle 45 életerőt vesztett."),
         });
-        public static Actor Unoka = new Actor("Unoka", new Power[] {});
+        public static Actor Unoka = new Actor("Unoka", new Power[] { });
     }
 }

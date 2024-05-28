@@ -1,11 +1,9 @@
 ﻿using Gerle_Lib.BaseClasses;
-namespace Gerle_Lib.Actors
+namespace Gerle_Lib.Data
 {
     public class Player : FightingActor
     {
-        public Player(ref Actor actor) : base(ref actor)
-        {
-        }
+        public Player(ref Actor actor) : base(ref actor) {}
 
         /// <summary>
         /// Felülírja az alap Think karakter-"AI"-t egy grafikus kezelőfelülettel
