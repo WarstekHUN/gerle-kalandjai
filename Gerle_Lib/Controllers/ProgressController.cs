@@ -16,13 +16,15 @@ public static class ProgressController
     public static bool LoadFromSaveFile()
     {
         string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        string fullPath = Path.Combine(documentsPath, "Gerle");
+        string fullPath = Path.Combine(documentsPath, "Gerle", "savegame.gerle");
 
         if (File.Exists(fullPath))
         {
             string jsonData = File.ReadAllText(fullPath);
-            GameData gameData = JsonConvert.DeserializeObject<GameData>(jsonData);
+            GameData? gameData = JsonConvert.DeserializeObject<GameData>(jsonData);
             
+            if(gameData == null) return false;
+
             SceneController.CurrentCheckpoint = gameData.CurrentCheckpoint;
             SettingsController.MusicVolume = gameData.MusicVolume;
             SettingsController.FXVolume = gameData.FXVolume;
@@ -50,7 +52,7 @@ public static class ProgressController
         );
 
         string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        string fullPath = Path.Combine(documentsPath, "Gerle");
+        string fullPath = Path.Combine(documentsPath, "Gerle", "savegame.gerle");
 
         string jsonData = JsonConvert.SerializeObject(gameData, Formatting.None);
         File.WriteAllText(fullPath, jsonData);
