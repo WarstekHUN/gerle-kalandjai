@@ -18,7 +18,10 @@ class Program
     {
         Console.OutputEncoding = System.Text.Encoding.Unicode;
 
-        Menu.SetCreator("Tatár Mátyás Bence, Kluitenberg Alex, Gáspár Mihály, Balogh Levente");
+        string[] creators = { "Tatár Mátyás Bence", "Kluitenberg Alex", "Gáspár Mihály", "Balogh Levente" };
+        string shuffledCreators = string.Join(", ", creators.OrderBy(x => Guid.NewGuid()));
+
+        Menu.SetCreator(shuffledCreators);
         mainMenu.SetToScreen();
     }
 
