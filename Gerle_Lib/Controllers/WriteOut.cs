@@ -17,8 +17,12 @@ namespace Gerle_Lib.Controllers
                 SettingsController.FXVolume,
                 SettingsController.DialogueVolume
                 );
-                string json = JsonConvert.SerializeObject(gameData);
-                Console.WriteLine(json);
+
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string fullPath = Path.Combine(documentsPath, "Gerle");
+
+                string jsonData = JsonConvert.SerializeObject(gameData, Formatting.None);
+                File.WriteAllText(fullPath, jsonData);
         }
     }
 }
