@@ -10,7 +10,7 @@
 /// <c>Scene</c> osztály a jeleneteket tartalmazz, kezeli (<c>Scene.cs</c>).
 /// </summary>
 #endregion
-public unsafe class Scene
+public class Scene
 {
     #region Lines (tulajdonság) - comment
     /// <summary>
@@ -35,7 +35,7 @@ public unsafe class Scene
     /// <c>Scene</c> paraméteres konstruktor a fentebb lévő tulajdonságoknak állítja be a megfelelő értéket.
     /// </summary>
     #endregion
-    public Scene(Line[] lines, Actor opponent, SceneVersion choiceVersion = SceneVersion.BASE)
+    public Scene(Line[] lines, ref Actor opponent, SceneVersion choiceVersion = SceneVersion.BASE)
     {
         Lines = lines;
         Opponent = opponent;
