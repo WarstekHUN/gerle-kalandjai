@@ -34,7 +34,6 @@ public static class SceneController
     #endregion
     public static void InitFight(Actor opponent)
     {
-        BeautyWriter bw = new BeautyWriter();
         Scene currentscene = Scenes[CurrentCheckpoint];
         
     }
@@ -47,8 +46,7 @@ public static class SceneController
     {
         if (checkpoint >= Scenes.Length)
         {
-            BeautyWriter bw = new BeautyWriter();
-            bw.Write("Hibás mentésfájl.");
+            BeautyWriter.Write("Hibás mentésfájl.");
             Thread.Sleep(5000);
             Environment.Exit(2);
         }

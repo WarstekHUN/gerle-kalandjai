@@ -54,15 +54,14 @@ public class FightingActor : Actor
     #endregion
     public bool Attack(Power power)
     {
-        BeautyWriter bw = new BeautyWriter();
         if (Mana - power.Mana < 0) { 
-            bw.Write(($"{Name} próbált támadni a {power.Name} képességgel, de nem volt elég mana!")); 
+            BeautyWriter.Write(($"{Name} próbált támadni a {power.Name} képességgel, de nem volt elég mana!")); 
             return false; 
         }
         else {
         Mana -= power.Mana;
         Opponent.DealDamage(power.Damage);
-        bw.Write($"{Name} támadott a {power.Name} képességgel, {power.Damage} sebzést okozva!");
+        BeautyWriter.Write($"{Name} támadott a {power.Name} képességgel, {power.Damage} sebzést okozva!");
         return true;
         }
     }
@@ -73,9 +72,8 @@ public class FightingActor : Actor
     #endregion
     public void DealDamage(ushort damage)
     {
-        BeautyWriter bw = new BeautyWriter();
         Health = (ushort)Math.Max(Health -  damage, 0);
-        bw.Write($"{Name} {damage} sebzést szenvedett el. Hátralevő életereje: {Health}");
+        BeautyWriter.Write($"{Name} {damage} sebzést szenvedett el. Hátralevő életereje: {Health}");
         //TODO: Hangeffekt lejátszás
         throw new NotImplementedException("Hangeffekt-lejátszás hiányzik");
     }
