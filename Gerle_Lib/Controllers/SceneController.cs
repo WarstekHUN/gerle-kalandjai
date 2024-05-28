@@ -38,7 +38,7 @@ public static class SceneController
     /// <c>InitFight</c> metódus elindítja a játékos számára a harcot. 
     /// </summary>
     #endregion
-    public static FightEndingReason InitFight(ref Actor opponentCharacter)
+    public static FightEndingReason InitFight(Actor opponentCharacter)
     {
         Scene currentscene = Scenes[CurrentCheckpoint];
         //Körökre osztott harcrendszer
@@ -114,9 +114,8 @@ public static class SceneController
             Scenes[i].PlayScene();
             if (Scenes[i].Opponent is not null)
             {
-                Actor opp = Scenes[i].Opponent!;
-                InitFight(ref opp);
-                //Lehetséges hiba: Nem működik a referencia alapú átadás, akkor pointert kell használni
+                //Ez is egy referencia alapú passzolás, csak a C# nem akarja egyértelművé tenni, mert minek az
+                InitFight(Scenes[i].Opponent);
             }
 
             CurrentCheckpoint = i;
