@@ -15,7 +15,24 @@ public static class ProgressController
     #endregion
     public static bool LoadFromSaveFile()
     {
-        throw new NotImplementedException();
+        string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        string fullPath = Path.Combine(documentsPath, "Gerle");
+
+        if (File.Exists(fullPath))
+        {
+            string jsonData = File.ReadAllText(fullPath);
+            GameData gameData = JsonConvert.DeserializeObject<GameData>(jsonData);
+            
+            SceneController.CurrentCheckpoint = gameData.CurrentCheckpoint;
+            SettingsController.MusicVolume = gameData.MusicVolume;
+            SettingsController.FXVolume = gameData.FXVolume;
+            SettingsController.DialogueVolume = gameData.DialogueVolume;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     #region SaveToFile (metódus) - comment
