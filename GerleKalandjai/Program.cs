@@ -42,14 +42,11 @@ class Program
 
     static void TemplateScene()
     {
-        //BeautyWriter.WriteLine("[bold yellow on blue]Meglévő folytatása![/] :globe_showing_europe_africa:");
-
-        
         var grid = new Grid();
-        grid.AddColumn(new GridColumn());   
-        //grid.AddColumn(new GridColumn());   
-        
+        grid.AddColumn(new GridColumn());
+        // grid.AddColumn(new GridColumn());
 
+        var random = new Random();
         var BossHPItems = new List<BarChartItem>
         {
             new BarChartItem("Életerő", 100, SysColor.IndianRed),
@@ -59,7 +56,6 @@ class Program
         var BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems, "")));
         BossHP.Border = BoxBorder.Rounded;
         BossHP.Header = new PanelHeader("[red3_1 bold underline]Ellenfél adatai[/]");
-        //BossHP.Expand();
 
         var YourHPItems = new List<BarChartItem>
         {
@@ -67,30 +63,56 @@ class Program
             new BarChartItem("Mana", 100, SysColor.RebeccaPurple),
             new BarChartItem("Idő Támadásig", 100, SysColor.Green),
         };
-        //ProgressBarMaker.RenderBarChart(YourHP, "A te adataid:");
-        var YourHP = new Panel (Align.Center(ProgressBarMaker.CreateBarChart(YourHPItems, "")));
+        var YourHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(YourHPItems, "")));
         YourHP.Border = BoxBorder.Rounded;
         YourHP.Header = new PanelHeader($"[green bold underline]A te adataid[/]");
-        //YourHP.Expand();
 
         grid.AddRow(BossHP);
         grid.AddEmptyRow();
         grid.AddRow(YourHP);
-        //AnsiConsole.Write(grid);
-
 
         var layout = new Layout("Root")
-    .SplitRows(
-        new Layout("Top"),
-        new Layout("Center"),
-        new Layout("Bottom"));
+            .SplitRows(
+                new Layout("Top"),
+                new Layout("Center"),
+                new Layout("Bottom"));
 
         layout["Top"].Update(BossHP).Size(7);
-        layout["center"].Update(YourHP).Size(7);
+        layout["Center"].Update(YourHP).Size(7);
 
         AnsiConsole.Write(layout);
 
-        Console.ReadKey();
+        while (!Console.KeyAvailable || Console.ReadKey(true).Key != ConsoleKey.Enter)
+        {
+            // Simulate random changes
+            BossHPItems[0].Value = Clamp((int)(BossHPItems[0].Value + random.Next(-3, 5)));
+            BossHPItems[1].Value = Clamp((int)(BossHPItems[1].Value + random.Next(-3, 5)));
+            BossHPItems[2].Value = Clamp((int)(BossHPItems[2].Value + random.Next(-3, 5)));
+
+            YourHPItems[0].Value = Clamp((int)(YourHPItems[0].Value + random.Next(-3, 5)));
+            YourHPItems[1].Value = Clamp((int)(YourHPItems[1].Value + random.Next(-3, 5)));
+            YourHPItems[2].Value = Clamp((int)(YourHPItems[2].Value + random.Next(-3, 5)));
+
+            // Update the UI
+            BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems, "")))
+            {
+                Border = BoxBorder.Rounded,
+                Header = new PanelHeader("[red3_1 bold underline]Ellenfél adatai[/]")
+            };
+            YourHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(YourHPItems, "")))
+            {
+                Border = BoxBorder.Rounded,
+                Header = new PanelHeader($"[green bold underline]A te adataid[/]")
+            };
+
+            layout["Top"].Update(BossHP);
+            layout["Center"].Update(YourHP);
+
+            AnsiConsole.Clear();
+            AnsiConsole.Write(layout);
+
+            Thread.Sleep(10); // Pause for a while to simulate time passing
+        }
 
     }
 
@@ -130,5 +152,10 @@ class Program
     static void Exit()
     {
         BeautyWriter.Write("[bold yellow on blue]Kilépés![/] :globe_showing_europe_africa:");
+    }
+
+    static int Clamp(int value)
+    {
+        return Math.Max(0, Math.Min(100, value));
     }
 }
