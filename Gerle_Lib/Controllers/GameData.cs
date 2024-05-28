@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gerle_Lib.Controllers
+﻿namespace Gerle_Lib.Controllers
 {
     public class GameData
     {
