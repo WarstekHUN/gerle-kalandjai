@@ -17,19 +17,20 @@ public static class ProgressController
     {
         throw new NotImplementedException();
     }
+
     #region SaveToFile (metódus) - comment
     /// <summary>
-    /// <c>SaveToFile</c> metódus lementi a felhasználó "AppData" mappájába az előrehaladását (<c>Progress</c>).
+    /// <c>SaveToFile</c> metódus lementi a felhasználó "Dokumentumok" mappájába az előrehaladását (<c>Progress</c>).
     /// </summary>
     #endregion
     public static void SaveToFile()
     {
         GameData gameData = new GameData(
-                SceneController.CurrentCheckpoint,
-                SettingsController.MusicVolume,
-                SettingsController.FXVolume,
-                SettingsController.DialogueVolume
-                );
+            SceneController.CurrentCheckpoint,
+            SettingsController.MusicVolume,
+            SettingsController.FXVolume,
+            SettingsController.DialogueVolume
+        );
 
         string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         string fullPath = Path.Combine(documentsPath, "Gerle");

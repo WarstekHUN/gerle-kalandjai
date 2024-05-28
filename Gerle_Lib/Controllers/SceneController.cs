@@ -109,6 +109,8 @@ namespace Gerle_Lib.Controllers
                 }
 
                 CurrentCheckpoint = i;
+
+                ProgressController.SaveToFile();
             }
         }
     }
