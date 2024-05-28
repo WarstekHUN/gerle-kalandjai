@@ -1,8 +1,10 @@
 ﻿#region Actor (osztály) - comment
+#endregion
+using Gerle_Lib.BaseClasses;
+
 /// <summary>
 /// <c>Actor</c> osztály a szereplők, adataiknak az osztálya (<c>Actor.cs</c>).
 /// </summary>
-#endregion
 public class Actor
 {
     #region Name (mező) - comment

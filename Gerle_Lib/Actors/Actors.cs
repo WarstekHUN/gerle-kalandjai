@@ -1,4 +1,6 @@
-﻿namespace Gerle_Lib.Actors
+﻿using Gerle_Lib.BaseClasses;
+
+namespace Gerle_Lib.Actors
 {
     public static class Actors
     {

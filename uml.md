@@ -27,7 +27,7 @@ A szereplők maguk
 <!--  SetOpponent(`ref:FightingActor`): `void` Beállítja az adott éppen harcoló karakter ellenségét -->
 - Think(): `public void` Az NPC-k nél releváns, ez dönti el, hogy milyen támadást használjon
 - Attack(kepesseg): `public bool` Megsebzi az Opponent karaktert a képesség sebzésével, levonja a manat. Ha true, volt elég mana. Ha false, nem volt.
-- DealDemage(ushort): `public void` Sebez a FightingActoron
+- RecieveDemage(ushort): `public void` Sebez a FightingActoron
 
 ## Scene
 

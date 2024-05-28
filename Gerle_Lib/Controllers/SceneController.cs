@@ -7,6 +7,12 @@ using Gerle_Lib.BaseClasses;
 #endregion
 public static class SceneController
 {
+    public enum FightEndingReason
+    {
+        PlayerDeath,
+        EnemyDeath
+    }
+
     #region Scenes (mező) - comment
     /// <summary>
     /// <c>Scenes</c> mező tartalmazza az összes jelenetet. Ez a játékjelenetek tömbje.
@@ -32,10 +38,61 @@ public static class SceneController
     /// <c>InitFight</c> metódus elindítja a játékos számára a harcot. 
     /// </summary>
     #endregion
-    public static void InitFight(Actor opponent)
+    public static FightEndingReason InitFight(ref Actor opponentCharacter)
     {
         Scene currentscene = Scenes[CurrentCheckpoint];
-        
+        //Körökre osztott harcrendszer
+        uint turn = 0;
+        FightEndingReason? fightEnd = null;
+
+        FightingActor player = new FightingActor(ref Actors.Gerle);
+        FightingActor opponent = player.SetupOpponent(ref opponentCharacter);
+        while (fightEnd == null)
+        {
+            FightingActor currentTurnActor;
+            FightingActor currentTurnOpponent;
+
+            if(turn % 2 == 0)
+            {
+                currentTurnActor = player;
+                currentTurnOpponent = opponent;
+                if (turn == uint.MaxValue - 1) turn = 0;
+            }else
+            {
+                currentTurnActor = opponent;
+                currentTurnOpponent = player;
+            }
+
+            Power? attack = currentTurnActor.Think();
+
+            bool death = false;
+
+            if(attack != null)
+            {
+                if(attack is SpecialPower)
+                {
+                    if (((SpecialPower)attack).SpecialAbility(ref currentTurnActor, ref currentTurnOpponent)) death = true;
+                }
+                else
+                {
+                    if (currentTurnActor.Attack(attack)) death = true;
+                }
+            }
+
+            if(death)
+            {
+                if (currentTurnOpponent == player)
+                {
+                    fightEnd = FightEndingReason.EnemyDeath;
+                }
+                else
+                {
+                    fightEnd = FightEndingReason.PlayerDeath;
+                }
+            }
+        }
+
+        return (FightEndingReason)fightEnd;
     }
     #region PlayScenes (metódus) - comment
     /// <summary>
@@ -57,7 +114,9 @@ public static class SceneController
             Scenes[i].PlayScene();
             if (Scenes[i].Opponent is not null)
             {
-                InitFight(Scenes[i].Opponent!);
+                Actor opp = Scenes[i].Opponent!;
+                InitFight(ref opp);
+                //Lehetséges hiba: Nem működik a referencia alapú átadás, akkor pointert kell használni
             }
 
             CurrentCheckpoint = i;

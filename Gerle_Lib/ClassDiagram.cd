@@ -3,7 +3,7 @@
   <Class Name="Scene">
     <Position X="5.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAABAAAAACAAAAAACAAAAAAAAAAA=</HashCode>
+      <HashCode>IAAAAAAAAAAAAAAAAABAAAAACAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>BaseClasses\Scene.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -25,16 +25,6 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAACAAAAAAAAAQAAAAAAAAhAAAAAAAAAAA=</HashCode>
       <FileName>BaseClasses\Actor.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Powers" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="Power">
-    <Position X="9.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAQCAAAAAQAAAAAAQQAQAAAAAAAAAAAAAIAAAAAA=</HashCode>
-      <FileName>BaseClasses\Power.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

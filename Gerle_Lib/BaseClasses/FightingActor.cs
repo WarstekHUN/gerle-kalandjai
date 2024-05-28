@@ -4,65 +4,77 @@
 /// <summary>
 /// <c>FightingActor</c> osztály az éppen lezajló harc résztvevőinek (<c>Actor</c>) adatait, a harc menetét kezeli (<c>FightingActor.cs</c>). Az <c>Actor</c> osztály tulajdonságait konstruktorait örökli meg.
 /// </summary>
-public class FightingActor : Actor
+public class FightingActor
 {
+    private Actor Actor { get; init; }
+
     #region Health (mező) - comment
     /// <summary>
     /// <c>Health</c> mező az éppen harcoló karakter életerejét tartalmazza.
     /// </summary>
     #endregion
-    private ushort Health;
+    public ushort Health { get; private set; }
     #region Mana (mező) - comment
     /// <summary>
     /// <c>Mana</c> mező az éppen harcoló karakter manaszintjét tartalmazza.
     /// </summary>
     #endregion
-    private ushort Mana;
+    public ushort Mana { get; private set; }
     #region Opponent (mező) - comment
     /// <summary>
     /// <c>Opponent</c> mező az éppen harcoló karakter ellenségét tartalmazza.
     /// </summary>
     #endregion
-    private FightingActor Opponent;
+    public FightingActor Opponent { get; private set; }
+
     #region FightingActor (paraméteres konstruktor) - comment
     /// <summary>
     /// <c>FightingActor</c> paraméteres konstruktor az éppen harcoló karakter életerejét, manaszintjét és ellenfelét adja meg. Minden harcot maximális életerővel és manszinttel kezdik meg a karakterek.
     /// </summary>
     #endregion
-    public FightingActor(string name, ref Actor opponent, Power[] powers) : base(name)
+#pragma warning disable CS8618 // Lehet null az opponent
+    public FightingActor(ref Actor actor)
+#pragma warning restore CS8618
     {
-        Health = MaxHealth;
-        Mana = MaxMana;
-        Opponent = (FightingActor)opponent;
+        Actor = actor;
+        Health = Actor.MaxHealth;
+        Mana = Actor.MaxMana;
     }
+
+    public FightingActor SetupOpponent(ref Actor opponent)
+    {
+        FightingActor opponentFighter = new FightingActor(ref opponent);
+        Opponent = opponentFighter;
+        return opponentFighter;
+    }
+
     #region Think (metódus) - comment
     /// <summary>
     /// <c>Think</c> metódus az NPC-k (Non-Playable Character) esetében dönti el, milyen képesséhet használjanak.
     /// </summary>
     #endregion
-    public void Think()
+    public virtual Power? Think()
     {
-        if (Mana >= Powers[0].Mana)
-        {
-            Attack(Powers[0]);
-        }
+        throw new NotImplementedException();
     }
+
     #region Attack (metódus) - comment
     /// <summary>
     /// <c>Attack</c> metódus az éppen harcoló karakter manaszintjét vizsgálva eldönti, hogy tudja-e a megadott képességet használni. Ez alapján fog az ellenfélre (<c>Opponent</c>) képességhez kötött sebzést mérni.
+    /// True-t ad vissza, ha az ellenfél meghalt
     /// </summary>
     #endregion
     public bool Attack(Power power)
     {
         if (Mana - power.Mana < 0) { 
-            BeautyWriter.Write(($"{Name} próbált támadni a {power.Name} képességgel, de nem volt elég mana!")); 
             return false; 
         }
         else {
-        Mana -= power.Mana;
-        Opponent.DealDamage(power.Damage);
-        BeautyWriter.Write($"{Name} támadott a {power.Name} képességgel, {power.Damage} sebzést okozva!");
-        return true;
+            Mana -= power.Mana;
+            Opponent.RecieveDamage(power.Damage);
+            //TODO: Képernyő közepére jelenjen meg a szöveg 3 másodpercre, ami kiírja a power.DamageText-et.
+            //BeautyWriter.Write($"{power.DamageText}");
+            return true;
         }
     }
     #region DealDamage (metódus) - comment
@@ -70,10 +82,9 @@ public class FightingActor : Actor
     /// <c>DealDamage</c> metódus a bemeneti paraméterként megadott <c>damage</c> változó alapján a sebzés nagyságát vonja le a karakter ellenfelének életerejéből.
     /// </summary>
     #endregion
-    public void DealDamage(ushort damage)
+    public void RecieveDamage(ushort damage)
     {
-        Health = (ushort)Math.Max(Health -  damage, 0);
-        BeautyWriter.Write($"{Name} {damage} sebzést szenvedett el. Hátralevő életereje: {Health}");
+        Health = (ushort)Math.Max(Health - damage, 0);
         //TODO: Hangeffekt lejátszás
         throw new NotImplementedException("Hangeffekt-lejátszás hiányzik");
     }
