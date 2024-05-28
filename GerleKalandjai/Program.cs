@@ -1,10 +1,14 @@
 ﻿using Gerle_Lib.BaseClasses;
 using MenuSystem;
 using Spectre.Console;
+using BarChartItem = Gerle_Lib.BaseClasses.BarChartItem;
+using SysColor = System.Drawing.Color; // Alias System.Drawing.Color to avoid ambiguity
+
 
 class Program
 {
-    private static Menu mainMenu = new Menu(new[] { "Játék 📁", "Beállítások 📝", "Kilépés 🚪" }, new Action[] {
+    private static Menu mainMenu = new Menu(new[] { "temp", "Játék 📁", "Beállítások 📝", "Kilépés 🚪" }, new Action[] {
+            TemplateScene,
             GameMenu,
             SettingsMenu,
             Exit
@@ -34,6 +38,60 @@ class Program
             () => BeautyWriter.Write("[bold yellow on blue]Meglévő folytatása![/] :globe_showing_europe_africa:"),
             NewGameMenu
         }, true, mainMenu);
+    }
+
+    static void TemplateScene()
+    {
+        //BeautyWriter.WriteLine("[bold yellow on blue]Meglévő folytatása![/] :globe_showing_europe_africa:");
+
+        
+        var grid = new Grid();
+        grid.AddColumn(new GridColumn());   
+        //grid.AddColumn(new GridColumn());   
+        
+
+        var BossHPItems = new List<BarChartItem>
+        {
+            new BarChartItem("Életerő", 100, SysColor.IndianRed),
+            new BarChartItem("Mana", 100, SysColor.RebeccaPurple),
+            new BarChartItem("Idő Támadásig", 100, SysColor.Green),
+        };
+        var BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems, "")));
+        BossHP.Border = BoxBorder.Rounded;
+        BossHP.Header = new PanelHeader("[red3_1 bold underline]Ellenfél adatai[/]");
+        //BossHP.Expand();
+
+        var YourHPItems = new List<BarChartItem>
+        {
+            new BarChartItem("Életerő", 100, SysColor.IndianRed),
+            new BarChartItem("Mana", 100, SysColor.RebeccaPurple),
+            new BarChartItem("Idő Támadásig", 100, SysColor.Green),
+        };
+        //ProgressBarMaker.RenderBarChart(YourHP, "A te adataid:");
+        var YourHP = new Panel (Align.Center(ProgressBarMaker.CreateBarChart(YourHPItems, "")));
+        YourHP.Border = BoxBorder.Rounded;
+        YourHP.Header = new PanelHeader($"[green bold underline]A te adataid[/]");
+        //YourHP.Expand();
+
+        grid.AddRow(BossHP);
+        grid.AddEmptyRow();
+        grid.AddRow(YourHP);
+        //AnsiConsole.Write(grid);
+
+
+        var layout = new Layout("Root")
+    .SplitRows(
+        new Layout("Top"),
+        new Layout("Center"),
+        new Layout("Bottom"));
+
+        layout["Top"].Update(BossHP).Size(7);
+        layout["center"].Update(YourHP).Size(7);
+
+        AnsiConsole.Write(layout);
+
+        Console.ReadKey();
+
     }
 
     /// <summary>
