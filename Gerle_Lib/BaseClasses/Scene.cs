@@ -10,7 +10,7 @@
 /// <c>Scene</c> osztály a jeleneteket tartalmazz, kezeli (<c>Scene.cs</c>).
 /// </summary>
 #endregion
-public class Scene
+public unsafe class Scene
 {
     #region Lines (tulajdonság) - comment
     /// <summary>
@@ -23,7 +23,7 @@ public class Scene
     /// <c>Opponent</c> Amennyiben nem null, a jelenet után harc kezdődik az adott karakterrel.
     /// </summary>
     #endregion
-    public Actor? Opponent { get; init; }
+    public Actor Opponent { get; init; }
 
     /// <summary>
     /// Megadja hogy az adott jelenet melyik történetágon helyezkedik el. A játék végén van jelentősége
@@ -35,7 +35,7 @@ public class Scene
     /// <c>Scene</c> paraméteres konstruktor a fentebb lévő tulajdonságoknak állítja be a megfelelő értéket.
     /// </summary>
     #endregion
-    public Scene(Line[] lines, ref Actor? opponent, SceneVersion choiceVersion = SceneVersion.BASE)
+    public Scene(Line[] lines, Actor opponent, SceneVersion choiceVersion = SceneVersion.BASE)
     {
         Lines = lines;
         Opponent = opponent;

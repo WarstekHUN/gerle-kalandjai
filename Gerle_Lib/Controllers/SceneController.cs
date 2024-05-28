@@ -24,7 +24,7 @@ public static class SceneController
         {
             new Line("Az ápoló bejön az ajtón", ref Actors.Narrator, "01_01_narrator"),
             new Line("Szép napot Gerle! Meséljen, hogyan érzi magát. Minden rendben volt az este folyamán? Nem volt hideg a szobában, nem fázott?", ref Actors.Apolo, "01_02_apolo")
-        }, ref Actors.Apolo!)    
+        }, Actors.Apolo) //Bármennyire is nem úgy tűnik, ez referencia alapján van átadva.
     };
 
     #region CurrentCheckpoint (tulajdonság) - comment
