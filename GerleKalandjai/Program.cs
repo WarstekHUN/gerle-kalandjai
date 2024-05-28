@@ -19,6 +19,7 @@ class Program
         Console.OutputEncoding = System.Text.Encoding.Unicode;
 
         Menu.SetCreator("Tatár Mátyás Bence, Kluitenberg Alex, Gáspár Mihály, Balogh Levente");
+        mainMenu.SetToScreen();
     }
 
     /// <summary>
