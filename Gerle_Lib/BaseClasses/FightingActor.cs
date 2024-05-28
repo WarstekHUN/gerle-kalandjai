@@ -29,7 +29,7 @@ public class FightingActor : Actor
     /// <c>FightingActor</c> paraméteres konstruktor az éppen harcoló karakter életerejét, manaszintjét és ellenfelét adja meg. Minden harcot maximális életerővel és manszinttel kezdik meg a karakterek.
     /// </summary>
     #endregion
-    public FightingActor(string name, ref Actor opponent, Power[] powers) : base(name, powers)
+    public FightingActor(string name, ref Actor opponent, Power[] powers) : base(name)
     {
         Health = MaxHealth;
         Mana = MaxMana;

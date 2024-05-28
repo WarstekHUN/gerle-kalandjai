@@ -1,4 +1,11 @@
-﻿#region Scene (osztály) - comment
+﻿public enum SceneVersion
+{
+    BASE,
+    A,
+    B
+}
+
+#region Scene (osztály) - comment
 /// <summary>
 /// <c>Scene</c> osztály a jeleneteket tartalmazz, kezeli (<c>Scene.cs</c>).
 /// </summary>
@@ -17,15 +24,22 @@ public class Scene
     /// </summary>
     #endregion
     public Actor? Opponent { get; init; }
+
+    /// <summary>
+    /// Megadja hogy az adott jelenet melyik történetágon helyezkedik el. A játék végén van jelentősége
+    /// </summary>
+    public SceneVersion Version { get; init; }
+
     #region Scene (paraméteres konstruktor) - comment
     /// <summary>
     /// <c>Scene</c> paraméteres konstruktor a fentebb lévő tulajdonságoknak állítja be a megfelelő értéket.
     /// </summary>
     #endregion
-    public Scene(Line[] lines, ref Actor? opponent)
+    public Scene(Line[] lines, ref Actor? opponent, SceneVersion choiceVersion = SceneVersion.BASE)
     {
         Lines = lines;
         Opponent = opponent;
+        Version = choiceVersion;
     }
     #region PlayScene (metódus) - comment
     /// <summary>

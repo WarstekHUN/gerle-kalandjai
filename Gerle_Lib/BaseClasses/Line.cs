@@ -31,13 +31,13 @@ public class Line
     /// <c>NoiseFile</c> tulajdonság a háttérzaj fájljának a nevét tartalmazza. Ezek lehetnek speciális effektek (FX). Pl: "hatterzaj.wav"
     /// </summary>
     #endregion
-    public string NoiseFile { get; set; }
+    public string? NoiseFile { get; set; }
     #region Line (paraméteres konstruktor) - comment
     /// <summary>
     /// <c>Line</c> paraméteres konstruktor a fentebb megadott tulajdonságoknak adja meg a beállítandó értékeket.
     /// </summary>
     #endregion
-    public Line(string text, ref Actor talker, string voiceFile, string noiseFile)
+    public Line(string text, ref Actor talker, string voiceFile, string? noiseFile = null)
     {
         Text = text;
         Talker = talker;
