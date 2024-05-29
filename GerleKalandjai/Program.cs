@@ -44,7 +44,6 @@ class Program
     {
         var grid = new Grid();
         grid.AddColumn(new GridColumn());
-        // grid.AddColumn(new GridColumn());
 
         var random = new Random();
         var BossHPItems = new List<BarChartItem>
@@ -85,13 +84,13 @@ class Program
         while (!Console.KeyAvailable || Console.ReadKey(true).Key != ConsoleKey.Enter)
         {
             // Simulate random changes
-            BossHPItems[0].Value = Clamp((int)(BossHPItems[0].Value + random.Next(-3, 5)));
-            BossHPItems[1].Value = Clamp((int)(BossHPItems[1].Value + random.Next(-3, 5)));
-            BossHPItems[2].Value = Clamp((int)(BossHPItems[2].Value + random.Next(-3, 5)));
+            BossHPItems[0].Value = Math.Clamp(BossHPItems[0].Value + random.Next(-12, 12), 0, 100);
+            BossHPItems[1].Value = Math.Clamp(BossHPItems[1].Value + random.Next(-12, 12), 0, 100);
+            BossHPItems[2].Value = Math.Clamp(BossHPItems[2].Value + random.Next(-12, 12), 0, 100);
 
-            YourHPItems[0].Value = Clamp((int)(YourHPItems[0].Value + random.Next(-3, 5)));
-            YourHPItems[1].Value = Clamp((int)(YourHPItems[1].Value + random.Next(-3, 5)));
-            YourHPItems[2].Value = Clamp((int)(YourHPItems[2].Value + random.Next(-3, 5)));
+            YourHPItems[0].Value = Math.Clamp(YourHPItems[0].Value + random.Next(-12, 12), 0, 100);
+            YourHPItems[1].Value = Math.Clamp(YourHPItems[1].Value + random.Next(-12, 12), 0, 100);
+            YourHPItems[2].Value = Math.Clamp(YourHPItems[2].Value + random.Next(-12, 12), 0, 100);
 
             // Update the UI
             BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems, "")))
@@ -111,7 +110,7 @@ class Program
             AnsiConsole.Clear();
             AnsiConsole.Write(layout);
 
-            Thread.Sleep(10); // Pause for a while to simulate time passing
+            Thread.Sleep(2_000); // Pause for a while to simulate time passing
         }
 
     }
@@ -152,10 +151,5 @@ class Program
     static void Exit()
     {
         BeautyWriter.Write("[bold yellow on blue]Kilépés![/] :globe_showing_europe_africa:");
-    }
-
-    static int Clamp(int value)
-    {
-        return Math.Max(0, Math.Min(100, value));
     }
 }
