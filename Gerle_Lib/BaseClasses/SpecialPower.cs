@@ -1,6 +1,14 @@
 ﻿namespace Gerle_Lib.BaseClasses
 {
-    public delegate bool PowerEvent(ref FightingActor currentActor, ref FightingActor opponent);
+    ///// <summary>
+    ///// adssad
+    ///// </summary>
+    ///// <param name="currentActor">asd</param>
+    ///// <param name="opponent">252352535</param>
+    ///// <returns></returns>
+    //public delegate Func<FightingActor, FightingActor, bool>PowerEvent(ref FightingActor currentActor, ref FightingActor opponent);
+
+    public delegate bool PowerEvent(ref FightingActor actor1, ref FightingActor actor2);
 
     #region Power (osztály) - comment
     /// <summary>
@@ -9,9 +17,11 @@
     #endregion
     public class SpecialPower : Power
     {
-        public SpecialPower(string name, ushort mana, bool isDodgeable, string damageText, PowerEvent specialAbility) : base(name, 0, mana, isDodgeable, damageText)
+        public SpecialPower(string name, ushort mana, bool isDodgeable, string damageText,
+            PowerEvent specialAbility) : base(name, 0, mana, isDodgeable, damageText)
         {
             SpecialAbility = specialAbility;
+
         }
 
         #region Minigame - comment

@@ -9,7 +9,10 @@ namespace Gerle_Lib.Data
             new Power("Kajakommandó",20,50,false,"Gerle készített egy almás pitét ami megfeküdte az ellenfele gyomrát, ezért 50 életerőt veszetett."),
             new Power("Pálcasuhintás",20,50,false,"Gerle megsuhintotta pálcáját, amitől ellenfele varázsütésre 50 életerőt vesztett."),
             new Power("Mamuszdobás",50,80,false,"Gerle az acél lemezekből készült mamuszát fénysebességgel vágta ellenfeléhez, amitől ellenfele 80 életerőt vesztett."),
-            //TODO: new Power("The potions",75,75,false,"Életerőtöltés")
+            new SpecialPower("The potions",75,false, "Gerle megivott egy kupicával megboldogult férjének házi páleszéből, ezért életereje 75-el nőtt.", (ref FightingActor currentActor, ref FightingActor opponent) =>
+            {
+                return false;
+            })
             //TODO: new Power("Sprechen Sie Deutsche?",)
         });
         public static Actor Apolo = new Actor("Ápoló", new Power[] {
