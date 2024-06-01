@@ -1,14 +1,6 @@
 ﻿namespace Gerle_Lib.BaseClasses
 {
-    ///// <summary>
-    ///// adssad
-    ///// </summary>
-    ///// <param name="currentActor">asd</param>
-    ///// <param name="opponent">252352535</param>
-    ///// <returns></returns>
-    //public delegate Func<FightingActor, FightingActor, bool>PowerEvent(ref FightingActor currentActor, ref FightingActor opponent);
-
-    public delegate bool PowerEvent(ref FightingActor actor1, ref FightingActor actor2);
+    public delegate void PowerEvent(ref FightingActor currentActor, ref FightingActor opponentActor);
 
     #region Power (osztály) - comment
     /// <summary>

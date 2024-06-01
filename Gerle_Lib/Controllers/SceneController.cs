@@ -61,7 +61,12 @@ namespace Gerle_Lib.Controllers
                 {
                     if (attack is SpecialPower)
                     {
-                        if (((SpecialPower)attack).SpecialAbility(ref currentTurnActor, ref currentTurnOpponent)) death = true;
+                        ((SpecialPower)attack).SpecialAbility(ref currentTurnActor, ref currentTurnOpponent);
+                        
+                        if(currentTurnOpponent.Health <= 0)
+                        {
+                            death = true;
+                        }
                     }
                     else
                     {
