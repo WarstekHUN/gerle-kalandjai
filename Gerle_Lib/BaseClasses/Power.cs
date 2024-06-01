@@ -24,7 +24,7 @@
         /// <c>DamageText</c> mező tartalmazza, 
         /// </summary>
         #endregion
-        public string DamageText { get; init; }
+        public string DamageText { get; set; }
         #region Mana (tulajdonság) - comment
         /// <summary>
         /// <c>Mana</c> tulajdonság a képesség mana-szükségletét tartalmazza. Pl: "5". Ezt az értéket csak konstruktor állíthatja!

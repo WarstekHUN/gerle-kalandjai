@@ -6,7 +6,7 @@
 /// </summary>
 public class FightingActor
 {
-    private Actor Actor { get; init; }
+    public Actor Actor { get; init; }
 
     private ushort _Health {  get; set; }
 
@@ -34,6 +34,11 @@ public class FightingActor
         get => _Mana;
         set => Math.Max(value, (ushort)0);
     }
+
+    /// <summary>
+    /// A karakter minden támadásakor az alap sebzése beszorzásra kerül ezzel az értékkel.
+    /// </summary>
+    public float DamageModifier { get; set; } = 1f;
     
     #region Opponent (mező) - comment
     /// <summary>
@@ -86,7 +91,7 @@ public class FightingActor
         }
         else {
             _Mana -= power.Mana;
-            Opponent.RecieveDamage(power.Damage);
+            Opponent.RecieveDamage((ushort)Math.Round(power.Damage * DamageModifier));
             //TODO: Képernyő közepére jelenjen meg a szöveg 3 másodpercre, ami kiírja a power.DamageText-et.
             //BeautyWriter.Write($"{power.DamageText}");
             return true;

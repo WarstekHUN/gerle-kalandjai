@@ -1,4 +1,5 @@
 ﻿using Gerle_Lib.BaseClasses;
+using System.Runtime.CompilerServices;
 
 namespace Gerle_Lib.Data
 {
@@ -9,21 +10,40 @@ namespace Gerle_Lib.Data
             new Power("Kajakommandó",20,50,false,"Gerle készített egy almás pitét ami megfeküdte az ellenfele gyomrát, ezért 50 életerőt veszetett."),
             new Power("Pálcasuhintás",20,50,false,"Gerle megsuhintotta pálcáját, amitől ellenfele varázsütésre 50 életerőt vesztett."),
             new Power("Mamuszdobás",50,80,false,"Gerle az acél lemezekből készült mamuszát fénysebességgel vágta ellenfeléhez, amitől ellenfele 80 életerőt vesztett."),
-            new SpecialPower("The potions",75,false, "Gerle megivott egy kupicával megboldogult férjének házi páleszéből, ezért életereje 75-el nőtt.", (ref FightingActor currentActor, ref FightingActor opponent) =>
+            new SpecialPower("The potions", 75, false, "Gerle megivott egy kupicával megboldogult férjének házi páleszéből, ezért életereje 75-el nőtt.", (SpecialPower thisPower, ref FightingActor currentActor, ref FightingActor opponent) =>
             {
-                currentActor.Health = 12;
+                currentActor.Health += 75;
+            }),
+            new SpecialPower("Sprechen Sie Deutsche?", 120, false, "Gerle német nyugdíjasnak tettette magát. Az ellenfele összezavarodottságában mostantól 10%-al gyengébben támad.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
+            {
+                if(opp.Actor == Jegykezelo)
+                {
+                    thisPower.DamageText = "Gerle megpróbálta magát német nyugdíjasnak tetteni, de a jegykezelő tudott németül. A kaller mostantól 15%-al erősebben támad.";
+                    opp.DamageModifier = 1.15f;
+                }else
+                {
+                    current.DamageModifier = 1.1f;
+                }
             })
-            //TODO: new Power("Sprechen Sie Deutsche?",)
         });
         public static Actor Apolo = new Actor("Ápoló", new Power[] {
             new Power("Vérnyomásmérő",20,35,true,"Az ápoló kegyetlenül megszorította Gerle karját így főhősünk 20 életerőt vesztett."),
-            //TODO: new Power("Gyógyszerek",20-at visz le Gerle manájából,50,true,"Az ápoló beadta Gerle napi gyógyszeradagját (nyugtatót) és Gerle 20 manát vesztett."),
-            //TODO: new Power("Kényszerzubbony",45-öt visz le Gerle manájából,80,false,"Az ápoló kényszerzubbonyba kényszerítette Gerlét a következő körre ezáltal Gerle 45 manát vesztett."),
-            new Power("Ágytál",30,45,true,"Marika fejbe kólintotta Gerlét egy ágytállal, amitől Gerle 30 eleterőt vesztett."),
+            new SpecialPower("Gyógyszerek", 20, false, "Az ápoló beadta Gerle napi gyógyszeradagját (nyugtatót), ezért Gerle 20 manát vesztett.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
+            {
+                opp.Mana -= 20;
+            }),
+            new SpecialPower("Kényszerzubbony",80,false,"Az ápoló kényszerzubbonyba kényszerítette Gerlét a következő körre ezáltal Gerle 45 manát vesztett.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
+            {
+                opp.Mana -= 45;
+            }),
+            new Power("Ágytál",30,45,false,"Marika fejbe kólintotta Gerlét egy ágytállal, amitől Gerle 30 eleterőt vesztett."),
         });
         public static Actor Galambok = new Actor("Galambok", new Power[] {
-            new Power("Csipkedés",10,30,true,"A pajkos jómadarak megcsipkedték Gerle kezét, amitől ő 10 életerőt vesztett."),
-            //TODO: new Power("Ganébomba",35-öt visz le Gerle manájából,70,false,"A galambraj szőnyegbombázást hajtott végre Gerle felett, így Gerle 35 manát vesztett."),
+            new Power("Csipkedés",10,30,false,"A pajkos jómadarak megcsipkedték Gerle kezét, amitől ő 10 életerőt vesztett."),
+            new SpecialPower("Ganébomba",70,false,"A galambraj szőnyegbombázást hajtott végre Gerle felett, így Gerle 35 manát vesztett.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
+            {
+                opp.Mana -= 35;
+            }),
             new Power("Mi ez? Egy madár? Egy repülő?",35,60,false,"A galambraj egyenesen belerepült Gerle arcába, így Gerle 35 életerőt vesztett."),
         });
         public static Actor Jegykezelo = new Actor("Jegykezelő", new Power[] {

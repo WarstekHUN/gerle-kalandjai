@@ -1,6 +1,6 @@
 ﻿namespace Gerle_Lib.BaseClasses
 {
-    public delegate void PowerEvent(ref FightingActor currentActor, ref FightingActor opponentActor);
+    public delegate void PowerEvent(SpecialPower thisPower, ref FightingActor currentActor, ref FightingActor opponentActor);
 
     #region Power (osztály) - comment
     /// <summary>
@@ -12,7 +12,7 @@
         public SpecialPower(string name, ushort mana, bool isDodgeable, string damageText,
             PowerEvent specialAbility) : base(name, 0, mana, isDodgeable, damageText)
         {
-            SpecialAbility = specialAbility;
+            _SpecialAbility = specialAbility;
 
         }
 
@@ -23,12 +23,22 @@
         #endregion
         public new PowerEvent? Minigame;
 
+        #region _SpecialAbility
+        /// <summary>
+        /// Akkor fut le, hogyha az adott képesség különleges, tehát nem csak simán sebez
+        /// </summary>
+        #endregion
+        private PowerEvent _SpecialAbility;
+
         #region SpecialAbility
         /// <summary>
         /// Akkor fut le, hogyha az adott képesség különleges, tehát nem csak simán sebez
         /// </summary>
         #endregion
-        public PowerEvent SpecialAbility;
+        public void SpecialAbility(ref FightingActor currentActor, ref FightingActor opponentActor)
+        {
+            _SpecialAbility(this, ref currentActor, ref opponentActor);
+        }
     }
 
 }
