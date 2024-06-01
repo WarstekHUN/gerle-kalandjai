@@ -11,7 +11,7 @@ namespace Gerle_Lib.Data
             new Power("Mamuszdobás",50,80,false,"Gerle az acél lemezekből készült mamuszát fénysebességgel vágta ellenfeléhez, amitől ellenfele 80 életerőt vesztett."),
             new SpecialPower("The potions",75,false, "Gerle megivott egy kupicával megboldogult férjének házi páleszéből, ezért életereje 75-el nőtt.", (ref FightingActor currentActor, ref FightingActor opponent) =>
             {
-                
+                currentActor.Health = 12;
             })
             //TODO: new Power("Sprechen Sie Deutsche?",)
         });

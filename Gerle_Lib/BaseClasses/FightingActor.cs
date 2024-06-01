@@ -8,18 +8,33 @@ public class FightingActor
 {
     private Actor Actor { get; init; }
 
+    private ushort _Health {  get; set; }
+
     #region Health (mező) - comment
     /// <summary>
     /// <c>Health</c> mező az éppen harcoló karakter életerejét tartalmazza.
     /// </summary>
     #endregion
-    public ushort Health { get; private set; }
+    public ushort Health 
+    {
+        get => _Health;
+        //Imádom, hogy csak ezekkel a castokkal fogadja el, mert különben azt hiszi, hogy ez egy byte...
+        set => _Health = Math.Clamp(value, (ushort)0, (ushort)100);
+    }
+
+    private ushort _Mana { get; set; }
+
     #region Mana (mező) - comment
     /// <summary>
     /// <c>Mana</c> mező az éppen harcoló karakter manaszintjét tartalmazza.
     /// </summary>
     #endregion
-    public ushort Mana { get; private set; }
+    public ushort Mana
+    {
+        get => _Mana;
+        set => Math.Max(value, (ushort)0);
+    }
+    
     #region Opponent (mező) - comment
     /// <summary>
     /// <c>Opponent</c> mező az éppen harcoló karakter ellenségét tartalmazza.
@@ -66,11 +81,11 @@ public class FightingActor
     #endregion
     public bool Attack(Power power)
     {
-        if (Mana - power.Mana < 0) { 
+        if (_Mana - power.Mana < 0) { 
             return false; 
         }
         else {
-            Mana -= power.Mana;
+            _Mana -= power.Mana;
             Opponent.RecieveDamage(power.Damage);
             //TODO: Képernyő közepére jelenjen meg a szöveg 3 másodpercre, ami kiírja a power.DamageText-et.
             //BeautyWriter.Write($"{power.DamageText}");
@@ -84,7 +99,7 @@ public class FightingActor
     #endregion
     public void RecieveDamage(ushort damage)
     {
-        Health = (ushort)Math.Max(Health - damage, 0);
+        Health -= damage;
         //TODO: Hangeffekt lejátszás
         throw new NotImplementedException("Hangeffekt-lejátszás hiányzik");
     }
