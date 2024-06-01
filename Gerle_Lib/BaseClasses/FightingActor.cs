@@ -1,4 +1,5 @@
 ﻿using Gerle_Lib.BaseClasses;
+using Gerle_Lib.Exceptions;
 #region FightingActor (osztály) - comment
 #endregion
 /// <summary>
@@ -39,7 +40,7 @@ public class FightingActor
     /// A karakter minden támadásakor az alap sebzése beszorzásra kerül ezzel az értékkel.
     /// </summary>
     public float DamageModifier { get; set; } = 1f;
-    
+
     #region Opponent (mező) - comment
     /// <summary>
     /// <c>Opponent</c> mező az éppen harcoló karakter ellenségét tartalmazza.
@@ -72,10 +73,25 @@ public class FightingActor
     /// <summary>
     /// <c>Think</c> metódus az NPC-k (Non-Playable Character) esetében dönti el, milyen képesséhet használjanak.
     /// </summary>
+    /// <exception cref="ActorIsNotFighterException"></exception>
     #endregion
-    public virtual Power? Think()
+    public virtual Power[] Think()
     {
-        throw new NotImplementedException();
+        Power[] chosenPowers = new Power[] { };
+
+        if(_Mana == 0) return chosenPowers;
+        if(Actor.Powers is null) throw new ActorIsNotFighterException();
+        if (_Mana < Actor.LeastManaExpensivePower!.Mana) return chosenPowers;
+
+        //Eldöntük, hogy akarunk-e támadni
+        if(Random.Shared.Next(Actor.Aggression - 5, 10) >= 5)
+        {
+            //Támadunk
+            byte numberOfAttackTries = (byte)Random.Shared.Next(0, Actor.Aggression + 1);
+
+        }
+
+        return chosenPowers;
     }
 
     #region Attack (metódus) - comment

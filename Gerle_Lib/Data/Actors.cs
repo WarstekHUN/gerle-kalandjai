@@ -1,4 +1,5 @@
 ﻿using Gerle_Lib.BaseClasses;
+using Gerle_Lib.BaseClasses.Powers;
 using System.Runtime.CompilerServices;
 
 namespace Gerle_Lib.Data
@@ -47,8 +48,8 @@ namespace Gerle_Lib.Data
             new Power("Mi ez? Egy madár? Egy repülő?",35,60,false,"A galambraj egyenesen belerepült Gerle arcába, így Gerle 35 életerőt vesztett."),
         });
         public static Actor Jegykezelo = new Actor("Jegykezelő", new Power[] {
+            //A Mr. WorldWide egy passzív képesség, nem kell lescriptelni ide.
             //TODO: new Power("Vakítás",Megvakítja Gerlét/felcserélődik két képessége,80,false,"A furmányos kaller megvakítja scannerével Gerlét amitő ő két képessége randomizáltan felcserélődik."),
-            //TODO: new Power("Mr. Worldwide",Ki tudja védeni a sprechen sie deutsche? képességet, valamint 15%-al erősebben fog a dodge után sebezni,50,false,"Ki tudja védeni a sprechen sie deutsche? képességet, valamint 15%-al erősebben fogja a dodge után Gerlét sebezni."),
             new Power("Bírságolás",25,40,true,"A kaller megbírságolta Gerlét amiért jegy nélkül utazik a buszon, Gerle 25 életerőt vesztett."),
             new Power("A tömeg ereje",35,50,false,"A dagi kaller elől nincs menekvés,a jegykezelő ráült Gerlére, a földdel tette egyenlőve. Gerle 35 életerőt vesztett."),
         });

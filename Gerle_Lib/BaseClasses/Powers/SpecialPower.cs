@@ -1,4 +1,4 @@
-﻿namespace Gerle_Lib.BaseClasses
+﻿namespace Gerle_Lib.BaseClasses.Powers
 {
     public delegate void PowerEvent(SpecialPower thisPower, ref FightingActor currentActor, ref FightingActor opponentActor);
 
@@ -35,7 +35,7 @@
         /// Akkor fut le, hogyha az adott képesség különleges, tehát nem csak simán sebez
         /// </summary>
         #endregion
-        public void SpecialAbility(ref FightingActor currentActor, ref FightingActor opponentActor)
+        public virtual void SpecialAbility(ref FightingActor currentActor, ref FightingActor opponentActor)
         {
             _SpecialAbility(this, ref currentActor, ref opponentActor);
         }

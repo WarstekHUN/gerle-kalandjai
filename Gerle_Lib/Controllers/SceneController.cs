@@ -16,6 +16,8 @@ namespace Gerle_Lib.Controllers
             EnemyDeath
         }
 
+        public const byte MANA_PER_ROUND = 80;
+
         #region CurrentCheckpoint (tulajdonság) - comment
         /// <summary>
         /// <c>CurrentCheckpoint</c> tulajdonság tartalmazza, a játékos hanyadik jeleneten, illetve harcon van túl.
@@ -29,7 +31,6 @@ namespace Gerle_Lib.Controllers
         #endregion
         public static FightEndingReason InitFight(Actor opponentCharacter)
         {
-            Scene currentscene = Scenes[CurrentCheckpoint];
             //Körökre osztott harcrendszer
             uint turn = 0;
             FightEndingReason? fightEnd = null;
@@ -38,6 +39,12 @@ namespace Gerle_Lib.Controllers
             FightingActor opponent = player.SetupOpponent(ref opponentCharacter);
             while (fightEnd == null)
             {
+                if(turn != 0)
+                {
+                    player.Mana += MANA_PER_ROUND;
+                    opponent.Mana += MANA_PER_ROUND;
+                } 
+
                 FightingActor currentTurnActor;
                 FightingActor currentTurnOpponent;
 
@@ -45,7 +52,7 @@ namespace Gerle_Lib.Controllers
                 {
                     currentTurnActor = player;
                     currentTurnOpponent = opponent;
-                    if (turn == uint.MaxValue - 1) turn = 0;
+                    if (turn == uint.MaxValue) turn = 1;
                 }
                 else
                 {
@@ -53,26 +60,35 @@ namespace Gerle_Lib.Controllers
                     currentTurnOpponent = player;
                 }
 
-                Power? attack = currentTurnActor.Think();
+                Power[] attacks = currentTurnActor.Think();
 
                 bool death = false;
 
-                if (attack != null)
+                foreach (Power attack in attacks)
                 {
-                    if (attack is SpecialPower)
+                    if (attack != null)
                     {
-                        ((SpecialPower)attack).SpecialAbility(ref currentTurnActor, ref currentTurnOpponent);
-                        
-                        if(currentTurnOpponent.Health <= 0)
+                        if (attack is SpecialPower)
                         {
-                            death = true;
+                            ((SpecialPower)attack).SpecialAbility(ref currentTurnActor, ref currentTurnOpponent);
+                        
+                            if(currentTurnOpponent.Health <= 0)
+                            {
+                                death = true;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (currentTurnActor.Attack(attack))
+                            {
+                                death = true;
+                                break;
+                            }
                         }
                     }
-                    else
-                    {
-                        if (currentTurnActor.Attack(attack)) death = true;
-                    }
                 }
+
 
                 if (death)
                 {

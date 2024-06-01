@@ -1,4 +1,6 @@
-﻿namespace Gerle_Lib.BaseClasses
+﻿using Gerle_Lib.BaseClasses.Powers;
+
+namespace Gerle_Lib.BaseClasses
 {
     #region Power (osztály) - comment
     /// <summary>

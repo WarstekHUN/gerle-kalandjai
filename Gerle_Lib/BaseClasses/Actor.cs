@@ -7,7 +7,7 @@ using Gerle_Lib.BaseClasses;
 /// </summary>
 public class Actor
 {
-    #region Name (mező) - comment
+    #region Name (tulajdonság) - comment
     /// <summary>
     /// <c>Name</c> méző a szereplő / Actor nevét tartalmazza. Ha nem adunk meg neki értéket akkor marad a default: "Default Actor" értékénél.
     /// </summary>
@@ -30,15 +30,36 @@ public class Actor
     /// <c>Powers</c> tulajdonság a szereplők képességeit tartalmazza (Power.cs).
     /// </summary>
     #endregion
-    public Power[]? Powers { get; set; }
+    public Power[]? Powers { get; init; }
+    #region Aggression (tulajdonság)
+    /// <summary>
+    /// Megadja egy 1-től 10-ig terjedő skálán, hogy mennyire aggresszív az adott Actor
+    /// </summary>
+    #endregion
+    public byte Aggression { get; init; }
+    #region AverageManaCostOfPowers (tulajdonság)
+    /// <summary>
+    /// Megadja, hogy a karakter képességei átlagosan hány manába kerülnek
+    /// </summary>
+    #endregion
+    public float? AverageManaCostOfPowers { get; init; }
+    #region LeastManaExpensivePower (tulajdonság)
+    /// <summary>
+    /// Megadja, hogy melyik a legkevesebb manát igénylő képessége az Actornek,
+    /// </summary>
+    #endregion
+    public Power? LeastManaExpensivePower { get; init; }
     #region Actor (paraméteres konstruktor) - comment
     /// <summary>
     /// <c>Actor</c> paraméteres konstruktorral beállíthatjuk a szereplők nevét, képességeit.
     /// </summary>
     #endregion
-    public Actor(string name, Power[]? powers = null)
+    public Actor(string name, Power[]? powers = null, byte aggression = 5)
     {
         Name = name;
         Powers = powers;
+        Aggression = Math.Clamp(aggression, (byte)1, (byte)10);
+        AverageManaCostOfPowers = (float?)powers?.Average(el => el.Mana);
+        LeastManaExpensivePower = powers?.MinBy(el => el.Mana);
     }
 }
