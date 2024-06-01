@@ -10,7 +10,7 @@ namespace Gerle_Lib.Data
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override Power[] Think()
+        public override List<Power> Think()
         {
             //TODO: Enemy Healthbar, felette enemy nevének megjelenítése
             //TODO: Player healthbar, manabar

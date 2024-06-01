@@ -1,4 +1,5 @@
 ﻿using Gerle_Lib.BaseClasses;
+using Gerle_Lib.BaseClasses.Powers;
 using Gerle_Lib.Data;
 
 namespace Gerle_Lib.Controllers
@@ -60,7 +61,7 @@ namespace Gerle_Lib.Controllers
                     currentTurnOpponent = player;
                 }
 
-                Power[] attacks = currentTurnActor.Think();
+                List<Power> attacks = currentTurnActor.Think();
 
                 bool death = false;
 

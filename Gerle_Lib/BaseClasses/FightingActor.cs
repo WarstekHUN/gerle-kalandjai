@@ -75,9 +75,9 @@ public class FightingActor
     /// </summary>
     /// <exception cref="ActorIsNotFighterException"></exception>
     #endregion
-    public virtual Power[] Think()
+    public virtual List<Power> Think()
     {
-        Power[] chosenPowers = new Power[] { };
+        List<Power> chosenPowers = new List<Power>();
 
         if(_Mana == 0) return chosenPowers;
         if(Actor.Powers is null) throw new ActorIsNotFighterException();
@@ -89,6 +89,20 @@ public class FightingActor
             //Támadunk
             byte numberOfAttackTries = (byte)Random.Shared.Next(0, Actor.Aggression + 1);
 
+            byte i = 0;
+            ushort virtualMana = _Mana;
+            List<Power> availablePowers = Actor.Powers.Where(el => el.Mana <= _Mana).ToList();
+            
+            while(virtualMana >= Actor.LeastManaExpensivePower.Mana && i < numberOfAttackTries)
+            {
+                //Összes képesség, amire van elég Mana:
+                Power power = availablePowers[Random.Shared.Next(0, availablePowers.Count)];
+                chosenPowers.Add(power);
+                availablePowers.Remove(power);
+                virtualMana -= power.Mana;
+
+                i++;
+            }
         }
 
         return chosenPowers;
