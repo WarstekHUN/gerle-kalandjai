@@ -14,7 +14,7 @@ namespace Gerle_Lib.Controllers
             new Scene(new Line[]
             {
                 new Line("Az ápoló bejön az ajtón", ref Actors.Narrator, "01_01_narrator"),
-                new Line("Szép napot Gerle! Meséljen, hogyan érzi magát. Minden rendben volt az este folyamán? Nem volt hideg a szobában, nem fázott?", ref Actors.Apolo, "01_02_apolo")
+                new Line("Szép napot Gerle! Meséljen, hogyan érzi magát. Minden rendben volt az este folyamán? Nem volt hideg a szobában, nem fázott?", ref Actors.Apolo, "01/02_Apolo")
             }, ref Actors.Apolo)
         };
     }
