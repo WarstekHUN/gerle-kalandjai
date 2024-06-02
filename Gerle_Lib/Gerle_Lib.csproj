@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -18,5 +18,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data\Audio\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <!--
+  <Target Name="CopyFilesToOutputDirectory">
+    <ItemGroup>
+      <AudioFiles Include="Data\Audio\**\*"/>
+    </ItemGroup>
+    <Copy SourceFiles="@(AudioFiles)" DestinationFolder="$(OutputPath)\\%(RecursiveDir)"/>
+  </Target -->
 
 </Project>
