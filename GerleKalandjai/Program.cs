@@ -67,8 +67,7 @@ class Program
 
         var YourHPBar = new List<BarChartItem>
                 {
-                    new BarChartItem("Életerő", 50, SysColor.IndianRed),
-                    new BarChartItem("Mana", 100, SysColor.RebeccaPurple),
+                    new BarChartItem("", 50, SysColor.IndianRed),
                     new BarChartItem("", 100, SysColor.Gray),
                 };        
         var YourHP = new Panel(
@@ -78,11 +77,11 @@ class Program
             );
         YourHP.Border = BoxBorder.None;
         //YourHP.Header = new PanelHeader(($"[green bold underline]A te adataid[/]")).Justify(Justify.Center);
-        YourHP.Header = new PanelHeader(($".")).Justify(Justify.Center);
+        YourHP.Header = new PanelHeader(($"[indianred1]Gerle élete[/]")).Justify(Justify.Center);
 
         var YourManBar = new List<BarChartItem>
                 {
-                    new BarChartItem("Mana", 100, SysColor.RebeccaPurple),
+                    new BarChartItem("", 100, SysColor.RebeccaPurple),
                     new BarChartItem("", 100, SysColor.Gray),
                 };
 
@@ -93,7 +92,7 @@ class Program
                        );
         YourMana.Border = BoxBorder.None;
         //YourMana.Header = new PanelHeader(($"[green bold underline]A te adataid[/]")).Justify(Justify.Center);
-        YourMana.Header = new PanelHeader(($".")).Justify(Justify.Center);
+        YourMana.Header = new PanelHeader(($"[purple_2]Gerle manája[/]")).Justify(Justify.Center);
 
         var yourGrid = new Grid();
         yourGrid.AddColumn(new GridColumn());
@@ -107,9 +106,10 @@ class Program
             new Rule("[red]Használt erő:[/]"),
             BeautyWriter.Spacer(1),
             new Text(UsedPowerText, new Style(Color.Red, Color.Black)).Centered(),
-            new Text(centerText, new Style(Color.Green, Color.Black)),
-            new Text(otherText, new Style(Color.Blue, Color.Black)),
+            new Text(centerText, new Style(Color.Green, Color.Black)).Centered(),
+            new Text(otherText, new Style(Color.Blue, Color.Black)).Centered(),
             BeautyWriter.Spacer(1),
+            new Rule($""),
             yourGrid,
         };
 
