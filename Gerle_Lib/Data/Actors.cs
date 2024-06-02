@@ -49,22 +49,55 @@ namespace Gerle_Lib.Data
         });
         public static Actor Jegykezelo = new Actor("Jegykezelő", new Power[] {
             //A Mr. WorldWide egy passzív képesség, nem kell lescriptelni ide.
-            //TODO: new Power("Vakítás",Megvakítja Gerlét/felcserélődik két képessége,80,false,"A furmányos kaller megvakítja scannerével Gerlét amitő ő két képessége randomizáltan felcserélődik."),
+             new SpecialPower("Vakítás",80,false,"A furmányos kaller megvakítja scannerével Gerlét amitől az ő képességei közül kettő randomizáltan felcserélődik.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
+            {
+               var powers = opp.Actor.Powers;
+                if (powers.Length > 1)
+                {
+                    Random rand = new Random();
+                    int index1 = rand.Next(powers.Length);
+                    int index2;
+                    do
+                    {
+                        index2 = rand.Next(powers.Length);
+                    } while (index1 == index2);
+
+                    var temp = powers[index1];
+                    powers[index1] = powers[index2];
+                    powers[index2] = temp;
+                }
+            }),
             new Power("Bírságolás",25,40,true,"A kaller megbírságolta Gerlét amiért jegy nélkül utazik a buszon, Gerle 25 életerőt vesztett."),
             new Power("A tömeg ereje",35,50,false,"A dagi kaller elől nincs menekvés,a jegykezelő ráült Gerlére, a földdel tette egyenlőve. Gerle 35 életerőt vesztett."),
         });
         public static Actor Agressziv_kis_ovis = new Actor("Agresszív kis ovis", new Power[] {
-            //TODO: new Power("Hisztéria",Ha 8 körnél hosszabb a harc sikít az ovis Gerle képességeinek a nevei 20%-ban eltorzulnak,60,false,"Gerle érzékszervei felmondják a szolgálatot."),
+           new SpecialPower("Hisztéria",60,false,"Ha 8 körnél hosszabb a harc, Gerle képességeinek a nevei 20%-ban eltorzulnak.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
+            {
+                opp.DamageModifier = 0.8f;
+            }),
+
             //TODO: new Power("Legoland",30 életerő sebzés,120,true/Dodgeolható ha jó billentyű kombinációt nyomunk le.,"Ha nem volt jo a billenytűkombináció újabb 30 életerőt veszít Gerle."),
-            //TODO: new Power("Délutáni szunya",20 életerőt tölt,40,false,"A kiscsoportos fenegyerek szunyókálás közben 20 életerőt gyűjtött."),
+            new HealingPower("Délutáni szunya", 40, 20, "A kiscsoportos fenegyerek szunyókálás közben 20 életerőt gyűjtött."),
             new Power("Túlerő",80,160,false,"A túlerőben lévő kiscsoportosok könnyű szerrel vontak le Gerle életerejéből 80-at."),
-            //TODO: new Power("Sírás a szülőknek",Gerlét lefoglajlák az ovis szülei/ ellátja sebeit az ovodás 40 életerőre tesz szert,70,false,"40 életerőre tett szert az óvodás."),
+            new HealingPower("Sírás a szülőknek", 70, 40, "Gerlét lefoglalják az ovis szülei, ellátja sebeit az ovodás, 40 életerőre tesz szert."),
         });
         public static Actor Dajka_Laura_neni = new Actor("Dajka (Laura néni)", new Power[] {
             new Power("Kinderkommandó",20,140,false,"Toddlers! Assemble! - jelmondattal hívja harcba Laura néni a csoport többi mozgósítható tagját. Gerle 20 életerőt vesztett."),
             //TODO: new Power("Kajadobálás",Gerle képességei nevének minden 3-dik betűje látszódik csak,140,false,"A dajka a  megmaradt ebédet Gerle arcához vágta. Gerle nem lát ki a "),
+            new SpecialPower("Kajadobálás",140,false,"Gerle képességei nevének minden 3-dik betűje látszódik csak.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
+            {
+
+            }),
             //TODO: new Power("Párna páncél",Ha Laura neni élete már kevés (40 alatt van) pajzsot használ,60,false,"Hárítja Gerle következő támadását."),
+             new SpecialPower("Párna páncél",60,false,"Ha Laura néni élete már kevés (40 alatt van), pajzsot használ, hárítja Gerle következő támadását.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
+            {
+
+            }),
             //TODO: new Power("A Férj",70% heal,50,,"Ha sokáig húzódik a csata (10 kör), a dajkának a férje képes megvédeni őt. Ez időt ad a dajka számára, aki így képes visszatölteni teljes életerőének 70%-át."),
+             new SpecialPower("A Férj", 50, true, "Ha a csata több mint 10 körig tart, Laura néni életereje 70%-kal nő.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
+            {
+
+            }),
             new Power("Plüssmackó",45,45,true,"A dajka két kővel kitömött plüssmackót vágott Gerléhez amitől Gerle 45 életerőt vesztett."),
         });
         public static Actor Unoka = new Actor("Unoka", new Power[] { });
