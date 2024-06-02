@@ -140,9 +140,42 @@ class Program
     static void SoundSettingsMenu()
     {
         Menu sm = new Menu(new string[] { "Zene hangereje🎵", "Szinkron hangereje 🗣️" }, new Action[] {
-            () => BeautyWriter.Write("[bold yellow on blue]Zene hangereje![/] :globe_showing_europe_africa:"),
+            () => OpenMusicVolumeMenu(),
             () => BeautyWriter.Write("[bold yellow on blue]Szinkron hangereje![/] :globe_showing_europe_africa:")
         }, true, mainMenu);
+    }
+    static int volume = 50;
+    static void OpenMusicVolumeMenu()
+    {
+        Menu sm = new Menu(new string[] { $"Jelenlegi hangerő: {volume.ToString()}%", "Hangerő növelése 🔊", "Hangerő csökkentése 🔉", "Alkalmazás ✅" }, new Action[]
+        {
+            () => ApplySoundVolumeMenu(),
+            () => VolumeUp(),
+            () => VolumeDown(),
+            () => ApplySoundVolumeMenu(),
+        }, true, mainMenu);
+    }
+
+    static void ApplySoundVolumeMenu()
+    {
+        Menu sm = new Menu(new string[] { $"Jóváhagyja a beállításokat? A hangerő: {volume.ToString()}%", "Alkalmazás ✅", "Mégse ❌"}, new Action[] 
+        {
+            ApplySoundVolumeMenu,
+            () => BeautyWriter.Write("[bold green3_1]Jóváhagyva![/]"),
+            () => OpenMusicVolumeMenu()
+        }, true, mainMenu);
+    }
+
+    static void VolumeUp()
+    {
+        volume++;
+        OpenMusicVolumeMenu();
+    }
+
+    static void VolumeDown()
+    {
+        volume--;
+        OpenMusicVolumeMenu();
     }
 
     /// <summary>
