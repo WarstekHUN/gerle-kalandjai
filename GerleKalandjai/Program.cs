@@ -1,5 +1,6 @@
 ﻿using Gerle_Lib.BaseClasses;
 using MenuSystem;
+using NAudio.Wave;
 using Spectre.Console;
 using BarChartItem = Gerle_Lib.BaseClasses.BarChartItem;
 using SysColor = System.Drawing.Color; // Alias System.Drawing.Color to avoid ambiguity
@@ -137,7 +138,8 @@ class Program
         Menu sm = new Menu(new string[] { "Hang 📋" }, new Action[] { SoundSettingsMenu }, true, mainMenu);
     }
 
-    static int volume = 50;
+    static int castVolume = 70;
+    static int musicVolume = 50;
     /// <summary>
     /// A hangbeállítások menü megjelenítése.
     /// </summary>
@@ -145,22 +147,106 @@ class Program
     {
         Menu sm = new Menu(new string[] { "Zene hangereje🎵", "Szinkron hangereje 🗣️" }, new Action[] {
                     () => OpenMusicVolumeMenu(),
-                    () => BeautyWriter.Write("[bold yellow on blue]Szinkron hangereje![/] :globe_showing_europe_africa:")
+                    () => OpenCastVolumeMenu()
                 }, true, mainMenu);
     }
+
+    
+    static void OpenCastVolumeMenu()
+    {
+        //Menu sm = new Menu(new string[] { $"Jelenlegi hangerő: {musicVolume.ToString()}%", "Hangerő növelése 🔊", "Hangerő csökkentése 🔉", "Alkalmazás ✅" }, new Action[]
+        //{
+        //            () => ApplySoundVolumeMenu(),
+        //            () => VolumeUp(),
+        //            () => VolumeDown(),
+        //            () => ApplySoundVolumeMenu(),
+        //}, true, mainMenu);
+
+
+        int mertek = AnsiConsole.Prompt(
+        new TextPrompt<int>("Add meg [green]1 és 100[/] között a [bold yellow]szinkron[/] hangerejét! ")
+            .PromptStyle("green")
+            .ValidationErrorMessage("[red]Ez nem egy szám![/]")
+            .Validate(age =>
+            {
+                return age switch
+                {
+                    <= 0 => ValidationResult.Error("[red]Az érték nem lehet 1-nél kisebb![/]"),
+                    >= 101 => ValidationResult.Error("[red]Az érték nem lehet 100-nál kisebb![/]"),
+                    _ => ValidationResult.Success(),
+                };
+            })
+        );
+
+        Console.Clear();
+
+
+        var VolumeSet = new List<BarChartItem>
+                {
+                    new BarChartItem("[green]Zene hangereje[/]", musicVolume, SysColor.Green),
+                    new BarChartItem("[yellow]Szinkron hangereje[/]", castVolume, SysColor.Green),
+                    new BarChartItem("[pink3]Max[/]", 100, SysColor.Transparent),
+                };
+        var VolumeSetPan = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(VolumeSet, "")));
+        VolumeSetPan.Border = BoxBorder.Rounded;
+        VolumeSetPan.Header = new PanelHeader("[green]Beállítások[/]");
+
+        castVolume = mertek;
+
+        AnsiConsole.Write(VolumeSetPan);
+
+
+        //BeautyWriter.WriteLine($"[green] A zene hangereje:[/] [bold deepskyblue1]{mertek}[/][gold3_1]%[/]");
+    }
+
 
     /// <summary>
     /// A zene hangerejének menüje megjelenítése.
     /// </summary>
     static void OpenMusicVolumeMenu()
     {
-        Menu sm = new Menu(new string[] { $"Jelenlegi hangerő: {volume.ToString()}%", "Hangerő növelése 🔊", "Hangerő csökkentése 🔉", "Alkalmazás ✅" }, new Action[]
-        {
-                    () => ApplySoundVolumeMenu(),
-                    () => VolumeUp(),
-                    () => VolumeDown(),
-                    () => ApplySoundVolumeMenu(),
-        }, true, mainMenu);
+        //Menu sm = new Menu(new string[] { $"Jelenlegi hangerő: {musicVolume.ToString()}%", "Hangerő növelése 🔊", "Hangerő csökkentése 🔉", "Alkalmazás ✅" }, new Action[]
+        //{
+        //            () => ApplySoundVolumeMenu(),
+        //            () => VolumeUp(),
+        //            () => VolumeDown(),
+        //            () => ApplySoundVolumeMenu(),
+        //}, true, mainMenu);
+
+
+        int mertek = AnsiConsole.Prompt(
+        new TextPrompt<int>("Add meg [green]1 és 100[/] között a [bold green3]zene[/] hangerejét! ")
+            .PromptStyle("green")
+            .ValidationErrorMessage("[red]Ez nem egy szám![/]")
+            .Validate(age =>
+            {
+                return age switch
+                {
+                    <= 0 => ValidationResult.Error("[red]Az érték nem lehet 1-nél kisebb![/]"),
+                    >= 101 => ValidationResult.Error("[red]Az érték nem lehet 100-nál kisebb![/]"),
+                    _ => ValidationResult.Success(),
+                };
+            })
+        );
+        
+        Console.Clear();
+
+
+        var VolumeSet = new List<BarChartItem>
+                {
+                    new BarChartItem("[green]Zene hangereje[/]", mertek, SysColor.Green),
+                    new BarChartItem("[green]Alapbeállítás[/]", musicVolume, SysColor.Transparent),
+                };
+        var VolumeSetPan = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(VolumeSet, "")));
+        VolumeSetPan.Border = BoxBorder.Rounded;
+        VolumeSetPan.Header = new PanelHeader("[green]Beállítások[/]");
+
+        musicVolume = mertek;
+
+        AnsiConsole.Write(VolumeSetPan);
+
+
+        //BeautyWriter.WriteLine($"[green] A zene hangereje:[/] [bold deepskyblue1]{mertek}[/][gold3_1]%[/]");
     }
 
     /// <summary>
@@ -168,7 +254,7 @@ class Program
     /// </summary>
     static void ApplySoundVolumeMenu()
     {
-        Menu sm = new Menu(new string[] { $"Jóváhagyja a beállításokat? A hangerő: {volume.ToString()}%", "Alkalmazás ✅", "Mégse ❌" }, new Action[]
+        Menu sm = new Menu(new string[] { $"Jóváhagyja a beállításokat? A hangerő: {musicVolume.ToString()}%", "Alkalmazás ✅", "Mégse ❌" }, new Action[]
         {
                     ApplySoundVolumeMenu,
                     () => BeautyWriter.Write("[bold green3_1]Jóváhagyva![/]"),
@@ -181,7 +267,7 @@ class Program
     /// </summary>
     static void VolumeUp()
     {
-        volume++;
+        musicVolume++;
         OpenMusicVolumeMenu();
     }
 
@@ -190,7 +276,7 @@ class Program
     /// </summary>
     static void VolumeDown()
     {
-        volume--;
+        musicVolume--;
         OpenMusicVolumeMenu();
     }
 
