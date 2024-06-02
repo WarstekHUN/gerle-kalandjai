@@ -218,24 +218,28 @@ class Program
         Menu sm = new Menu(new string[] { "Hang 📋" }, new Action[] { SoundSettingsMenu }, true, mainMenu);
     }
 
-    static int castVolume = 70;
+    static int masterVolume = 100;
     static int musicVolume = 50;
+    static int castVolume = 70;
+    static int sfxVolume = 100;
     /// <summary>
     /// A hangbeállítások menü megjelenítése.
     /// </summary>
     static void SoundSettingsMenu()
     {
-        Menu sm = new Menu(new string[] { "Zene hangereje🎵", "Szinkron hangereje 🗣️" }, new Action[] {
+        Menu sm = new Menu(new string[] { "Fő hangerő🔊", "Zene hangereje🎵", "Szinkron hangereje🗣️", "Effektek hangereje🪄" }, new Action[] {
+                    () => OpenMasterVolumeMenu(),
                     () => OpenMusicVolumeMenu(),
-                    () => OpenCastVolumeMenu()
+                    () => OpenCastVolumeMenu(),
+                    () => OpenSFXVolumeMenu(),
                 }, true, mainMenu);
     }
 
     
-    static void OpenCastVolumeMenu()
+    static void OpenMasterVolumeMenu()
     {
         int mertek = AnsiConsole.Prompt(
-        new TextPrompt<int>("Add meg [green]1 és 100[/] között a [bold yellow]szinkron[/] hangerejét! ")
+        new TextPrompt<int>("Add meg [green]1 és 100[/] között a [bold yellow]játék[/] hangerejét! ")
             .PromptStyle("green")
             .ValidationErrorMessage("[red]Ez nem egy szám![/]")
             .Validate(age =>
@@ -248,7 +252,7 @@ class Program
                 };
             })
         );
-        castVolume = mertek;
+        masterVolume = mertek;
         PrintVolume();
     }
 
@@ -277,6 +281,46 @@ class Program
     }
 
 
+    static void OpenCastVolumeMenu()
+    {
+        int mertek = AnsiConsole.Prompt(
+        new TextPrompt<int>("Add meg [green]1 és 100[/] között a [bold yellow]szinkron[/] hangerejét! ")
+            .PromptStyle("green")
+            .ValidationErrorMessage("[red]Ez nem egy szám![/]")
+            .Validate(age =>
+            {
+                return age switch
+                {
+                    <= 0 => ValidationResult.Error("[red]Az érték nem lehet 1-nél kisebb![/]"),
+                    >= 101 => ValidationResult.Error("[red]Az érték nem lehet 100-nál kisebb![/]"),
+                    _ => ValidationResult.Success(),
+                };
+            })
+        );
+        castVolume = mertek;
+        PrintVolume();
+    }
+    
+    static void OpenSFXVolumeMenu()
+    {
+        int mertek = AnsiConsole.Prompt(
+        new TextPrompt<int>("Add meg [green]1 és 100[/] között az [bold yellow]effektek[/] hangerejét! ")
+            .PromptStyle("green")
+            .ValidationErrorMessage("[red]Ez nem egy szám![/]")
+            .Validate(age =>
+            {
+                return age switch
+                {
+                    <= 0 => ValidationResult.Error("[red]Az érték nem lehet 1-nél kisebb![/]"),
+                    >= 101 => ValidationResult.Error("[red]Az érték nem lehet 100-nál kisebb![/]"),
+                    _ => ValidationResult.Success(),
+                };
+            })
+        );
+        sfxVolume = mertek;
+        PrintVolume();
+    }
+
 
     static void PrintVolume()
     {
@@ -288,7 +332,9 @@ class Program
                 {
                     new BarChartItem("[green]Zene hangereje[/]", musicVolume, SysColor.LightGreen),
                     new BarChartItem("[yellow]Szinkron hangereje[/]", castVolume, SysColor.Yellow),
-                    new BarChartItem("[pink3]Max[/]", 100, SysColor.LightPink),
+                    new BarChartItem("[blue]SFX hangereje[/]", sfxVolume, SysColor.LightBlue),
+                    new BarChartItem("[pink3]Master hangereje[/]", masterVolume, SysColor.LightPink),
+                    new BarChartItem("[gray]Max[/]", 100, SysColor.Gray),
                 };
         var VolumeSetPan = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(VolumeSet, "")));
         VolumeSetPan.Border = BoxBorder.Rounded;
