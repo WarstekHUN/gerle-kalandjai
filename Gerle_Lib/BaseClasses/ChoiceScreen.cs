@@ -11,7 +11,7 @@ namespace Gerle_Lib.BaseClasses
         #endregion
         public Choice[] Choices { get; init; }
 
-        public ChoiceScreen(Choice[] choices, string voiceFile, string? noiseFile = null) : base("Választási lehetőség", ref Actors.Narrator, voiceFile, noiseFile)
+        public ChoiceScreen(Choice[] choices, string voiceFile, string? noiseFile = null) : base("Választási lehetőség", ref Actors.Narrator, voiceFile)
         {
             Choices = choices;
         }

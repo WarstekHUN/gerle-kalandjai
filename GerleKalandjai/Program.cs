@@ -65,15 +65,41 @@ class Program
 
 
 
-        var YourHPItems = new List<BarChartItem>
+        var YourHPBar = new List<BarChartItem>
                 {
                     new BarChartItem("Életerő", 50, SysColor.IndianRed),
                     new BarChartItem("Mana", 100, SysColor.RebeccaPurple),
                     new BarChartItem("", 100, SysColor.Gray),
+                };        
+        var YourHP = new Panel(
+            Align.Center(
+                ProgressBarMaker.CreateBarChart(YourHPBar, "")
+                )
+            );
+        YourHP.Border = BoxBorder.None;
+        //YourHP.Header = new PanelHeader(($"[green bold underline]A te adataid[/]")).Justify(Justify.Center);
+        YourHP.Header = new PanelHeader(($".")).Justify(Justify.Center);
+
+        var YourManBar = new List<BarChartItem>
+                {
+                    new BarChartItem("Mana", 100, SysColor.RebeccaPurple),
+                    new BarChartItem("", 100, SysColor.Gray),
                 };
-        var YourHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(YourHPItems, "")));
-        YourHP.Border = BoxBorder.Double;
-        YourHP.Header = new PanelHeader(($"[green bold underline]A te adataid[/]")).Justify(Justify.Center);
+
+        var YourMana = new Panel(
+            Align.Center(
+                               ProgressBarMaker.CreateBarChart(YourManBar, "")
+                                              )
+                       );
+        YourMana.Border = BoxBorder.None;
+        //YourMana.Header = new PanelHeader(($"[green bold underline]A te adataid[/]")).Justify(Justify.Center);
+        YourMana.Header = new PanelHeader(($".")).Justify(Justify.Center);
+
+        var yourGrid = new Grid();
+        yourGrid.AddColumn(new GridColumn());
+        yourGrid.AddColumn(new GridColumn());
+        yourGrid.AddRow(YourHP, YourMana);
+
 
         var rows = new List<dynamic>() {
             BossHP,
@@ -84,7 +110,7 @@ class Program
             new Text(centerText, new Style(Color.Green, Color.Black)),
             new Text(otherText, new Style(Color.Blue, Color.Black)),
             BeautyWriter.Spacer(1),
-            YourHP,
+            yourGrid,
         };
 
         foreach (var item in rows)
