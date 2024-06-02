@@ -54,12 +54,12 @@ class Program
 
         var BossHPItems = new List<BarChartItem>
                 {
-                    new BarChartItem("Életerő", 50, SysColor.IndianRed),
+                    new BarChartItem("", 50, SysColor.IndianRed),
                     new BarChartItem("", 100, SysColor.Gray),
                 };
         var BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems, "")));
         BossHP.Border = BoxBorder.None;
-        BossHP.Header = new PanelHeader("[red3_1 bold underline]Ellenfél adatai[/]").Justify(Justify.Center);
+        BossHP.Header = new PanelHeader($"[red3_1 bold underline]{enemyName}[/]").Justify(Justify.Center);
         BossHP.Expand = false;
         BossHP.Padding = new Padding(1, 1, 1, 1);
 
@@ -103,7 +103,7 @@ class Program
         var rows = new List<dynamic>() {
             BossHP,
             BeautyWriter.Spacer(1),
-            new Rule("[red]Használt erő:[/]"),
+            new Rule("[yellow]Használt erő:[/]"),
             BeautyWriter.Spacer(1),
             new Text(UsedPowerText, new Style(Color.Red, Color.Black)).Centered(),
             new Text(centerText, new Style(Color.Green, Color.Black)).Centered(),
