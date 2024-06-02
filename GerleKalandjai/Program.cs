@@ -2,6 +2,7 @@
 using MenuSystem;
 using NAudio.Wave;
 using Spectre.Console;
+using System.Diagnostics.Metrics;
 using BarChartItem = Gerle_Lib.BaseClasses.BarChartItem;
 using SysColor = System.Drawing.Color; // Alias System.Drawing.Color to avoid ambiguity
 
@@ -154,15 +155,6 @@ class Program
     
     static void OpenCastVolumeMenu()
     {
-        //Menu sm = new Menu(new string[] { $"Jelenlegi hangerő: {musicVolume.ToString()}%", "Hangerő növelése 🔊", "Hangerő csökkentése 🔉", "Alkalmazás ✅" }, new Action[]
-        //{
-        //            () => ApplySoundVolumeMenu(),
-        //            () => VolumeUp(),
-        //            () => VolumeDown(),
-        //            () => ApplySoundVolumeMenu(),
-        //}, true, mainMenu);
-
-
         int mertek = AnsiConsole.Prompt(
         new TextPrompt<int>("Add meg [green]1 és 100[/] között a [bold yellow]szinkron[/] hangerejét! ")
             .PromptStyle("green")
@@ -177,26 +169,8 @@ class Program
                 };
             })
         );
-
-        Console.Clear();
-
-
-        var VolumeSet = new List<BarChartItem>
-                {
-                    new BarChartItem("[green]Zene hangereje[/]", musicVolume, SysColor.Green),
-                    new BarChartItem("[yellow]Szinkron hangereje[/]", castVolume, SysColor.Green),
-                    new BarChartItem("[pink3]Max[/]", 100, SysColor.Transparent),
-                };
-        var VolumeSetPan = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(VolumeSet, "")));
-        VolumeSetPan.Border = BoxBorder.Rounded;
-        VolumeSetPan.Header = new PanelHeader("[green]Beállítások[/]");
-
         castVolume = mertek;
-
-        AnsiConsole.Write(VolumeSetPan);
-
-
-        //BeautyWriter.WriteLine($"[green] A zene hangereje:[/] [bold deepskyblue1]{mertek}[/][gold3_1]%[/]");
+        PrintVolume();
     }
 
 
@@ -205,15 +179,6 @@ class Program
     /// </summary>
     static void OpenMusicVolumeMenu()
     {
-        //Menu sm = new Menu(new string[] { $"Jelenlegi hangerő: {musicVolume.ToString()}%", "Hangerő növelése 🔊", "Hangerő csökkentése 🔉", "Alkalmazás ✅" }, new Action[]
-        //{
-        //            () => ApplySoundVolumeMenu(),
-        //            () => VolumeUp(),
-        //            () => VolumeDown(),
-        //            () => ApplySoundVolumeMenu(),
-        //}, true, mainMenu);
-
-
         int mertek = AnsiConsole.Prompt(
         new TextPrompt<int>("Add meg [green]1 és 100[/] között a [bold green3]zene[/] hangerejét! ")
             .PromptStyle("green")
@@ -228,26 +193,30 @@ class Program
                 };
             })
         );
-        
+        musicVolume = mertek;
+        PrintVolume();
+    }
+
+
+
+    static void PrintVolume()
+    {
         Console.Clear();
-
-
         var VolumeSet = new List<BarChartItem>
                 {
-                    new BarChartItem("[green]Zene hangereje[/]", mertek, SysColor.Green),
-                    new BarChartItem("[green]Alapbeállítás[/]", musicVolume, SysColor.Transparent),
+                    new BarChartItem("[green]Zene hangereje[/]", musicVolume, SysColor.Green),
+                    new BarChartItem("[yellow]Szinkron hangereje[/]", castVolume, SysColor.Green),
+                    new BarChartItem("[pink3]Max[/]", 100, SysColor.Transparent),
                 };
         var VolumeSetPan = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(VolumeSet, "")));
         VolumeSetPan.Border = BoxBorder.Rounded;
         VolumeSetPan.Header = new PanelHeader("[green]Beállítások[/]");
 
-        musicVolume = mertek;
+        castVolume = mertek;
 
         AnsiConsole.Write(VolumeSetPan);
-
-
-        //BeautyWriter.WriteLine($"[green] A zene hangereje:[/] [bold deepskyblue1]{mertek}[/][gold3_1]%[/]");
     }
+
 
     /// <summary>
     /// A hangerejének beállításainak menüje megjelenítése.
