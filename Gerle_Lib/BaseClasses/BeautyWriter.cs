@@ -16,5 +16,13 @@ namespace Gerle_Lib.BaseClasses
         {
             ProgressBarMaker.RenderBarChart(items, title);
         }
+        public static Panel Spacer(int size = 3)
+        {
+            Panel panel = new Panel(" ");
+            panel.Padding = new Padding(0, size, 0, size);
+            panel.Border = BoxBorder.None;
+            return panel;
+        }
     }
+
 }
