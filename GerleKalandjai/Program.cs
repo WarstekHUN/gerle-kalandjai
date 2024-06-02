@@ -10,7 +10,7 @@ using SysColor = System.Drawing.Color; // Alias System.Drawing.Color to avoid am
 class Program
 {
     private static Menu mainMenu = new Menu(new[] { "temp", "Játék 📁", "Beállítások 📝", "Kilépés 🚪" }, new Action[] {
-                    TemplateScene,
+                    () => TemplateScene(),
                     GameMenu,
                     SettingsMenu,
                     Exit
@@ -23,6 +23,7 @@ class Program
     static void Main(string[] args)
     {
         Console.OutputEncoding = System.Text.Encoding.Unicode;
+        Console.BackgroundColor = ConsoleColor.Gray;
 
         string[] creators = { "Tatár Mátyás Bence", "Kluitenberg Alex", "Gáspár Mihály", "Balogh Levente" };
         string shuffledCreators = string.Join(", ", creators.OrderBy(x => Guid.NewGuid()));
@@ -42,10 +43,79 @@ class Program
                 }, true, mainMenu);
     }
 
+
+    static void TemplateScene(string UsedPowerText = "Sakármit Döjcs", string centerText = "centerText", string otherText = "otherText", string UsedBy= "UsedBy", string enemyName="enemyName")
+    {
+        
+        var grid = new Grid();
+        grid.AddColumn(new GridColumn());
+
+        var BossHPItems = new List<BarChartItem>
+                {
+                    new BarChartItem("Életerő", 50, SysColor.IndianRed),
+                    new BarChartItem("", 100, SysColor.Gray),
+                };
+        var BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems, "")));
+        BossHP.Border = BoxBorder.None;
+        BossHP.Header = new PanelHeader("[red3_1 bold underline]Ellenfél adatai[/]").Justify(Justify.Center);
+        BossHP.Expand = false;
+        BossHP.Padding = new Padding(1, 1, 1, 1);
+
+       
+
+
+        //var RowsPanel = new Panel(Align.Center(new Table().AddColumns("[center]").AddRow(rows)));
+
+
+        var YourHPItems = new List<BarChartItem>
+                {
+                    new BarChartItem("Életerő", 50, SysColor.IndianRed),
+                    new BarChartItem("Mana", 100, SysColor.RebeccaPurple),
+                    new BarChartItem("", 100, SysColor.Gray),
+                };
+        var YourHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(YourHPItems, "")));
+        YourHP.Border = BoxBorder.Double;
+        YourHP.Header = new PanelHeader(($"[green bold underline]A te adataid[/]")).Justify(Justify.Center);
+
+
+
+        
+        //var CenterPanels = new List<dynamic>() {
+        //    BossHP,
+        //    new Rule("[red]Használt erő:[/]"),
+        //    new Text(UsedPowerText, new Style(Color.Red, Color.Black)).Centered(),
+        //    new Text(centerText, new Style(Color.Green, Color.Black)),
+        //    new Text(otherText, new Style(Color.Blue, Color.Black)),
+        //    YourHP,
+        //};
+
+
+
+        var rows = new List<dynamic>() {
+            BossHP,
+            BeautyWriter.Spacer(1),
+            new Rule("[red]Használt erő:[/]"),
+            BeautyWriter.Spacer(1),
+            new Text(UsedPowerText, new Style(Color.Red, Color.Black)).Centered(),
+            new Text(centerText, new Style(Color.Green, Color.Black)),
+            new Text(otherText, new Style(Color.Blue, Color.Black)),
+            BeautyWriter.Spacer(1),
+            YourHP,
+        };
+
+        foreach (var item in rows)
+        {
+            grid.AddRow(item);
+        }
+
+
+        AnsiConsole.Write(grid);
+    }
+
     /// <summary>
     /// A sablon jelenet megjelenítése.
     /// </summary>
-    static void TemplateScene()
+    static void TemplateScene2()
     {
         var grid = new Grid();
         grid.AddColumn(new GridColumn());
@@ -53,23 +123,22 @@ class Program
         var random = new Random();
         var BossHPItems = new List<BarChartItem>
                 {
-                    new BarChartItem("Életerő", 100, SysColor.IndianRed),
-                    new BarChartItem("Mana", 100, SysColor.RebeccaPurple),
-                    new BarChartItem("Idő Támadásig", 100, SysColor.Green),
+                    new BarChartItem("Életerő", 50, SysColor.IndianRed),
+                    //new BarChartItem("", 100, SysColor.Teal),
                 };
         var BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems, "")));
-        BossHP.Border = BoxBorder.Rounded;
-        BossHP.Header = new PanelHeader("[red3_1 bold underline]Ellenfél adatai[/]");
+        BossHP.Border = BoxBorder.None;
+        BossHP.Header = new PanelHeader("[red3_1 bold underline]Ellenfél adatai[/]").Justify(Justify.Center);
 
         var YourHPItems = new List<BarChartItem>
                 {
-                    new BarChartItem("Életerő", 100, SysColor.IndianRed),
+                    new BarChartItem("Életerő", 50, SysColor.IndianRed),
                     new BarChartItem("Mana", 100, SysColor.RebeccaPurple),
-                    new BarChartItem("Idő Támadásig", 100, SysColor.Green),
                 };
         var YourHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(YourHPItems, "")));
-        YourHP.Border = BoxBorder.Rounded;
-        YourHP.Header = new PanelHeader($"[green bold underline]A te adataid[/]");
+        YourHP.Border = BoxBorder.Double;
+        YourHP.Header = new PanelHeader(($"[green bold underline]A te adataid[/]")).Justify(Justify.Center);
+        YourHP.Width = 100;
 
         grid.AddRow(BossHP);
         grid.AddEmptyRow();
@@ -90,23 +159,22 @@ class Program
         {
             // Simulate random changes
             BossHPItems[0].Value = Math.Clamp(BossHPItems[0].Value + random.Next(-12, 12), 0, 100);
-            BossHPItems[1].Value = Math.Clamp(BossHPItems[1].Value + random.Next(-12, 12), 0, 100);
-            BossHPItems[2].Value = Math.Clamp(BossHPItems[2].Value + random.Next(-12, 12), 0, 100);
 
             YourHPItems[0].Value = Math.Clamp(YourHPItems[0].Value + random.Next(-12, 12), 0, 100);
             YourHPItems[1].Value = Math.Clamp(YourHPItems[1].Value + random.Next(-12, 12), 0, 100);
-            YourHPItems[2].Value = Math.Clamp(YourHPItems[2].Value + random.Next(-12, 12), 0, 100);
 
             // Update the UI
             BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems, "")))
             {
-                Border = BoxBorder.Rounded,
-                Header = new PanelHeader("[red3_1 bold underline]Ellenfél adatai[/]")
+                Border = BoxBorder.None,
+                Header = new PanelHeader("[red3_1 bold underline]Ellenfél adatai[/]").Justify(Justify.Center),
+                Width = 100
             };
             YourHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(YourHPItems, "")))
             {
-                Border = BoxBorder.Rounded,
-                Header = new PanelHeader($"[green bold underline]A te adataid[/]")
+                Border = BoxBorder.None,
+                Header = new PanelHeader($"[green bold underline]A te adataid[/]").Justify(Justify.Center),
+                Width = 100
             };
 
             layout["Top"].Update(BossHP);
@@ -115,7 +183,7 @@ class Program
             AnsiConsole.Clear();
             AnsiConsole.Write(layout);
 
-            Thread.Sleep(2_000); // Pause for a while to simulate time passing
+            Thread.Sleep(1_000); // Pause for a while to simulate time passing
         }
 
     }
