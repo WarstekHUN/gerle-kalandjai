@@ -1,4 +1,5 @@
-﻿using NAudio.Wave;
+﻿using Gerle_Lib.Controllers;
+using NAudio.Wave;
 
 namespace Gerle_Lib.BaseClasses
 {
@@ -29,6 +30,7 @@ namespace Gerle_Lib.BaseClasses
         {
             PlayingTask = Task.Run(() =>
             {
+                Player.Volume = SettingsController.MasterVolume * SettingsController.FXVolume;
                 Player.Play();
             });
         }
