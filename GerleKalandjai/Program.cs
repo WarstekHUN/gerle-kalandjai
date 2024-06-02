@@ -8,11 +8,11 @@ using SysColor = System.Drawing.Color; // Alias System.Drawing.Color to avoid am
 class Program
 {
     private static Menu mainMenu = new Menu(new[] { "temp", "Játék 📁", "Beállítások 📝", "Kilépés 🚪" }, new Action[] {
-            TemplateScene,
-            GameMenu,
-            SettingsMenu,
-            Exit
-        });
+                    TemplateScene,
+                    GameMenu,
+                    SettingsMenu,
+                    Exit
+                });
 
     /// <summary>
     /// A program belépési pontja.
@@ -35,11 +35,14 @@ class Program
     static void GameMenu()
     {
         Menu sm = new Menu(new string[] { "Meglévő folytatása 🆕", "Új játék 📂" }, new Action[] {
-            () => BeautyWriter.Write("[bold yellow on blue]Meglévő folytatása![/] :globe_showing_europe_africa:"),
-            NewGameMenu
-        }, true, mainMenu);
+                    () => BeautyWriter.Write("[bold yellow on blue]Meglévő folytatása![/] :globe_showing_europe_africa:"),
+                    NewGameMenu
+                }, true, mainMenu);
     }
 
+    /// <summary>
+    /// A sablon jelenet megjelenítése.
+    /// </summary>
     static void TemplateScene()
     {
         var grid = new Grid();
@@ -47,21 +50,21 @@ class Program
 
         var random = new Random();
         var BossHPItems = new List<BarChartItem>
-        {
-            new BarChartItem("Életerő", 100, SysColor.IndianRed),
-            new BarChartItem("Mana", 100, SysColor.RebeccaPurple),
-            new BarChartItem("Idő Támadásig", 100, SysColor.Green),
-        };
+                {
+                    new BarChartItem("Életerő", 100, SysColor.IndianRed),
+                    new BarChartItem("Mana", 100, SysColor.RebeccaPurple),
+                    new BarChartItem("Idő Támadásig", 100, SysColor.Green),
+                };
         var BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems, "")));
         BossHP.Border = BoxBorder.Rounded;
         BossHP.Header = new PanelHeader("[red3_1 bold underline]Ellenfél adatai[/]");
 
         var YourHPItems = new List<BarChartItem>
-        {
-            new BarChartItem("Életerő", 100, SysColor.IndianRed),
-            new BarChartItem("Mana", 100, SysColor.RebeccaPurple),
-            new BarChartItem("Idő Támadásig", 100, SysColor.Green),
-        };
+                {
+                    new BarChartItem("Életerő", 100, SysColor.IndianRed),
+                    new BarChartItem("Mana", 100, SysColor.RebeccaPurple),
+                    new BarChartItem("Idő Támadásig", 100, SysColor.Green),
+                };
         var YourHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(YourHPItems, "")));
         YourHP.Border = BoxBorder.Rounded;
         YourHP.Header = new PanelHeader($"[green bold underline]A te adataid[/]");
@@ -121,9 +124,9 @@ class Program
     static void NewGameMenu()
     {
         Menu sm = new Menu(new string[] { "Nehézség ✂️", "Játék neve🔤" }, new Action[] {
-            () => BeautyWriter.Write("[bold yellow on blue]Nehézség![/] :globe_showing_europe_africa:"),
-            () => BeautyWriter.Write("[bold yellow on blue]Játék neve![/] :globe_showing_europe_africa:")
-        }, true, mainMenu);
+                    () => BeautyWriter.Write("[bold yellow on blue]Nehézség![/] :globe_showing_europe_africa:"),
+                    () => BeautyWriter.Write("[bold yellow on blue]Játék neve![/] :globe_showing_europe_africa:")
+                }, true, mainMenu);
     }
 
     /// <summary>
@@ -134,44 +137,57 @@ class Program
         Menu sm = new Menu(new string[] { "Hang 📋" }, new Action[] { SoundSettingsMenu }, true, mainMenu);
     }
 
+    static int volume = 50;
     /// <summary>
     /// A hangbeállítások menü megjelenítése.
     /// </summary>
     static void SoundSettingsMenu()
     {
         Menu sm = new Menu(new string[] { "Zene hangereje🎵", "Szinkron hangereje 🗣️" }, new Action[] {
-            () => OpenMusicVolumeMenu(),
-            () => BeautyWriter.Write("[bold yellow on blue]Szinkron hangereje![/] :globe_showing_europe_africa:")
-        }, true, mainMenu);
+                    () => OpenMusicVolumeMenu(),
+                    () => BeautyWriter.Write("[bold yellow on blue]Szinkron hangereje![/] :globe_showing_europe_africa:")
+                }, true, mainMenu);
     }
-    static int volume = 50;
+
+    /// <summary>
+    /// A zene hangerejének menüje megjelenítése.
+    /// </summary>
     static void OpenMusicVolumeMenu()
     {
         Menu sm = new Menu(new string[] { $"Jelenlegi hangerő: {volume.ToString()}%", "Hangerő növelése 🔊", "Hangerő csökkentése 🔉", "Alkalmazás ✅" }, new Action[]
         {
-            () => ApplySoundVolumeMenu(),
-            () => VolumeUp(),
-            () => VolumeDown(),
-            () => ApplySoundVolumeMenu(),
+                    () => ApplySoundVolumeMenu(),
+                    () => VolumeUp(),
+                    () => VolumeDown(),
+                    () => ApplySoundVolumeMenu(),
         }, true, mainMenu);
     }
 
+    /// <summary>
+    /// A hangerejének beállításainak menüje megjelenítése.
+    /// </summary>
     static void ApplySoundVolumeMenu()
     {
-        Menu sm = new Menu(new string[] { $"Jóváhagyja a beállításokat? A hangerő: {volume.ToString()}%", "Alkalmazás ✅", "Mégse ❌"}, new Action[] 
+        Menu sm = new Menu(new string[] { $"Jóváhagyja a beállításokat? A hangerő: {volume.ToString()}%", "Alkalmazás ✅", "Mégse ❌" }, new Action[]
         {
-            ApplySoundVolumeMenu,
-            () => BeautyWriter.Write("[bold green3_1]Jóváhagyva![/]"),
-            () => OpenMusicVolumeMenu()
+                    ApplySoundVolumeMenu,
+                    () => BeautyWriter.Write("[bold green3_1]Jóváhagyva![/]"),
+                    () => OpenMusicVolumeMenu()
         }, true, mainMenu);
     }
 
+    /// <summary>
+    /// Növeli a hangerőt.
+    /// </summary>
     static void VolumeUp()
     {
         volume++;
         OpenMusicVolumeMenu();
     }
 
+    /// <summary>
+    /// Csökkenti a hangerőt.
+    /// </summary>
     static void VolumeDown()
     {
         volume--;
