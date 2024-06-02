@@ -30,14 +30,20 @@ namespace Gerle_Lib.Controllers
         /// <c>InitFight</c> metódus elindítja a játékos számára a harcot. 
         /// </summary>
         #endregion
-        public static FightEndingReason InitFight(Actor opponentCharacter)
+        public static FightEndingReason InitFight(Scene scene)
         {
+            Actor opponentCharacter = scene.Opponent!;
+
             //Körökre osztott harcrendszer
             uint turn = 0;
             FightEndingReason? fightEnd = null;
 
-            FightingActor player = new FightingActor(ref Actors.Gerle);
+            Player player = new Player(ref Actors.Gerle);
+
             FightingActor opponent = player.SetupOpponent(ref opponentCharacter);
+
+            MusicController.PlayMusic(scene.FightMusic);
+
             while (fightEnd == null)
             {
                 if(turn != 0)
@@ -65,41 +71,61 @@ namespace Gerle_Lib.Controllers
 
                 bool death = false;
 
-                foreach (Power attack in attacks)
+                Task.Run(() =>
                 {
-                    if (attack != null)
+                    foreach (Power attack in attacks)
                     {
-                        if (attack is SpecialPower)
+                        if (attack != null)
                         {
-                            ((SpecialPower)attack).SpecialAbility(ref currentTurnActor, ref currentTurnOpponent);
-                        
-                            if(currentTurnOpponent.Health <= 0)
+                            if (attack is SpecialPower)
                             {
-                                death = true;
-                                break;
+                                ((SpecialPower)attack).SpecialAbility(ref currentTurnActor, ref currentTurnOpponent);
+
+                                if (currentTurnOpponent.Health <= 0)
+                                {
+                                    death = true;
+                                }
                             }
-                        }
-                        else
-                        {
-                            if (currentTurnActor.Attack(attack))
+                            else
                             {
-                                death = true;
-                                break;
+                                if (currentTurnActor.Attack(attack))
+                                {
+                                    death = true;
+                                }
+                            }
+
+                            //TODO: attack.damageText kiírása
+
+                            if (currentTurnActor is Player)
+                                SoundEffectController.PlayEffect(SoundEffectController.SoundEffects.DealDamage);
+                            else
+                                SoundEffectController.PlayEffect(SoundEffectController.SoundEffects.ReceiveDamage);
+
+                            //3mp várakozás, hogy a játékos el tudja olvasni a damageText-et.
+                            Thread.Sleep(3000);
+
+                            if(death)
+                            {
+                                return;
                             }
                         }
                     }
-                }
-
+                });
 
                 if (death)
                 {
                     if (currentTurnOpponent == player)
                     {
                         fightEnd = FightEndingReason.EnemyDeath;
+                        //TODO: Ellenfél legyőzve UI
+                        MusicController.EndMusic();
                     }
                     else
                     {
                         fightEnd = FightEndingReason.PlayerDeath;
+                        SoundEffectController.PlayEffect(SoundEffectController.SoundEffects.LoseGame);
+                        //TODO: Meghalás UI
+                        MusicController.StopMusic();
                     }
                 }
             }
@@ -127,7 +153,7 @@ namespace Gerle_Lib.Controllers
                 if (Scenes[i].Opponent is not null)
                 {
                     //Ez is egy referencia alapú passzolás, csak a C# nem akarja egyértelművé tenni, mert minek az
-                    InitFight(Scenes[i].Opponent);
+                    InitFight(Scenes[i]);
                 }
 
                 CurrentCheckpoint = i;

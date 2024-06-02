@@ -1,9 +1,8 @@
-﻿using Gerle_Lib.BaseClasses;
-namespace Gerle_Lib.Data
+﻿namespace Gerle_Lib.BaseClasses
 {
     public class Player : FightingActor
     {
-        public Player(ref Actor actor) : base(ref actor) {}
+        public Player(ref Actor actor) : base(ref actor) { }
 
         /// <summary>
         /// Felülírja az alap Think karakter-"AI"-t egy grafikus kezelőfelülettel
@@ -13,6 +12,7 @@ namespace Gerle_Lib.Data
         public override List<Power> Think()
         {
             //TODO: Enemy Healthbar, felette enemy nevének megjelenítése
+            //TODO: Power kiválasztás UI
             //TODO: Player healthbar, manabar
             throw new NotImplementedException();
         }

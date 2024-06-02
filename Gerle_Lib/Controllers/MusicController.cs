@@ -6,7 +6,7 @@ namespace Gerle_Lib.Controllers
 {
     public static class MusicController
     {
-        public static SceneMuic? CurrentlyPlaying { get; private set; }
+        public static SceneMusic? CurrentlyPlaying { get; private set; }
         private static WaveOutEvent? CurrentPlayer { get; set; }
         private static Task<WaveOutEvent>? PlayerTask { get; set; }
 
@@ -15,7 +15,7 @@ namespace Gerle_Lib.Controllers
         /// </summary>
         private const float FADE_OUT_TIME_S = 1.5f;
 
-        public static async void PlayMusic(SceneMuic music)
+        public static async void PlayMusic(SceneMusic music)
         {
             CurrentlyPlaying = music;
             PlayerTask = Task.Run(() => _PlayOnce(CurrentlyPlaying.MusicBegining));

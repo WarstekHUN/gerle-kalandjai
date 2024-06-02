@@ -158,7 +158,7 @@ public class FightingActor
     /// <c>DealDamage</c> metódus a bemeneti paraméterként megadott <c>damage</c> változó alapján a sebzés nagyságát vonja le a karakter ellenfelének életerejéből.
     /// </summary>
     #endregion
-    public void RecieveDamage(ushort damage)
+    public virtual void RecieveDamage(ushort damage)
     {
         Health -= damage;
         //TODO: Hangeffekt lejátszás
