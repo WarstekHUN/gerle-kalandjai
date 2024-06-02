@@ -1,4 +1,5 @@
 ﻿using Gerle_Lib.BaseClasses;
+using Gerle_Lib.BaseClasses.Powers;
 using Gerle_Lib.Exceptions;
 #region FightingActor (osztály) - comment
 #endregion
@@ -81,26 +82,51 @@ public class FightingActor
 
         if(_Mana == 0) return chosenPowers;
         if(Actor.Powers is null) throw new ActorIsNotFighterException();
-        if (_Mana < Actor.LeastManaExpensivePower!.Mana) return chosenPowers;
+        if (_Mana < Actor.LeastManaExpensiveAttackingPower!.Mana) return chosenPowers;
 
-        //Eldöntük, hogy akarunk-e támadni
-        if(Random.Shared.Next(Actor.Aggression - 5, 10) >= 5)
+        ushort virtualMana = _Mana;
+        List<Power> notUsedPowers = Actor.Powers.Where(el => el.Mana <= Mana && el is not HealingPower).ToList();
+        List<Power> affordableNotUsedPowers() => notUsedPowers.Intersect(Actor.Powers.Where(el => el.Mana <= Mana)).ToList();
+
+        void UsePower(Power power)
+        {
+            virtualMana -= power.Mana;
+            notUsedPowers.Remove(power);
+            chosenPowers.Add(power);
+        }
+
+        //Az ellenfél életereje kisebb-e, mint a legnagyob damageű elérhető támadás? Van rá elég mana?
+        if (Actor.MostDamagingPower?.Damage >= Opponent.Health && Actor.MostDamagingPower.Mana <= Mana)
+        {
+            //Jobban megéri inkább támadni, mint védekezni.
+            UsePower(Actor.MostDamagingPower);
+        }
+        else
+        {
+            //Inkább healelni érdemesebb
+            //Kell-e healelni? Van-e healelő képesség?
+            if (Health <= 35 && Actor.HealingPowers?.Length > 0)
+            {
+                //Elhasználom azt a képességet, ami a legtöbb életerőt tölti, de még meg tudom venni a jelenlegi manámból.
+                UsePower(Actor.HealingPowers.OrderBy(el => el.Health).ThenBy(el => el.Mana).First(el => el.Mana < Mana));
+            }
+        }
+
+
+        //Eldöntük, hogy akarunk-e támadni, maradt-e még elhasználható mana
+        if(Random.Shared.Next(Actor.Aggression - 5, 10) >= 3 && virtualMana >= Actor.LeastManaExpensiveAttackingPower.Mana)
         {
             //Támadunk
-            byte numberOfAttackTries = (byte)Random.Shared.Next(0, Actor.Aggression + 1);
+            //Ha 5-ös az aggresszió, akkor minimum 0-szor, maximum 2-ször támadunk
+            byte numberOfAttackTries = (byte)Random.Shared.Next(0, Math.Max(Actor.Aggression - 3, 1) + 1);
 
             byte i = 0;
-            ushort virtualMana = _Mana;
-            List<Power> availablePowers = Actor.Powers.Where(el => el.Mana <= _Mana).ToList();
             
-            while(virtualMana >= Actor.LeastManaExpensivePower.Mana && i < numberOfAttackTries)
+            while(virtualMana >= Actor.LeastManaExpensiveAttackingPower.Mana && i < numberOfAttackTries)
             {
-                //Összes képesség, amire van elég Mana:
-                Power power = availablePowers[Random.Shared.Next(0, availablePowers.Count)];
-                chosenPowers.Add(power);
-                availablePowers.Remove(power);
-                virtualMana -= power.Mana;
-
+                //Összes képesség, amire van elég Mana
+                List<Power> currentlyAvailablePowers = affordableNotUsedPowers();
+                UsePower(currentlyAvailablePowers[Random.Shared.Next(0, currentlyAvailablePowers.Count)]);
                 i++;
             }
         }

@@ -1,6 +1,7 @@
 ﻿#region Actor (osztály) - comment
 #endregion
 using Gerle_Lib.BaseClasses;
+using Gerle_Lib.BaseClasses.Powers;
 
 /// <summary>
 /// <c>Actor</c> osztály a szereplők, adataiknak az osztálya (<c>Actor.cs</c>).
@@ -48,7 +49,19 @@ public class Actor
     /// Megadja, hogy melyik a legkevesebb manát igénylő képessége az Actornek,
     /// </summary>
     #endregion
-    public Power? LeastManaExpensivePower { get; init; }
+    public Power? LeastManaExpensiveAttackingPower { get; init; }
+    #region HealingPowers (tulajdonság)
+    /// <summary>
+    /// Csak életerőt adó képességeket tartalmaz
+    /// </summary>
+    #endregion
+    public HealingPower[]? HealingPowers { get; init; }
+    #region MostDamagingPower (tulajdonság)
+    /// <summary>
+    /// Megadja, hogy melyik képesség sebzi a legtöbbet
+    /// </summary>
+    #endregion
+    public Power? MostDamagingPower { get; init; }
     #region Actor (paraméteres konstruktor) - comment
     /// <summary>
     /// <c>Actor</c> paraméteres konstruktorral beállíthatjuk a szereplők nevét, képességeit.
@@ -60,6 +73,8 @@ public class Actor
         Powers = powers;
         Aggression = Math.Clamp(aggression, (byte)1, (byte)10);
         AverageManaCostOfPowers = (float?)powers?.Average(el => el.Mana);
-        LeastManaExpensivePower = powers?.MinBy(el => el.Mana);
+        LeastManaExpensiveAttackingPower = powers?.SkipWhile(el => el is HealingPower).MinBy(el => el.Mana);
+        HealingPowers = (HealingPower[]?)powers?.Where(el => el is HealingPower);
+        MostDamagingPower = powers?.MaxBy(el => el.Damage);
     }
 }
