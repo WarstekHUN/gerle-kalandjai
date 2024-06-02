@@ -40,14 +40,21 @@ public class Scene
     public SceneMusic FightMusic { get; init; }
 
     /// <summary>
+    /// Tartalmazza a scene alatt lejátszandó háttérzaj fájlnevét (kiterjesztés és elérési út nélkül)
+    /// </summary>
+    public string? NoiseFile { get; init; }
+
+    /// <summary>
     /// Olyan jelenetet hoz létre, aminek a végén nincsen harc
     /// </summary>
     /// <param name="lines">Karakterek által elmondott szövegek</param>
+    /// <param name="noiseFile">A scene alatt lejátszandó háttérzaj fájlneve (kiterjesztés és elérési út nélkül)</param>
     /// <param name="choiceVersion">Megadja, hogy az adott jelenet melyik történetszálhoz tartozzon</param>
-    public Scene(Line[] lines, SceneVersion choiceVersion = SceneVersion.BASE)
+    public Scene(Line[] lines, string? noiseFile = null, SceneVersion choiceVersion = SceneVersion.BASE)
     {
         Lines = lines;
         Version = choiceVersion;
+        NoiseFile = noiseFile;
     }
 
     /// <summary>
@@ -56,13 +63,15 @@ public class Scene
     /// <param name="lines">Karakterek által elmondott szövegek</param>
     /// <param name="opponent">A jelenet ellensége</param>
     /// <param name="fightMusic">A jelenet harci zenéje</param>
+    /// <param name="noiseFile">A scene alatt lejátszandó háttérzaj fájlneve (kiterjesztés és elérési út nélkül)</param>
     /// <param name="choiceVersion">Megadja, hogy az adott jelenet melyik történetszálhoz tartozzon</param>
-    public Scene(Line[] lines, ref Actor opponent, SceneMusic fightMusic, SceneVersion choiceVersion = SceneVersion.BASE)
+    public Scene(Line[] lines, ref Actor opponent, SceneMusic fightMusic, string? noiseFile = null, SceneVersion choiceVersion = SceneVersion.BASE)
     {
         Lines = lines;
         Opponent = opponent;
         Version = choiceVersion;
         FightMusic = fightMusic;
+        NoiseFile = noiseFile;
     }
 
     #region PlayScene (metódus) - comment
