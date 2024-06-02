@@ -202,18 +202,18 @@ class Program
     static void PrintVolume()
     {
         Console.Clear();
+
+        //Color color = (Color)ColorConverter.ConvertFromString("#FFDFD991");
+
         var VolumeSet = new List<BarChartItem>
                 {
-                    new BarChartItem("[green]Zene hangereje[/]", musicVolume, SysColor.Green),
-                    new BarChartItem("[yellow]Szinkron hangereje[/]", castVolume, SysColor.Green),
-                    new BarChartItem("[pink3]Max[/]", 100, SysColor.Transparent),
+                    new BarChartItem("[green]Zene hangereje[/]", musicVolume, SysColor.LightGreen),
+                    new BarChartItem("[yellow]Szinkron hangereje[/]", castVolume, SysColor.Yellow),
+                    new BarChartItem("[pink3]Max[/]", 100, SysColor.LightPink),
                 };
         var VolumeSetPan = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(VolumeSet, "")));
         VolumeSetPan.Border = BoxBorder.Rounded;
         VolumeSetPan.Header = new PanelHeader("[green]Beállítások[/]");
-
-        castVolume = mertek;
-
         AnsiConsole.Write(VolumeSetPan);
     }
 
