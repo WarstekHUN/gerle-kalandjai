@@ -43,7 +43,9 @@ class Program
                 }, true, mainMenu);
     }
 
-
+    /// <summary>
+    /// A sablon jelenet megjelenítése, sorok és spacerek.
+    /// </summary>
     static void TemplateScene(string UsedPowerText = "Sakármit Döjcs", string centerText = "centerText", string otherText = "otherText", string UsedBy= "UsedBy", string enemyName="enemyName")
     {
         
@@ -61,10 +63,6 @@ class Program
         BossHP.Expand = false;
         BossHP.Padding = new Padding(1, 1, 1, 1);
 
-       
-
-
-        //var RowsPanel = new Panel(Align.Center(new Table().AddColumns("[center]").AddRow(rows)));
 
 
         var YourHPItems = new List<BarChartItem>
@@ -76,20 +74,6 @@ class Program
         var YourHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(YourHPItems, "")));
         YourHP.Border = BoxBorder.Double;
         YourHP.Header = new PanelHeader(($"[green bold underline]A te adataid[/]")).Justify(Justify.Center);
-
-
-
-        
-        //var CenterPanels = new List<dynamic>() {
-        //    BossHP,
-        //    new Rule("[red]Használt erő:[/]"),
-        //    new Text(UsedPowerText, new Style(Color.Red, Color.Black)).Centered(),
-        //    new Text(centerText, new Style(Color.Green, Color.Black)),
-        //    new Text(otherText, new Style(Color.Blue, Color.Black)),
-        //    YourHP,
-        //};
-
-
 
         var rows = new List<dynamic>() {
             BossHP,
@@ -113,6 +97,7 @@ class Program
     }
 
     /// <summary>
+    /// OUTDATED
     /// A sablon jelenet megjelenítése.
     /// </summary>
     static void TemplateScene2()
