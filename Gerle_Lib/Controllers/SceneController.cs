@@ -11,6 +11,8 @@ namespace Gerle_Lib.Controllers
     #endregion
     public static partial class SceneController
     {
+        public static uint Turn { get; private set; }
+
         public enum FightEndingReason
         {
             PlayerDeath,
@@ -35,7 +37,7 @@ namespace Gerle_Lib.Controllers
             Actor opponentCharacter = scene.Opponent!;
 
             //Körökre osztott harcrendszer
-            uint turn = 0;
+            Turn = 0;
             FightEndingReason? fightEnd = null;
 
             Player player = new Player(ref Actors.Gerle);
@@ -46,7 +48,7 @@ namespace Gerle_Lib.Controllers
 
             while (fightEnd == null)
             {
-                if(turn != 0)
+                if(Turn != 0)
                 {
                     player.Mana += MANA_PER_ROUND;
                     opponent.Mana += MANA_PER_ROUND;
@@ -55,11 +57,11 @@ namespace Gerle_Lib.Controllers
                 FightingActor currentTurnActor;
                 FightingActor currentTurnOpponent;
 
-                if (turn % 2 == 0)
+                if (Turn % 2 == 0)
                 {
                     currentTurnActor = player;
                     currentTurnOpponent = opponent;
-                    if (turn == uint.MaxValue) turn = 1;
+                    if (Turn == uint.MaxValue) Turn = 1;
                 }
                 else
                 {

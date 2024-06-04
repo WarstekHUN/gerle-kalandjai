@@ -1,5 +1,6 @@
 ﻿using Gerle_Lib.BaseClasses;
 using Gerle_Lib.BaseClasses.Powers;
+using Gerle_Lib.Controllers;
 using System.Runtime.CompilerServices;
 
 namespace Gerle_Lib.Data
@@ -93,10 +94,11 @@ namespace Gerle_Lib.Data
             {
 
             }),
-            //TODO: new Power("A Férj",70% heal,50,,"Ha sokáig húzódik a csata (10 kör), a dajkának a férje képes megvédeni őt. Ez időt ad a dajka számára, aki így képes visszatölteni teljes életerőének 70%-át."),
              new SpecialPower("A Férj", 50, true, "Ha a csata több mint 10 körig tart, Laura néni életereje 70%-kal nő.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
             {
-
+                if (SceneController.Turn == 10){
+                    current.Health += (ushort)(current.Health * 1.7);
+                }
             }),
             new Power("Plüssmackó",45,45,true,"A dajka két kővel kitömött plüssmackót vágott Gerléhez amitől Gerle 45 életerőt vesztett."),
         });
