@@ -13,6 +13,7 @@ class Program
     public static readonly string bgColorHex = "#282c34";
     public static readonly SysColor bgColor = System.Drawing.ColorTranslator.FromHtml(bgColorHex);
 
+
     private static Menu mainMenu = new Menu(new[] { "temp", "Játék 📁", "Beállítások 📝", "Kilépés 🚪" }, new Action[] {
                     () => DisplayActionCards(),
                     GameMenu,
@@ -35,6 +36,7 @@ class Program
 
         Menu.SetCreator(shuffledCreators);
         //LiveRefresher();
+        
         mainMenu.SetToScreen();
     }
 
@@ -147,6 +149,9 @@ class Program
         
     }
 
+    /// <summary>
+    /// Megjeleníti az akciókártyákat egy vízszintes menüben, amely lehetővé teszi a felhasználó számára, hogy balra és jobbra nyilakkal válasszon, majd az Enter billentyűvel aktiválja az akciót.
+    /// </summary>
     static void DisplayActionCards()
     {
         string[] actionCards = { 
@@ -206,7 +211,10 @@ class Program
         }
     }
 
-
+    /// <summary>
+    /// Aktiválja a kiválasztott akciót és megjeleníti a konzolon.
+    /// </summary>
+    /// <param name="action">Az aktiválandó akció neve.</param>
     static void TriggerAction(string action)
     {
         AnsiConsole.MarkupLine($"[bold green]Action triggered: {action}[/]");
