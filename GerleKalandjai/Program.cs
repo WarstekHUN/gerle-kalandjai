@@ -115,20 +115,25 @@ class Program
         var yourGrid = new Grid();
         yourGrid.AddColumn(new GridColumn());
         yourGrid.AddColumn(new GridColumn());
+        yourGrid.AddRow(BeautyWriter.Spacer(1), BeautyWriter.Spacer(1));
         yourGrid.AddRow(YourHP, YourMana);
 
 
         var rows = new List<dynamic>() {
             BossHP,
             BeautyWriter.Spacer(1),
-            new Rule("[yellow]Használt erő:[/]"),
+            new Rule("[yellow]Használt erő[/]"),
             BeautyWriter.Spacer(1),
             new Text(UsedPowerText, new Style(Color.Red, Color.Black)).Centered(),
             new Text(centerText, new Style(Color.Green, Color.Black)).Centered(),
             new Text(otherText, new Style(Color.Blue, Color.Black)).Centered(),
-            BeautyWriter.Spacer(1),
+            BeautyWriter.Spacer(2),
             new Rule($""),
             yourGrid,
+            BeautyWriter.Spacer(2),
+            new Rule("[yellow]Akciók[/]"),
+            BeautyWriter.Spacer(1),
+
         };
 
         foreach (var item in rows)
@@ -146,9 +151,6 @@ class Program
     {
         string[] actionCards = { 
             "Attack", "Defend", "Heal", "Special Move", 
-            "test",
-            "test",
-            "test",
             "test",
         };
         int selectedIndex = 0;
