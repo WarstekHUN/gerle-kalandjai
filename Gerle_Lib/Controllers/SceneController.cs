@@ -119,14 +119,12 @@ namespace Gerle_Lib.Controllers
                     if (currentTurnOpponent == player)
                     {
                         fightEnd = FightEndingReason.EnemyDeath;
-                        //TODO: Ellenfél legyőzve UI
                         MusicController.EndMusic();
                     }
                     else
                     {
                         fightEnd = FightEndingReason.PlayerDeath;
                         SoundEffectController.PlayEffect(SoundEffectController.SoundEffects.LoseGame);
-                        //TODO: Meghalás UI
                         MusicController.StopMusic();
                     }
                 }
@@ -152,15 +150,31 @@ namespace Gerle_Lib.Controllers
             for (uint i = checkpoint; i < Scenes.Length; i++)
             {
                 Scenes[i].PlayScene();
+                FightEndingReason? fightEnd = null;
                 if (Scenes[i].Opponent is not null)
                 {
                     //Ez is egy referencia alapú passzolás, csak a C# nem akarja egyértelművé tenni, mert minek az
-                    InitFight(Scenes[i]);
+                    fightEnd = InitFight(Scenes[i]);
                 }
 
-                CurrentCheckpoint = i;
+                if(fightEnd is not null)
+                {
+                    if(fightEnd == FightEndingReason.EnemyDeath)
+                    {
+                        CurrentCheckpoint = i;
+                        ProgressController.SaveToFile();
+                        //TODO: Ellenfél legyőzve UI
+                    }else
+                    {
+                        //TODO: Meghalás UI
 
-                ProgressController.SaveToFile();
+                    }
+
+                }
+                else
+                {
+                    ProgressController.SaveToFile();
+                }
             }
         }
     }
