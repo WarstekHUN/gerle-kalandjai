@@ -38,19 +38,26 @@ namespace Gerle_Lib.BaseClasses
         /// <c>IsDodgeable</c> egy mező, amely megadja / eldönti, hogy ki lehet-e védeni az ellenség támadását. Csak olvasható!
         /// </summary>
         #endregion
-        public bool IsDodgeable { get; init; }
+        public bool? IsDodgeable { get; init; } = null;
+        #region IsUsed (mező) - comment
+        /// <summary>
+        /// <c>IsUsed</c> egy mező, amely megadja / eldönti, hogy használták e már a képességet. Ha null, akkor korlátlanul használható a képesség!
+        /// </summary>
+        #endregion
+        public bool IsUsed { get; set; }
         #region Power (paraméteres konstruktor) - comment
         /// <summary>
         /// <c>Power</c> paraméteres konstruktor beállítja a képességek nevét, sebzéseiknek mértékét, manaszükségletüket valamint azt, hogy ki lehet-e térni előle.
         /// </summary>
         #endregion
-        public Power(string name, ushort damage, ushort mana, bool isDodgeable, string damageText)
+        public Power(string name, ushort damage, ushort mana, bool isDodgeable, string damageText, bool isUsed)
         {
             Name = name;
             Damage = damage;
             Mana = mana;
             IsDodgeable = isDodgeable;
             DamageText = damageText;
+            IsUsed = isUsed;
         }
         #region Minigame - comment
         /// <summary>
