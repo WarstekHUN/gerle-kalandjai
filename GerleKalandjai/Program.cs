@@ -9,6 +9,9 @@ using SysColor = System.Drawing.Color; // Alias System.Drawing.Color to avoid am
 
 class Program
 {
+    public static readonly string bgColorHex = "#282c34";
+    public static readonly SysColor bgColor = System.Drawing.ColorTranslator.FromHtml(bgColorHex);
+
     private static Menu mainMenu = new Menu(new[] { "temp", "Játék 📁", "Beállítások 📝", "Kilépés 🚪" }, new Action[] {
                     () => TemplateScene(),
                     GameMenu,
@@ -28,7 +31,9 @@ class Program
         string[] creators = { "Tatár Mátyás Bence", "Kluitenberg Alex", "Gáspár Mihály", "Balogh Levente" };
         string shuffledCreators = string.Join(", ", creators.OrderBy(x => Guid.NewGuid()));
 
+
         Menu.SetCreator(shuffledCreators);
+        LiveRefresher();
         mainMenu.SetToScreen();
     }
 
@@ -43,6 +48,16 @@ class Program
                 }, true, mainMenu);
     }
 
+    static void LiveRefresher()
+    {
+        while (true)
+        {
+            Console.Clear();
+            TemplateScene();
+            System.Threading.Thread.Sleep(10);
+        }
+    }
+
     /// <summary>
     /// A sablon jelenet megjelenítése, sorok és spacerek.
     /// </summary>
@@ -52,10 +67,12 @@ class Program
         var grid = new Grid();
         grid.AddColumn(new GridColumn());
 
+        SysColor col100 = BeautyWriter.FromColor(ConsoleColor.Gray);
+
         var BossHPItems = new List<BarChartItem>
                 {
                     new BarChartItem("", 50, SysColor.IndianRed),
-                    new BarChartItem("", 100, SysColor.Gray),
+                    new BarChartItem("", 100, bgColor),
                 };
         var BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems, "")));
         BossHP.Border = BoxBorder.None;
@@ -68,7 +85,7 @@ class Program
         var YourHPBar = new List<BarChartItem>
                 {
                     new BarChartItem("", 50, SysColor.IndianRed),
-                    new BarChartItem("", 100, SysColor.Gray),
+                    new BarChartItem("", 100, bgColor),
                 };        
         var YourHP = new Panel(
             Align.Center(
@@ -82,7 +99,7 @@ class Program
         var YourManBar = new List<BarChartItem>
                 {
                     new BarChartItem("", 100, SysColor.RebeccaPurple),
-                    new BarChartItem("", 100, SysColor.Gray),
+                    new BarChartItem("", 100, bgColor),
                 };
 
         var YourMana = new Panel(
@@ -334,7 +351,7 @@ class Program
                     new BarChartItem("[yellow]Szinkron hangereje[/]", castVolume, SysColor.Yellow),
                     new BarChartItem("[blue]SFX hangereje[/]", sfxVolume, SysColor.LightBlue),
                     new BarChartItem("[pink3]Master hangereje[/]", masterVolume, SysColor.LightPink),
-                    new BarChartItem("[gray]Max[/]", 100, SysColor.Gray),
+                    new BarChartItem("[gray]Max[/]", 100, bgColor),
                 };
         var VolumeSetPan = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(VolumeSet, "")));
         VolumeSetPan.Border = BoxBorder.Rounded;
