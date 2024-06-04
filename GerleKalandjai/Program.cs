@@ -2,6 +2,7 @@
 using MenuSystem;
 using NAudio.Wave;
 using Spectre.Console;
+using Spectre.Console.Rendering;
 using System.Diagnostics.Metrics;
 using BarChartItem = Gerle_Lib.BaseClasses.BarChartItem;
 using SysColor = System.Drawing.Color; // Alias System.Drawing.Color to avoid ambiguity
@@ -13,7 +14,7 @@ class Program
     public static readonly SysColor bgColor = System.Drawing.ColorTranslator.FromHtml(bgColorHex);
 
     private static Menu mainMenu = new Menu(new[] { "temp", "Játék 📁", "Beállítások 📝", "Kilépés 🚪" }, new Action[] {
-                    () => TemplateScene(),
+                    () => DisplayActionCards(),
                     GameMenu,
                     SettingsMenu,
                     Exit
@@ -33,7 +34,7 @@ class Program
 
 
         Menu.SetCreator(shuffledCreators);
-        LiveRefresher();
+        //LiveRefresher();
         mainMenu.SetToScreen();
     }
 
@@ -137,6 +138,77 @@ class Program
 
 
         AnsiConsole.Write(grid);
+
+        
+    }
+
+    static void DisplayActionCards()
+    {
+        string[] actionCards = { 
+            "Attack", "Defend", "Heal", "Special Move", 
+            "test",
+            "test",
+            "test",
+            "test",
+        };
+        int selectedIndex = 0;
+
+        while (true)
+        {
+            Console.Clear();
+            TemplateScene();
+
+            var actionGrid = new Grid();
+            foreach (var _ in actionCards)
+            {
+                actionGrid.AddColumn(new GridColumn().Width(AnsiConsole.Console.Profile.Width / actionCards.Length));
+            }
+
+            var row = new List<IRenderable>();
+
+            for (int i = 0; i < actionCards.Length; i++)
+            {
+                var card = new Panel(actionCards[i])
+                {
+                    Border = BoxBorder.Rounded,
+                    Padding = new Padding(1, 1, 1, 1)
+                };
+
+                if (i == selectedIndex)
+                {
+                    card.Border = BoxBorder.Double;
+                    card.Header = new PanelHeader("[bold yellow]Selected[/]").Justify(Justify.Center);
+                }
+
+                row.Add(card);
+            }
+
+            actionGrid.AddRow(row.ToArray());
+
+            AnsiConsole.Write(actionGrid);
+
+            var key = Console.ReadKey(true).Key;
+            if (key == ConsoleKey.LeftArrow)
+            {
+                selectedIndex = (selectedIndex == 0) ? actionCards.Length - 1 : selectedIndex - 1;
+            }
+            else if (key == ConsoleKey.RightArrow)
+            {
+                selectedIndex = (selectedIndex == actionCards.Length - 1) ? 0 : selectedIndex + 1;
+            }
+            else if (key == ConsoleKey.Enter)
+            {
+                TriggerAction(actionCards[selectedIndex]);
+                break;
+            }
+        }
+    }
+
+
+    static void TriggerAction(string action)
+    {
+        AnsiConsole.MarkupLine($"[bold green]Action triggered: {action}[/]");
+        Console.ReadKey();
     }
 
     /// <summary>
