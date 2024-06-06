@@ -10,7 +10,7 @@ using SysColor = System.Drawing.Color; // Alias System.Drawing.Color to avoid am
 
 class Program
 {
-    public static readonly string bgColorHex = "#282c34";
+    public static readonly string bgColorHex = "#0c0c0c";
     public static readonly SysColor bgColor = System.Drawing.ColorTranslator.FromHtml(bgColorHex);
 
 
@@ -185,6 +185,7 @@ class Program
                 {
                     card.Border = BoxBorder.Double;
                     card.Header = new PanelHeader("[bold yellow]Selected[/]").Justify(Justify.Center);
+                    
                 }
 
                 row.Add(card);
