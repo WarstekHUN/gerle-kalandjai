@@ -85,7 +85,7 @@ public class FightingActor
         if (_Mana < Actor.LeastManaExpensiveAttackingPower!.Mana) return chosenPowers;
 
         ushort virtualMana = _Mana;
-        List<Power> notUsedPowers = Actor.Powers.Where(el => el.Mana <= Mana && el is not HealingPower).ToList();
+        List<Power> notUsedPowers = Actor.Powers.Where(el => el.Mana <= Mana && el is not HealingPower && (el.IsUsed is null || el.IsUsed == false)).ToList();
         List<Power> affordableNotUsedPowers() => notUsedPowers.Intersect(Actor.Powers.Where(el => el.Mana <= Mana)).ToList();
 
         void UsePower(Power power)
@@ -93,6 +93,7 @@ public class FightingActor
             virtualMana -= power.Mana;
             notUsedPowers.Remove(power);
             chosenPowers.Add(power);
+            if(power.IsUsed is not null) power.IsUsed = true;
         }
 
         //Az ellenfél életereje kisebb-e, mint a legnagyob damageű elérhető támadás? Van rá elég mana?
@@ -108,12 +109,11 @@ public class FightingActor
             if (Health <= 35 && Actor.HealingPowers?.Length > 0)
             {
                 //Elhasználom azt a képességet, ami a legtöbb életerőt tölti, de még meg tudom venni a jelenlegi manámból.
-                UsePower(Actor.HealingPowers.OrderBy(el => el.Health).ThenBy(el => el.Mana).First(el => el.Mana < Mana));
+                UsePower(Actor.HealingPowers.Where(el => el.IsUsed is not null || el.IsUsed == false).OrderBy(el => el.Health).ThenBy(el => el.Mana).First(el => el.Mana < Mana));
             }
         }
 
-
-        //Eldöntük, hogy akarunk-e támadni, maradt-e még elhasználható mana
+        //Eldöntjük, hogy akarunk-e támadni, maradt-e még elhasználható mana
         if(Random.Shared.Next(Actor.Aggression - 5, 10) >= 3 && virtualMana >= Actor.LeastManaExpensiveAttackingPower.Mana)
         {
             //Támadunk

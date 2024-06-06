@@ -48,11 +48,11 @@ namespace Gerle_Lib.Controllers
 
             while (fightEnd == null)
             {
-                if(Turn != 0)
+                if (Turn != 0)
                 {
                     player.Mana += MANA_PER_ROUND;
                     opponent.Mana += MANA_PER_ROUND;
-                } 
+                }
 
                 FightingActor currentTurnActor;
                 FightingActor currentTurnOpponent;
@@ -73,46 +73,43 @@ namespace Gerle_Lib.Controllers
 
                 bool death = false;
 
-                Task.Run(() =>
+                /*Task.Run(() =>
+                {*/
+                foreach (Power attack in attacks)
                 {
-                    foreach (Power attack in attacks)
+                    if (attack != null)
                     {
-                        if (attack != null)
+                        if (attack is SpecialPower)
                         {
-                            if (attack is SpecialPower)
+                            ((SpecialPower)attack).SpecialAbility(ref currentTurnActor, ref currentTurnOpponent);
+
+                            if (currentTurnOpponent.Health <= 0)
                             {
-                                ((SpecialPower)attack).SpecialAbility(ref currentTurnActor, ref currentTurnOpponent);
-
-                                if (currentTurnOpponent.Health <= 0)
-                                {
-                                    death = true;
-                                }
-                            }
-                            else
-                            {
-                                if (currentTurnActor.Attack(attack))
-                                {
-                                    death = true;
-                                }
-                            }
-
-                            //TODO: attack.damageText kiírása
-
-                            if (currentTurnActor is Player)
-                                SoundEffectController.PlayEffect(SoundEffectController.SoundEffects.DealDamage);
-                            else
-                                SoundEffectController.PlayEffect(SoundEffectController.SoundEffects.ReceiveDamage);
-
-                            //3mp várakozás, hogy a játékos el tudja olvasni a damageText-et.
-                            Thread.Sleep(3000);
-
-                            if(death)
-                            {
-                                return;
+                                death = true;
                             }
                         }
+                        else
+                        {
+                            death = currentTurnActor.Attack(attack);
+                        }
+
+                        //TODO: attack.damageText kiírása
+
+                        if (currentTurnActor is Player)
+                            SoundEffectController.PlayEffect(SoundEffectController.SoundEffects.DealDamage);
+                        else
+                            SoundEffectController.PlayEffect(SoundEffectController.SoundEffects.ReceiveDamage);
+
+                        //3mp várakozás, hogy a játékos el tudja olvasni a damageText-et.
+                        Thread.Sleep(3000);
+
+                        if (death)
+                        {
+                            break;
+                        }
                     }
-                });
+                }
+                //});
 
                 if (death)
                 {
@@ -127,6 +124,18 @@ namespace Gerle_Lib.Controllers
                         SoundEffectController.PlayEffect(SoundEffectController.SoundEffects.LoseGame);
                         MusicController.StopMusic();
                     }
+
+                    void ResetPowers(Actor actor)
+                    {
+                        foreach(Power power in opponentCharacter.Powers!)
+                        {
+                            if(power.IsUsed is not null) power.IsUsed = false;
+                        }
+                    }
+
+                    //A képességek elhasználtságának visszaállítása
+                    //Ref alapúnak kéne lennie
+                    Task.WaitAll(Task.Run(() => ResetPowers(opponentCharacter)), Task.Run(() => ResetPowers(player.Actor)));
                 }
             }
 
@@ -157,14 +166,15 @@ namespace Gerle_Lib.Controllers
                     fightEnd = InitFight(Scenes[i]);
                 }
 
-                if(fightEnd is not null)
+                if (fightEnd is not null)
                 {
-                    if(fightEnd == FightEndingReason.EnemyDeath)
+                    if (fightEnd == FightEndingReason.EnemyDeath)
                     {
                         CurrentCheckpoint = i;
                         ProgressController.SaveToFile();
                         //TODO: Ellenfél legyőzve UI
-                    }else
+                    }
+                    else
                     {
                         //TODO: Meghalás UI
 
