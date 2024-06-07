@@ -1,17 +1,16 @@
 ﻿using Gerle_Lib.BaseClasses;
 using MenuSystem;
-using NAudio.Wave;
 using Spectre.Console;
 using Spectre.Console.Rendering;
-using System.Diagnostics.Metrics;
+using System.Runtime.InteropServices;
 using BarChartItem = Gerle_Lib.BaseClasses.BarChartItem;
 using SysColor = System.Drawing.Color; // Alias System.Drawing.Color to avoid ambiguity
-
 
 class Program
 {
     public static readonly string bgColorHex = "#0c0c0c";
     public static readonly SysColor bgColor = System.Drawing.ColorTranslator.FromHtml(bgColorHex);
+
 
 
     private static Menu mainMenu = new Menu(new[] { "temp", "Játék 📁", "Beállítások 📝", "Kilépés 🚪" }, new Action[] {
@@ -20,6 +19,25 @@ class Program
                     SettingsMenu,
                     Exit
                 });
+
+    struct Rect
+    {
+        public int Left;
+        public int Top;
+        public int Right;
+        public int Bottom;
+    }
+
+    // Import the necessary functions from user32.dll
+    [DllImport("user32.dll")]
+    private static extern IntPtr GetForegroundWindow();
+    [DllImport("user32.dll")]
+    private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+    [DllImport("user32.dll")]
+    private static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
+    [DllImport("user32.dll")]
+    private static extern bool MoveWindow(IntPtr hWnd, int x, int y, int nWidth, int nHeight, bool bRepaint);
 
     /// <summary>
     /// A program belépési pontja.
@@ -35,8 +53,22 @@ class Program
 
 
         Menu.SetCreator(shuffledCreators);
-        //LiveRefresher();
-        
+
+        //Hippity-Hoppity, your code is now my property! - Dani.
+
+        // Get the handle of the console window
+        IntPtr consoleWindowHandle = GetForegroundWindow();
+        // Maximize the console window
+        ShowWindow(consoleWindowHandle, 3);
+        // Get the screen size
+        GetWindowRect(consoleWindowHandle, out Rect screenRect);
+        // Resize and reposition the console window to fill the screen
+        int width = screenRect.Right - screenRect.Left;
+        int height = screenRect.Bottom - screenRect.Top;
+        MoveWindow(consoleWindowHandle, screenRect.Left, screenRect.Top, width, height, true);
+        //Console.ReadKey();
+
+        Thread.Sleep(120);
         mainMenu.SetToScreen();
     }
 
