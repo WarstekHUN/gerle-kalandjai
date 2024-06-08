@@ -83,35 +83,39 @@ public class Scene
     #endregion
     public void PlayScene()
     {
-        WaveOutEvent? noisePlayerEvent = null;
-
-        if (NoiseFile is not null)
+        CancellationTokenSource cts = new CancellationTokenSource();
+        Task noisePlayer = Task.Run(async () =>
         {
-            using(Mp3FileReader noiseReader = new Mp3FileReader(NoiseFile))
-            {
-                Task.Run(() =>
-                {
-                    TaskCompletionSource completionSource = new TaskCompletionSource();
-                    noisePlayerEvent = new WaveOutEvent();
-                    noisePlayerEvent.Init(noiseReader);
-                    noisePlayerEvent.Volume = SettingsController.MasterVolume * SettingsController.FXVolume;
-                    noisePlayerEvent.Play();
+            TaskCompletionSource completionSource = new TaskCompletionSource();
 
-                    noisePlayerEvent.PlaybackStopped += (object? sender, StoppedEventArgs e) =>
-                    {
-                        if (e.Exception is not null) throw e.Exception;
-                        noiseReader.Dispose();
-                        completionSource.SetResult();
-                    };
-                });
+            if (NoiseFile is null) completionSource.SetResult();
+
+            using (Mp3FileReader noiseReader = new Mp3FileReader(NoiseFile))
+            {
+                WaveOutEvent player = new WaveOutEvent();
+                player.Init(noiseReader);
+                player.Volume = SettingsController.MasterVolume * SettingsController.FXVolume;
+                player.Play();
+
+                //TODO: Ide lehetne rakni egy fade out-ot, de nem szükséges
+                cts.Token.Register(() => player.Stop());
+
+                player.PlaybackStopped += (object? sender, StoppedEventArgs e) =>
+                {
+                    if (e.Exception is not null) throw e.Exception;
+                    noiseReader.Dispose();
+                    completionSource.SetResult();
+                };
             }
-        }
+
+            await completionSource.Task;
+        });
 
         foreach (var line in Lines)
         {
             line.PlayLine();
         }
 
-        noisePlayerEvent?.Dispose();
+        cts.Cancel();
     }
 }
