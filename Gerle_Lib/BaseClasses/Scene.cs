@@ -1,4 +1,6 @@
 ﻿using Gerle_Lib.BaseClasses;
+using Gerle_Lib.Controllers;
+using NAudio.Wave;
 
 public enum SceneVersion
 {
@@ -37,7 +39,7 @@ public class Scene
     /// <summary>
     /// Tartalmazza a jelenet harci zenéjét.
     /// </summary>
-    public SceneMusic FightMusic { get; init; }
+    public SceneMusic? FightMusic { get; init; }
 
     /// <summary>
     /// Tartalmazza a scene alatt lejátszandó háttérzaj fájlnevét (kiterjesztés és elérési út nélkül)
@@ -81,9 +83,35 @@ public class Scene
     #endregion
     public void PlayScene()
     {
+        WaveOutEvent? noisePlayerEvent = null;
+
+        if (NoiseFile is not null)
+        {
+            using(Mp3FileReader noiseReader = new Mp3FileReader(NoiseFile))
+            {
+                Task.Run(() =>
+                {
+                    TaskCompletionSource completionSource = new TaskCompletionSource();
+                    noisePlayerEvent = new WaveOutEvent();
+                    noisePlayerEvent.Init(noiseReader);
+                    noisePlayerEvent.Volume = SettingsController.MasterVolume * SettingsController.FXVolume;
+                    noisePlayerEvent.Play();
+
+                    noisePlayerEvent.PlaybackStopped += (object? sender, StoppedEventArgs e) =>
+                    {
+                        if (e.Exception is not null) throw e.Exception;
+                        noiseReader.Dispose();
+                        completionSource.SetResult();
+                    };
+                });
+            }
+        }
+
         foreach (var line in Lines)
         {
             line.PlayLine();
         }
+
+        noisePlayerEvent?.Dispose();
     }
 }
