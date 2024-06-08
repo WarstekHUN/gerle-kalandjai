@@ -44,7 +44,7 @@ namespace Gerle_Lib.Controllers
 
             FightingActor opponent = player.SetupOpponent(ref opponentCharacter);
 
-            MusicController.PlayMusic(scene.FightMusic);
+            MusicController.PlayMusic(scene.FightMusic!);
 
             while (fightEnd == null)
             {

@@ -8,7 +8,7 @@ namespace Gerle_Lib.Controllers
     {
         public static SceneMusic? CurrentlyPlaying { get; private set; }
         private static WaveOutEvent? CurrentPlayer { get; set; }
-        private static Task<WaveOutEvent>? PlayerTask { get; set; }
+        private static CancellationTokenSource? CancelSource { get; set; }
 
         /// <summary>
         /// Azt az időt adja meg másodpercben, amíg a MusicController lekeveri egy zene hangerejét
@@ -17,11 +17,13 @@ namespace Gerle_Lib.Controllers
 
         public static async void PlayMusic(SceneMusic music)
         {
+            CancelSource = new CancellationTokenSource();
             CurrentlyPlaying = music;
-            PlayerTask = Task.Run(() => _PlayOnce(CurrentlyPlaying.MusicBegining));
-            await PlayerTask;
+            await Task.Run(() => _PlayOnce(CancelSource.Token, CurrentlyPlaying.MusicBegining));
 
-            PlayerTask = Task.Run(() => _PlayRepeat(CurrentlyPlaying.MusicBase));
+            if (CancelSource.IsCancellationRequested) return;
+
+            _ = Task.Run(() => _PlayRepeat(CancelSource.Token, CurrentlyPlaying.MusicBase));
         }
 
         /// <summary>
@@ -62,6 +64,8 @@ namespace Gerle_Lib.Controllers
                 float targetVolume = SettingsController.MusicVolume * SettingsController.MasterVolume;
                 player.Volume = 0f;
 
+                CancelSource?.Token.Register(player.Stop);
+
                 float volumeFadeBySec = 1.0f / fadeOutTime;
 
                 //Hány másodpercenként van egy nyolcas beat: 1 mp / Hány nyolcas beat van másodpercenként
@@ -81,12 +85,13 @@ namespace Gerle_Lib.Controllers
 #pragma warning restore CS4014
 
                 //Tervezési szempontból jobb lenne ezt egy külön függvénybe pakolni, de az csak úgy lenne szép, ha egyes dolgokat nem számolnék ki előre. Ha ezt nem tenném meg, akkor késne a Task elindítása, ezzel pedig kicsit szétcsúszna a crossfade effekt.
-                WaveOutEvent localTask = await Task.Run(() =>
+               await Task.Run(() =>
                 {
+                    TaskCompletionSource source = new TaskCompletionSource();
                     player.Play();
                     DateTime lastTick = DateTime.Now;
 
-                    while (player.Volume < targetVolume)
+                    while (player.Volume < targetVolume && CancelSource is not null && !CancelSource.IsCancellationRequested)
                     {
                         DateTime now = DateTime.Now;
                         player.Volume += Math.Min((float)new TimeSpan(now.Ticks - lastTick.Ticks).TotalSeconds * volumeFadeBySec, 1);
@@ -97,8 +102,7 @@ namespace Gerle_Lib.Controllers
                 });
 
                 CurrentPlayer.Dispose();
-                PlayerTask!.Dispose();
-                CurrentPlayer = localTask;
+                CurrentPlayer = player;
             }
         }
 
@@ -107,12 +111,11 @@ namespace Gerle_Lib.Controllers
         /// </summary>
         public static void StopMusic()
         {
-            CurrentPlayer?.Dispose();
-            PlayerTask?.Dispose();
+            CancelSource?.Cancel();
 
             CurrentlyPlaying = null;
             CurrentPlayer = null;
-            PlayerTask = null;
+            CancelSource = null;
         }
 
         /// <summary>
@@ -121,7 +124,7 @@ namespace Gerle_Lib.Controllers
         public static void EndMusic()
         {
             if (CurrentlyPlaying is null || CurrentPlayer is null) return;
-            
+            CancelSource = new CancellationTokenSource();
             CrossFade(CurrentlyPlaying.MusicEnding);
         }
 
@@ -131,7 +134,7 @@ namespace Gerle_Lib.Controllers
         /// <param name="path"></param>
         /// <param name="startVolume"></param>
         /// <returns></returns>
-        private static WaveOutEvent _PlayRepeat(string path, float? startVolume = null)
+        private static void _PlayRepeat(CancellationToken cancellationToken, string path, float? startVolume = null)
         {
             AutoResetEvent waitHandle = new AutoResetEvent(false);
 
@@ -147,14 +150,25 @@ namespace Gerle_Lib.Controllers
                 localPlayer.Volume = startVolume * SettingsController.MasterVolume ?? SettingsController.MusicVolume * SettingsController.MasterVolume;
                 localPlayer.Play();
 
-                //Amennyiben van egy kis szünet a zene vége és az újraindulás között, egy új Thread-et kell létrehozni már 80%-nál, amire átváltunk, ha véget ér a zene.
-                localPlayer.PlaybackStopped += (sender, ev) =>
+                cancellationToken.Register(() =>
+                {
+                    waitHandle.Set();
+                    localPlayer.PlaybackStopped -= eventHandler;
+                    localPlayer.Dispose();
+                    file.Dispose();
+                });
+
+                void eventHandler(object? sender, StoppedEventArgs ev)
                 {
                     file.Position = 0;
                     localPlayer.Play();
                 };
+
+                //Amennyiben van egy kis szünet a zene vége és az újraindulás között, egy új Thread-et kell létrehozni már 80%-nál, amire átváltunk, ha véget ér a zene.
+                localPlayer.PlaybackStopped += eventHandler;
  
-                return localPlayer;
+                CurrentPlayer = localPlayer;
+                waitHandle.WaitOne();
             }
         }
 
@@ -164,7 +178,7 @@ namespace Gerle_Lib.Controllers
         /// <param name="path"></param>
         /// <param name="startVolume"></param>
         /// <returns></returns>
-        private static WaveOutEvent _PlayOnce(string path, float? startVolume = null)
+        private static void _PlayOnce(CancellationToken cancellationToken, string path, float? startVolume = null)
         {
             AutoResetEvent waitHandle = new AutoResetEvent(false);
 
@@ -179,19 +193,20 @@ namespace Gerle_Lib.Controllers
                 localPlayer.Init(file);
                 localPlayer.Volume = startVolume * SettingsController.MasterVolume ?? SettingsController.MusicVolume * SettingsController.MasterVolume;
                 localPlayer.Play();
-          
+
+                cancellationToken.Register(localPlayer.Stop);
 
                 localPlayer.PlaybackStopped += (sender, ev) =>
                 {
                     if (ev.Exception is not null) return;
-                    //Hát, vagy hibát dob dupla Dispose-ra, vagy nem.
                     localPlayer.Dispose();
                     file.Dispose();
                     waitHandle.Set();
                 };
 
+                CurrentPlayer = localPlayer;
+
                 waitHandle.WaitOne();
-                return localPlayer;
             }
         }
     }
