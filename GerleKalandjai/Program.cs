@@ -113,7 +113,7 @@ class Program
     public static DeathScreenSelection DeathScreen(string customMessage)
     {
         AnsiConsole.Clear();
-
+        AnsiConsole.Write(BeautyWriter.Spacer(6));
         // Display custom message in large text
         var figletText = new FigletText(customMessage)
             .Centered()
@@ -136,10 +136,11 @@ class Program
         };
     }
 
-    /// <summary>
-    /// A sablon jelenet megjelenítése, sorok és spacerek.
-    /// </summary>
-    static void TemplateScene(string UsedPowerText = "Sakármit Döjcs", string centerText = "centerText", string otherText = "otherText", string UsedBy= "UsedBy", string enemyName="enemyName")
+
+/// <summary>
+/// A sablon jelenet megjelenítése, sorok és spacerek.
+/// </summary>
+static void TemplateScene(string UsedPowerText = "Sakármit Döjcs", string centerText = "centerText", string otherText = "otherText", string UsedBy= "UsedBy", string enemyName="enemyName")
     {
         
         var grid = new Grid();
