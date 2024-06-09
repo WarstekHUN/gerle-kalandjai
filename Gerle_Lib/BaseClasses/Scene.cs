@@ -81,7 +81,7 @@ public class Scene
     /// <c>PlayScene</c> metódus felel az adott jelenet lejátszásáért.
     /// </summary>
     #endregion
-    public void PlayScene()
+    public SceneVersion? PlayScene()
     {
         CancellationTokenSource cts = new CancellationTokenSource();
         Task noisePlayer = Task.Run(async () =>
@@ -111,11 +111,20 @@ public class Scene
             await completionSource.Task;
         });
 
+        SceneVersion? version = null;
+
         foreach (var line in Lines)
         {
-            line.PlayLine();
+            if(line is ChoiceScreen choice)
+            {
+                version = choice.PresentChoiceToPlayer().SceneVersion;
+            }else
+            {
+                line.PlayLine();
+            }
         }
 
         cts.Cancel();
+        return version;
     }
 }

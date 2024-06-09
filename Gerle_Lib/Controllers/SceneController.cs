@@ -27,6 +27,9 @@ namespace Gerle_Lib.Controllers
         /// </summary>
         #endregion
         public static uint CurrentCheckpoint { get; set; } = 0;
+
+        public static SceneVersion PlayerChoice { get; private set; } = SceneVersion.BASE;
+
         #region InitFight (metódus) - comment
         /// <summary>
         /// <c>InitFight</c> metódus elindítja a játékos számára a harcot. 
@@ -158,7 +161,11 @@ namespace Gerle_Lib.Controllers
 
             for (uint i = checkpoint; i < Scenes.Length; i++)
             {
-                Scenes[i].PlayScene();
+                if (PlayerChoice != SceneVersion.BASE && i > 0 && Scenes[i - 1].Version == SceneVersion.BASE && Scenes[i].Version != SceneVersion.BASE && Scenes[i].Version != PlayerChoice) continue;
+
+                SceneVersion? version = Scenes[i].PlayScene();
+                if (version is not null) PlayerChoice = (SceneVersion)version;
+
                 FightEndingReason? fightEnd = null;
                 if (Scenes[i].Opponent is not null)
                 {
