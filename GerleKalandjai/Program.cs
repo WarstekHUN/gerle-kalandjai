@@ -14,7 +14,7 @@ class Program
 
 
     private static Menu mainMenu = new Menu(new[] { "temp", "Játék 📁", "Beállítások 📝", "Kilépés 🚪" }, new Action[] {
-                    () => DisplayActionCards(),
+                    () => LiveRefresher(),
                     GameMenu,
                     SettingsMenu,
                     Exit
@@ -89,8 +89,51 @@ class Program
         {
             Console.Clear();
             TemplateScene();
-            System.Threading.Thread.Sleep(10);
+
+            DeathScreenSelection result = Program.DeathScreen("JÁTÉK VÉGE");
+            if (result == Program.DeathScreenSelection.Restart)
+            {
+                Console.WriteLine("Restarting game...");
+            }
+            else if (result == Program.DeathScreenSelection.Exit)
+            {
+                Console.WriteLine("Exiting game...");
+            }
+
+            //System.Threading.Thread.Sleep(100000);
         }
+    }
+
+    public enum DeathScreenSelection
+    {
+        Restart,
+        Exit
+    }
+
+    public static DeathScreenSelection DeathScreen(string customMessage)
+    {
+        AnsiConsole.Clear();
+
+        // Display custom message in large text
+        var figletText = new FigletText(customMessage)
+            .Centered()
+            .Color(Color.Red);
+        AnsiConsole.Write(figletText);
+
+        // Create a selection menu
+        var selection = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .Title("[red]Meghaltál. Most mihez kezdesz?[/]")
+                .AddChoices(new[] { "Újrakezdés (korábbi mentési pont betöltése)", "Kilépés" })
+                .HighlightStyle(new Style(Color.Yellow)));
+
+        // Return the selected option
+        return selection switch
+        {
+            "Újrakezdés (korábbi mentési pont betöltése)" => DeathScreenSelection.Restart,
+            "Kilépés" => DeathScreenSelection.Exit,
+            _ => DeathScreenSelection.Exit
+        };
     }
 
     /// <summary>
