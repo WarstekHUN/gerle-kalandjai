@@ -16,6 +16,11 @@ namespace Gerle_Lib.BaseClasses
             Choices = choices;
         }
 
+        private void PlayNarratorVoice(CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
         #region PresentChoiceToPlayer (függvény)
         /// <summary>
         /// Kirendereli a választási képernyőt, hogy a játékos el tudja dönteni, merre menjen tovább a történet
@@ -24,6 +29,12 @@ namespace Gerle_Lib.BaseClasses
         #endregion
         public Choice PresentChoiceToPlayer()
         {
+            CancellationTokenSource tokenSource = new CancellationTokenSource();
+            Task.Run(() => PlayNarratorVoice(tokenSource.Token));
+
+
+            tokenSource.Cancel();
+
             throw new NotImplementedException();
         }
     }

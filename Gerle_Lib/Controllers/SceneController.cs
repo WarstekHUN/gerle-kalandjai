@@ -149,9 +149,9 @@ namespace Gerle_Lib.Controllers
         /// <c>PlayScenes</c> a jeleneteket játssza le az ellenőrző pontoktól (<c>CurrentCheckpoint</c>).
         /// </summary>
         #endregion
-        public static void PlayScenes(uint checkpoint)
+        public static void PlayScenes()
         {
-            if (checkpoint >= Scenes.Length)
+            if (CurrentCheckpoint >= Scenes.Length)
             {
                 BeautyWriter.Write("Hibás mentésfájl.");
                 Thread.Sleep(5000);
@@ -159,9 +159,9 @@ namespace Gerle_Lib.Controllers
             }
 
 
-            for (uint i = checkpoint; i < Scenes.Length; i++)
+            for (uint i = CurrentCheckpoint; i < Scenes.Length; i++)
             {
-                if (PlayerChoice != SceneVersion.BASE && i > 0 && Scenes[i - 1].Version == SceneVersion.BASE && Scenes[i].Version != SceneVersion.BASE && Scenes[i].Version != PlayerChoice) continue;
+                if (PlayerChoice != SceneVersion.BASE && i > 0 && Scenes[i - 1].Version == SceneVersion.BASE && Scenes[i].Version != SceneVersion.BASE && Scenes[i].Version != PlayerChoice && Scenes[i] is not EndCreditScene) continue;
 
                 SceneVersion? version = Scenes[i].PlayScene();
                 if (version is not null) PlayerChoice = (SceneVersion)version;
