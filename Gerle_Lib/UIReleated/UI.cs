@@ -81,7 +81,7 @@ namespace Gerle_Lib.UIReleated
                 var villain = new Actor("Villain");
                 var narrator = new Actor("Narrator");
 
-                var lines = new List<Line>
+                var lines = new Line[]
     {
         new Line("Once upon a time in a faraway land...", ref narrator, "narrator_intro.mp3"),
         new Line("I will defeat you, villain!", ref hero, "hero_taunt.mp3"),
@@ -92,7 +92,7 @@ namespace Gerle_Lib.UIReleated
                 //CutsceneUI(lines);
 
                 // Sample Powers
-                var actionPowers = new List<Power>
+                var actionPowers = new Power[]
                 {
                     new Power("Attack", 20, 10, true, "You dealt 20 damage."),
                     new Power("Defend", 0, 5, false, "You defended."),
@@ -234,13 +234,15 @@ namespace Gerle_Lib.UIReleated
         /// A sorok színe a beszélő (Actor) alapján változik.
         /// A sorok egyenként jelennek meg, gépelési effektussal.
         /// </summary>
-        public static void CutsceneUI(List<Line> lines)
+        public static async void CutsceneUI(Line[] lines)
         {
             var grid = new Grid();
             grid.AddColumn(new GridColumn());
 
             foreach (var line in lines)
             {
+                Task voiceOver = Task.Run(() => line.PlayAudioFile(line.VoiceFile));
+
                 var text = new Text(line.Text);
 
                 if (line.Talker != null)
@@ -279,6 +281,8 @@ namespace Gerle_Lib.UIReleated
 
                 AnsiConsole.Clear();
                 AnsiConsole.Write(grid);
+
+                await voiceOver;
 
                 Thread.Sleep(2000); // Wait for 2 seconds before showing the next line
             }
@@ -741,7 +745,7 @@ namespace Gerle_Lib.UIReleated
 
         #region SelectActionCards (function)
 
-        public static List<Power> SelectActionCards(List<Power> actionPowers, ref ushort currentMana, ref ushort enemyHealth, ref ushort yourHealth, string enemyName = "enemyName")
+        public static List<Power> SelectActionCards(Power[] actionPowers, ref ushort currentMana, ref ushort enemyHealth, ref ushort yourHealth, string enemyName)
         {
             var selectedIndexes = new HashSet<int>();
             int currentIndex = 0;
@@ -772,11 +776,11 @@ namespace Gerle_Lib.UIReleated
                 var actionGrid = new Grid();
                 foreach (var _ in actionPowers)
                 {
-                    actionGrid.AddColumn(new GridColumn().Width(AnsiConsole.Console.Profile.Width / actionPowers.Count));
+                    actionGrid.AddColumn(new GridColumn().Width(AnsiConsole.Console.Profile.Width / actionPowers.Length));
                 }
 
                 var row = new List<IRenderable>();
-                for (int i = 0; i < actionPowers.Count; i++)
+                for (int i = 0; i < actionPowers.Length; i++)
                 {
                     var card = new Panel($"{actionPowers[i].Name}\nMana: {actionPowers[i].Mana}")
                     {
@@ -822,11 +826,11 @@ namespace Gerle_Lib.UIReleated
                 var key = Console.ReadKey(true).Key;
                 if (key == ConsoleKey.LeftArrow)
                 {
-                    currentIndex = (currentIndex == 0) ? actionPowers.Count - 1 : currentIndex - 1;
+                    currentIndex = (currentIndex == 0) ? actionPowers.Length - 1 : currentIndex - 1;
                 }
                 else if (key == ConsoleKey.RightArrow)
                 {
-                    currentIndex = (currentIndex == actionPowers.Count - 1) ? 0 : currentIndex + 1;
+                    currentIndex = (currentIndex == actionPowers.Length - 1) ? 0 : currentIndex + 1;
                 }
                 else if (key == ConsoleKey.Spacebar)
                 {
@@ -856,7 +860,7 @@ namespace Gerle_Lib.UIReleated
 
         #region FightingUI (function)
 
-        public static List<Power> FightingUI(List<Power> inputPowers, bool canSelectPowers, ushort currentMana, ushort enemyHealth, ushort yourHealth, string enemyName = "enemyName")
+        public static List<Power> FightingUI(Power[] inputPowers, bool canSelectPowers, ushort currentMana, ushort enemyHealth, ushort yourHealth, string enemyName)
         {
             ushort dummyCurrentMana = currentMana;
             ushort dummyEnemyHealth = enemyHealth;

@@ -1,6 +1,7 @@
 #region Line (osztály) - comment
 #endregion
 using Gerle_Lib.Controllers;
+using Gerle_Lib.UIReleated;
 using NAudio.Wave;
 
 /// <summary>
@@ -49,7 +50,7 @@ public class Line
         NoiseFile = noiseFile;
     }
 
-    private async Task PlayAudioFile(string filePath, CancellationToken? token = null)
+    internal async Task PlayAudioFile(string filePath, CancellationToken? token = null)
     {
         TaskCompletionSource source = new TaskCompletionSource();
         using (Mp3FileReader reader = new Mp3FileReader(filePath))
@@ -87,7 +88,7 @@ public class Line
             Task.Run(() => PlayAudioFile(NoiseFile, noiseTaskCancelSource.Token));
         }
 
-        //TODO: Cutscene UI megjelenítése a jelenlegi sorral, meg hogy ki mondja
+        //TODO: Cutscene UI megjelenítése a jelenlegi sorral, meg hogy ki 
 
         Task.Run(() => PlayAudioFile(VoiceFile)).Wait();
         noiseTaskCancelSource.Cancel();

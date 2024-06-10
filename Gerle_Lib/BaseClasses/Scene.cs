@@ -1,5 +1,6 @@
 ﻿using Gerle_Lib.BaseClasses;
 using Gerle_Lib.Controllers;
+using Gerle_Lib.UIReleated;
 using NAudio.Wave;
 
 public enum SceneVersion
@@ -120,7 +121,8 @@ public class Scene
                 version = choice.PresentChoiceToPlayer().SceneVersion;
             }else
             {
-                line.PlayLine();
+                UI.CutsceneUI(Lines);
+                //line.PlayLine();
             }
         }
 
