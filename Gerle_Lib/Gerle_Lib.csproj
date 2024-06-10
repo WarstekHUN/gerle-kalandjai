@@ -24,6 +24,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Data\Audio\Scenes\04\galamb2.mp3" />
+    <None Remove="Data\Audio\Scenes\05\random_csavo.mp3" />
+    <None Remove="Data\Audio\Scenes\07\A\portas.mp3" />
+  </ItemGroup>
   <!--
   <Target Name="CopyFilesToOutputDirectory">
     <ItemGroup>
