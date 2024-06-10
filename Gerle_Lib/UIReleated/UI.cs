@@ -89,47 +89,47 @@ namespace Gerle_Lib.UIReleated
         new Line("The battle between good and evil has begun.", ref narrator, "narrator_battle.mp3")
     };
 
-                CutsceneUI(lines);
+                //CutsceneUI(lines);
 
-                //        // Sample Powers
-                //        var actionPowers = new List<Power>
-                //{
-                //    new Power("Attack", 20, 10, true, "You dealt 20 damage."),
-                //    new Power("Defend", 0, 5, false, "You defended."),
-                //    new Power("Heal", 0, 15, false, "You healed 20 HP."),
-                //    new Power("Special Move", 30, 20, true, "You dealt 30 damage."),
-                //    new Power("Test", 10, 5, true, "You tested the action.")
-                //};
+                // Sample Powers
+                var actionPowers = new List<Power>
+                {
+                    new Power("Attack", 20, 10, true, "You dealt 20 damage."),
+                    new Power("Defend", 0, 5, false, "You defended."),
+                    new Power("Heal", 0, 15, false, "You healed 20 HP."),
+                    new Power("Special Move", 30, 20, true, "You dealt 30 damage."),
+                    new Power("Test", 10, 5, true, "You tested the action.")
+                };
 
-                //        // Current Mana and Health for testing purposes
-                //        ushort currentMana = 50;
-                //        ushort enemyHealth = 100;
-                //        ushort yourHealth = 100;
+                // Current Mana and Health for testing purposes
+                ushort currentMana = 50;
+                ushort enemyHealth = 100;
+                ushort yourHealth = 100;
 
-                //        // Test the FightingUI function with canSelectPowers as true
-                //        bool canSelectPowers = true;
-                //        List<Power> selectedPowers = FightingUI(actionPowers, canSelectPowers, ref currentMana, ref enemyHealth, ref yourHealth);
+                // Test the FightingUI function with canSelectPowers as true
+                bool canSelectPowers = true;
+                List<Power> selectedPowers = FightingUI(actionPowers, canSelectPowers, currentMana, enemyHealth, yourHealth, "Ellenség Neve");
 
-                //        // Display the selected powers
-                //        Console.Clear();
-                //        AnsiConsole.MarkupLine($"[bold green]Selected Powers:[/]");
-                //        foreach (var power in selectedPowers)
-                //        {
-                //            AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
-                //        }
-                //        Console.ReadKey();
+                // Display the selected powers
+                Console.Clear();
+                AnsiConsole.MarkupLine($"[bold green]Selected Powers:[/]");
+                foreach (var power in selectedPowers)
+                {
+                    AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
+                }
+                Console.ReadKey();
 
-                //        // Test the FightingUI function with canSelectPowers as false
-                //        canSelectPowers = false;
-                //        List<Power> enemyActions = FightingUI(actionPowers, canSelectPowers, ref currentMana, ref enemyHealth, ref yourHealth);
+                // Test the FightingUI function with canSelectPowers as false
+                canSelectPowers = false;
+                List<Power> enemyActions = FightingUI(actionPowers, canSelectPowers, currentMana, enemyHealth, yourHealth, "Ellenség 2 neve");
 
-                //        // Display the enemy actions
-                //        Console.Clear();
-                //        AnsiConsole.MarkupLine($"[bold red]Enemy Actions:[/]");
-                //        foreach (var power in enemyActions)
-                //        {
-                //            AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
-                //        }
+                // Display the enemy actions
+                Console.Clear();
+                AnsiConsole.MarkupLine($"[bold red]Enemy Actions:[/]");
+                foreach (var power in enemyActions)
+                {
+                    AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
+                }
                 Console.ReadKey();
             }
         }
@@ -351,10 +351,7 @@ namespace Gerle_Lib.UIReleated
 
         //            foreach (var row in grid.Rows)
         //            {
-        //                foreach (var cell in row)
-        //                {
-        //                    tempGrid.AddRow(cell);
-        //                }
+        //                tempGrid.AddRow(row.ToArray());
         //            }
 
         //            tempGrid.AddRow(typingText.Centered());
@@ -362,7 +359,14 @@ namespace Gerle_Lib.UIReleated
         //            layout["Middle"].Update(new Panel(tempGrid).Expand());
 
         //            AnsiConsole.Clear();
-        //            AnsiConsole.Write(layout);
+        //            try
+        //            {
+        //                AnsiConsole.Write(layout);
+        //            }
+        //            catch
+        //            {
+        //                AnsiConsole.Write(" ");
+        //            }
 
         //            Thread.Sleep(50); // Adjust the speed of the typing effect
         //        }
@@ -372,6 +376,7 @@ namespace Gerle_Lib.UIReleated
         //    }
         //}
         //#endregion
+
 
         #region Beállítások
         public static void SettingsMenu()
@@ -736,7 +741,7 @@ namespace Gerle_Lib.UIReleated
 
         #region SelectActionCards (function)
 
-        public static List<Power> SelectActionCards(List<Power> actionPowers, ref ushort currentMana, ref ushort enemyHealth, ref ushort yourHealth)
+        public static List<Power> SelectActionCards(List<Power> actionPowers, ref ushort currentMana, ref ushort enemyHealth, ref ushort yourHealth, string enemyName = "enemyName")
         {
             var selectedIndexes = new HashSet<int>();
             int currentIndex = 0;
@@ -757,6 +762,7 @@ namespace Gerle_Lib.UIReleated
 
                 // Re-render the fight scene with updated values
                 TemplateFightScene(
+                    enemyName: enemyName,
                     enemyHealth: (ushort)updatedEnemyHealth,
                     yourHealth: yourHealth,
                     yourMana: (ushort)remainingMana,
@@ -788,7 +794,7 @@ namespace Gerle_Lib.UIReleated
                     {
                         card.BorderColor(Color.Red);
                         card.Header = new PanelHeader("[bold red]❌[/]").Justify(Justify.Center);
-                    }                    
+                    }
                     else if (selectedIndexes.Contains(i) && i == currentIndex)
                     {
                         card.Border = BoxBorder.Double;
@@ -850,26 +856,45 @@ namespace Gerle_Lib.UIReleated
 
         #region FightingUI (function)
 
-        public static List<Power> FightingUI(List<Power> inputPowers, bool canSelectPowers, ref ushort currentMana, ref ushort enemyHealth, ref ushort yourHealth)
+        public static List<Power> FightingUI(List<Power> inputPowers, bool canSelectPowers, ushort currentMana, ushort enemyHealth, ushort yourHealth, string enemyName = "enemyName")
         {
+            ushort dummyCurrentMana = currentMana;
+            ushort dummyEnemyHealth = enemyHealth;
+            ushort dummyYourHealth = yourHealth;
+
             if (canSelectPowers)
             {
-                var selectedPowers = SelectActionCards(inputPowers, ref currentMana, ref enemyHealth, ref yourHealth);
+                var selectedPowers = SelectActionCards(inputPowers, ref dummyCurrentMana, ref dummyEnemyHealth, ref dummyYourHealth, enemyName);
+
+                // Play the selected powers using dummy2 references
+                ushort replayCurrentMana = currentMana;
+                ushort replayEnemyHealth = enemyHealth;
+                ushort replayYourHealth = yourHealth;
+
                 foreach (var power in selectedPowers)
                 {
                     Console.Clear();
-                    currentMana -= power.Mana;
+                    replayCurrentMana -= power.Mana;
+                    replayEnemyHealth = (ushort)Math.Max(0, replayEnemyHealth - power.Damage);
+
                     // Simulate the action on the UI
                     TemplateFightScene(
                         UsedPowerName: power.Name,
                         DemageText: power.DamageText,
-                        enemyHealth: enemyHealth,
-                        yourHealth: yourHealth,
-                        yourMana: currentMana,
+                        enemyName: enemyName,
+                        enemyHealth: replayEnemyHealth,
+                        yourHealth: replayYourHealth,
+                        yourMana: replayCurrentMana,
                         selectedPowerManaCost: power.Mana
                     );
                     Thread.Sleep(1000);
                 }
+
+                // Update original references after replay
+                currentMana = replayCurrentMana;
+                enemyHealth = replayEnemyHealth;
+                yourHealth = replayYourHealth;
+
                 return selectedPowers;
             }
             else
@@ -877,22 +902,28 @@ namespace Gerle_Lib.UIReleated
                 foreach (var power in inputPowers)
                 {
                     Console.Clear();
+                    dummyCurrentMana -= power.Mana;
+                    dummyEnemyHealth = (ushort)Math.Max(0, dummyEnemyHealth - power.Damage);
+
                     // Simulate the enemy action on the UI
                     TemplateFightScene(
                         UsedPowerName: power.Name,
                         DemageText: power.DamageText,
-                        enemyHealth: enemyHealth,
-                        yourHealth: yourHealth,
-                        yourMana: currentMana,
+                        enemyName: enemyName,
+                        enemyHealth: dummyEnemyHealth,
+                        yourHealth: dummyYourHealth,
+                        yourMana: dummyCurrentMana,
                         selectedPowerManaCost: power.Mana
                     );
                     Thread.Sleep(1000);
                 }
+
                 return new List<Power>();
             }
         }
 
         #endregion
+
 
 
 
