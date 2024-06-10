@@ -1,4 +1,5 @@
-﻿using Gerle_Lib.Data;
+﻿using Gerle_Lib.Controllers;
+using NAudio.Wave;
 
 namespace Gerle_Lib.BaseClasses
 {
@@ -13,9 +14,29 @@ namespace Gerle_Lib.BaseClasses
             EndCredits = credits;
         }
 
-        private void PlayMusic(CancellationToken token)
+        private async void PlayMusic(CancellationToken token)
         {
-            throw new NotImplementedException();
+            TaskCompletionSource completionSource = new TaskCompletionSource();
+
+            WaveOutEvent player = new WaveOutEvent();
+
+            using(Mp3FileReader reader = new Mp3FileReader(MusicFile))
+            {
+                player.Init(reader);
+                player.Volume = SettingsController.MasterVolume * SettingsController.MusicVolume;
+                player.Play();
+
+                token.Register(player.Stop);
+
+                player.PlaybackStopped += (object? sender, StoppedEventArgs e) =>
+                {
+                    if (e.Exception is not null) throw e.Exception;
+                    reader.Dispose();
+                    completionSource.SetResult();
+                };
+
+                await completionSource.Task;
+            }
         }
 
         public override SceneVersion? PlayScene()
