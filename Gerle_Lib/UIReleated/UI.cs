@@ -119,7 +119,6 @@ namespace Gerle_Lib.UIReleated
 
 
 
-
         #region Choice Screen
         public enum ChoiceScreenSelection
         {
@@ -367,7 +366,7 @@ namespace Gerle_Lib.UIReleated
             YourHP.Header = new PanelHeader(($"[indianred1]Gerle élete[/]")).Justify(Justify.Center);
 
             var YourManBar = new BreakdownChart()
-                .AddItem("Megmaradt mana", yourMana - selectedPowerManaCost, Color.Purple)
+                .AddItem("Megmaradt mana", yourMana, Color.Purple)
                 .AddItem("Felhasznált Mana", selectedPowerManaCost, Color.Purple3);
 
             var YourMana = new Panel(YourManBar);
@@ -592,6 +591,7 @@ namespace Gerle_Lib.UIReleated
 
                 // Calculate the remaining mana after the selected powers
                 var remainingMana = (int)initialMana - selectedPowerMana;
+                remainingMana = Math.Max(remainingMana, 0); // Ensure remaining mana is not negative
                 var updatedEnemyHealth = (int)initialEnemyHealth - selectedPowerDamage;
 
                 // Re-render the fight scene with updated values
@@ -617,24 +617,32 @@ namespace Gerle_Lib.UIReleated
                         Padding = new Padding(1, 1, 1, 1)
                     };
 
-                    if (actionPowers[i].Mana > remainingMana)
+                    if (i == currentIndex && actionPowers[i].Mana > remainingMana && !selectedIndexes.Contains(i))
+                    {
+                        card.Border = BoxBorder.Double;
+                        card.BorderColor(Color.OrangeRed1);
+                        card.Header = new PanelHeader("[bold orangered1]❌[/]").Justify(Justify.Center);
+                    }
+                    else if (actionPowers[i].Mana > remainingMana && !selectedIndexes.Contains(i))
                     {
                         card.BorderColor(Color.Red);
-                        card.Header = new PanelHeader("[bold red]Not Enough Mana[/]").Justify(Justify.Center);
-                    }
+                        card.Header = new PanelHeader("[bold red]❌[/]").Justify(Justify.Center);
+                    }                    
                     else if (selectedIndexes.Contains(i) && i == currentIndex)
                     {
                         card.Border = BoxBorder.Double;
+                        card.BorderColor(Color.Green3_1);
                         card.Header = new PanelHeader("[bold yellow]X[/]").Justify(Justify.Center);
                     }
                     else if (selectedIndexes.Contains(i))
                     {
-                        card.Border = BoxBorder.Double;
-                        card.Header = new PanelHeader("[bold red]X[/]").Justify(Justify.Center);
+                        card.BorderColor(Color.Green3_1);
+                        card.Header = new PanelHeader("[bold green3_1]✅[/]").Justify(Justify.Center);
                     }
                     else if (i == currentIndex)
                     {
-                        card.Border = BoxBorder.Rounded;
+                        card.Border = BoxBorder.Double;
+                        card.BorderColor(Color.Yellow);
                         card.Header = new PanelHeader("[bold yellow]X[/]").Justify(Justify.Center);
                     }
 
@@ -655,23 +663,22 @@ namespace Gerle_Lib.UIReleated
                 }
                 else if (key == ConsoleKey.Enter)
                 {
-                    if (actionPowers[currentIndex].Mana <= remainingMana)
+                    if (selectedIndexes.Contains(currentIndex))
                     {
-                        if (selectedIndexes.Contains(currentIndex))
-                        {
-                            selectedIndexes.Remove(currentIndex);
-                        }
-                        else
-                        {
-                            selectedIndexes.Add(currentIndex);
-                        }
+                        selectedIndexes.Remove(currentIndex);
+                        currentMana = (ushort)Math.Min(initialMana, currentMana + actionPowers[currentIndex].Mana);
+                        enemyHealth = (ushort)Math.Min(initialEnemyHealth, enemyHealth + actionPowers[currentIndex].Damage);
+                    }
+                    else if (actionPowers[currentIndex].Mana <= remainingMana)
+                    {
+                        selectedIndexes.Add(currentIndex);
+                        currentMana -= actionPowers[currentIndex].Mana;
+                        enemyHealth = (ushort)Math.Max(0, enemyHealth - actionPowers[currentIndex].Damage);
                     }
                 }
                 else if (key == ConsoleKey.Spacebar)
                 {
                     List<Power> selectedPowers = selectedIndexes.Select(index => actionPowers[index]).ToList();
-                    currentMana = (ushort)remainingMana;
-                    enemyHealth = (ushort)updatedEnemyHealth;
                     return selectedPowers;
                 }
             }
@@ -689,6 +696,7 @@ namespace Gerle_Lib.UIReleated
                 var selectedPowers = SelectActionCards(inputPowers, ref currentMana, ref enemyHealth, ref yourHealth);
                 foreach (var power in selectedPowers)
                 {
+                    Console.Clear();
                     currentMana -= power.Mana;
                     // Simulate the action on the UI
                     TemplateFightScene(
@@ -707,6 +715,7 @@ namespace Gerle_Lib.UIReleated
             {
                 foreach (var power in inputPowers)
                 {
+                    Console.Clear();
                     // Simulate the enemy action on the UI
                     TemplateFightScene(
                         UsedPowerName: power.Name,
