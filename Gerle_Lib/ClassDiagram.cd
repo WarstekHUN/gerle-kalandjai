@@ -1,19 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Scene">
-    <Position X="5.75" Y="3.25" Width="1.5" />
+    <Position X="5.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAAAAAABAAAAACAAAAAACAAAAAAAAAAA=</HashCode>
+      <HashCode>IAAAAAAAAAAAAAAAAABQAAAACAAAAAACAAAAAAEAAAA=</HashCode>
       <FileName>BaseClasses\Scene.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Opponent" />
+      <Property Name="Lines" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Line">
-    <Position X="7.5" Y="3" Width="1.5" />
+    <Position X="10.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAABAAAAAAAIAAAAAAAAAAAAACQEAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAIAAAAAAAAAAAAACQEgAAA=</HashCode>
       <FileName>BaseClasses\Line.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -21,11 +22,96 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Actor">
-    <Position X="6.75" Y="0.75" Width="1.5" />
+    <Position X="3" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAACAAAAAAAAAQAAAAAAAAhAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAEAAABAAACAAAAAAAAAQAAACAgAAhAAAAAAAIAAA=</HashCode>
       <FileName>BaseClasses\Actor.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Powers" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Gerle_Lib.BaseClasses.SceneMusic">
+    <Position X="15" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQABAAIAAAAAAAAAAEA=</HashCode>
+      <FileName>BaseClasses\SceneMusic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gerle_Lib.BaseClasses.Power">
+    <Position X="0.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAQCAAAAAQAAAAAAAQAQAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>BaseClasses\Power.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FightingActor">
+    <Position X="13.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAQAAAAAgAACAABAAAAAAIEAAAAAAAAAIAAACAA=</HashCode>
+      <FileName>BaseClasses\FightingActor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Actor" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Gerle_Lib.BaseClasses.Player">
+    <Position X="14.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>BaseClasses\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gerle_Lib.BaseClasses.EndCreditScene">
+    <Position X="5.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABEACAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>BaseClasses\EndCreditScene.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="EndCredits" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Gerle_Lib.BaseClasses.EndCredit" Collapsed="true">
+    <Position X="2.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BaseClasses\EndCredit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gerle_Lib.BaseClasses.Choice" Collapsed="true">
+    <Position X="10.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAACAAAAAA=</HashCode>
+      <FileName>BaseClasses\Choice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gerle_Lib.BaseClasses.ChoiceScreen">
+    <Position X="10.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>BaseClasses\ChoiceScreen.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Choices" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Gerle_Lib.Controllers.SceneController">
+    <Position X="8.25" Y="4.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Gerle_Lib.Controllers.SceneController.FightEndingReason" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Controllers\SceneController.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAgAACAAAAAAAAAwBEAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\SceneController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="Scenes" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

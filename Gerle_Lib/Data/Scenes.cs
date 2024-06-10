@@ -219,8 +219,6 @@ namespace Gerle_Lib.Controllers
                  new Line("Az unoka boldogan mosolyog, és együtt hagyják el az óvodát kéz a kézben, kezükben egymáséval, ahol már várják őt a szülei." +
                      "A győzelem édes íze még hosszan megmarad Gerle számára, hiszen nemcsak az unokáját mentette meg, hanem rámutatott az őszinte " +
                      "szeretetre és a bölcsesség erejére is.", ref Actors.Narrator, "08/23_narrátor_B.mp3"),
-
-
              }, Actors.Narrator.Name ,SceneVersion.B),
         };
     }
