@@ -72,24 +72,51 @@ namespace Gerle_Lib.UIReleated
             while (true)
             {
                 Console.Clear();
-                //TemplateScene();
-                string[] actionCards = {
-                "Attack", "Defend", "Heal", "Special Move", "Test"
-            };
-                List<string> SelectedCards = SelectActionCards(actionCards);
-                SelectedActionsPrint(SelectedCards);
 
-                //DeathScreenSelection result = DeathScreen("JÁTÉK VÉGE");
-                //if (result == DeathScreenSelection.Restart)
-                //{
-                //    Console.WriteLine("Restarting game...");
-                //}
-                //else if (result == DeathScreenSelection.Exit)
-                //{
-                //    Console.WriteLine("Exiting game...");
-                //}
+                // Sample Powers
+                var actionPowers = new List<Power>
+        {
+            new Power("Attack", 20, 10, true, "You dealt 20 damage."),
+            new Power("Defend", 0, 5, false, "You defended."),
+            new Power("Heal", 0, 15, false, "You healed 20 HP."),
+            new Power("Special Move", 30, 20, true, "You dealt 30 damage."),
+            new Power("Test", 10, 5, true, "You tested the action.")
+        };
+
+                // Current Mana and Health for testing purposes
+                ushort currentMana = 50;
+                ushort enemyHealth = 100;
+                ushort yourHealth = 100;
+
+                // Test the FightingUI function with canSelectPowers as true
+                bool canSelectPowers = true;
+                List<Power> selectedPowers = FightingUI(actionPowers, canSelectPowers, ref currentMana, ref enemyHealth, ref yourHealth);
+
+                // Display the selected powers
+                Console.Clear();
+                AnsiConsole.MarkupLine($"[bold green]Selected Powers:[/]");
+                foreach (var power in selectedPowers)
+                {
+                    AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
+                }
+                Console.ReadKey();
+
+                // Test the FightingUI function with canSelectPowers as false
+                canSelectPowers = false;
+                List<Power> enemyActions = FightingUI(actionPowers, canSelectPowers, ref currentMana, ref enemyHealth, ref yourHealth);
+
+                // Display the enemy actions
+                Console.Clear();
+                AnsiConsole.MarkupLine($"[bold red]Enemy Actions:[/]");
+                foreach (var power in enemyActions)
+                {
+                    AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
+                }
+                Console.ReadKey();
             }
         }
+
+
 
 
 
@@ -461,41 +488,141 @@ namespace Gerle_Lib.UIReleated
             AnsiConsole.Write(grid);
         }
 
-        
-        
-        #region Select Action Cards
 
-        public static List<string> SelectActionCards(
-            
-            string[] actionCards
-            
-            )
+
+        //#region Select Action Cards
+
+        //public static List<string> SelectActionCards(
+
+        //    string[] actionCards
+
+        //    )
+        //{
+
+        //    var selectedIndexes = new HashSet<int>();
+        //    int currentIndex = 0;
+
+        //    while (true)
+        //    {
+        //        Console.Clear();
+        //        TemplateFightScene();
+
+        //        var actionGrid = new Grid();
+        //        foreach (var _ in actionCards)
+        //        {
+        //            actionGrid.AddColumn(new GridColumn().Width(AnsiConsole.Console.Profile.Width / actionCards.Length));
+        //        }
+
+        //        var row = new List<IRenderable>();
+        //        for (int i = 0; i < actionCards.Length; i++)
+        //        {
+        //            var card = new Panel(actionCards[i])
+        //            {
+        //                Border = BoxBorder.Rounded,
+        //                Padding = new Padding(1, 1, 1, 1)
+        //            };
+
+        //            if (selectedIndexes.Contains(i) && i == currentIndex)
+        //            {
+        //                card.Border = BoxBorder.Double;
+        //                card.Header = new PanelHeader("[bold yellow]X[/]").Justify(Justify.Center);
+        //            }
+        //            else if (selectedIndexes.Contains(i))
+        //            {
+        //                card.Border = BoxBorder.Double;
+        //                card.Header = new PanelHeader("[bold red]X[/]").Justify(Justify.Center);
+        //            }
+        //            else if (i == currentIndex)
+        //            {
+        //                card.Border = BoxBorder.Rounded;
+        //                card.Header = new PanelHeader("[bold yellow]X[/]").Justify(Justify.Center);
+        //            }
+
+        //            row.Add(card);
+        //        }
+
+        //        actionGrid.AddRow(row.ToArray());
+        //        AnsiConsole.Write(actionGrid);
+
+        //        var key = Console.ReadKey(true).Key;
+        //        if (key == ConsoleKey.LeftArrow)
+        //        {
+        //            currentIndex = (currentIndex == 0) ? actionCards.Length - 1 : currentIndex - 1;
+        //        }
+        //        else if (key == ConsoleKey.RightArrow)
+        //        {
+        //            currentIndex = (currentIndex == actionCards.Length - 1) ? 0 : currentIndex + 1;
+        //        }
+        //        else if (key == ConsoleKey.Enter)
+        //        {
+        //            if (selectedIndexes.Contains(currentIndex))
+        //            {
+        //                selectedIndexes.Remove(currentIndex);
+        //            }
+        //            else
+        //            {
+        //                selectedIndexes.Add(currentIndex);
+        //            }
+        //        }
+        //        else if (key == ConsoleKey.Spacebar)
+        //        {
+        //            List<string> actions = selectedIndexes.Select(index => actionCards[index]).ToList();
+        //            SelectedActionsPrint(actions);
+        //            return actions;
+        //            break;
+        //        }
+        //    }
+        //}
+
+        #region SelectActionCards (function)
+
+        public static List<Power> SelectActionCards(List<Power> actionPowers, ref ushort currentMana, ref ushort enemyHealth, ref ushort yourHealth)
         {
-
             var selectedIndexes = new HashSet<int>();
             int currentIndex = 0;
+            var initialMana = currentMana;
+            var initialEnemyHealth = enemyHealth;
 
             while (true)
             {
                 Console.Clear();
-                TemplateFightScene();
+                var selectedPowerNames = selectedIndexes.Select(i => actionPowers[i].Name).ToList();
+                var selectedPowerMana = selectedIndexes.Select(i => actionPowers[i].Mana).Sum(m => (int)m);
+                var selectedPowerDamage = selectedIndexes.Select(i => actionPowers[i].Damage).Sum(d => (int)d);
+
+                // Calculate the remaining mana after the selected powers
+                var remainingMana = (int)initialMana - selectedPowerMana;
+                var updatedEnemyHealth = (int)initialEnemyHealth - selectedPowerDamage;
+
+                // Re-render the fight scene with updated values
+                TemplateFightScene(
+                    enemyHealth: (ushort)updatedEnemyHealth,
+                    yourHealth: yourHealth,
+                    yourMana: (ushort)remainingMana,
+                    selectedPowerManaCost: (ushort)selectedPowerMana
+                );
 
                 var actionGrid = new Grid();
-                foreach (var _ in actionCards)
+                foreach (var _ in actionPowers)
                 {
-                    actionGrid.AddColumn(new GridColumn().Width(AnsiConsole.Console.Profile.Width / actionCards.Length));
+                    actionGrid.AddColumn(new GridColumn().Width(AnsiConsole.Console.Profile.Width / actionPowers.Count));
                 }
 
                 var row = new List<IRenderable>();
-                for (int i = 0; i < actionCards.Length; i++)
+                for (int i = 0; i < actionPowers.Count; i++)
                 {
-                    var card = new Panel(actionCards[i])
+                    var card = new Panel($"{actionPowers[i].Name}\nMana: {actionPowers[i].Mana}")
                     {
                         Border = BoxBorder.Rounded,
                         Padding = new Padding(1, 1, 1, 1)
                     };
 
-                    if (selectedIndexes.Contains(i) && i == currentIndex)
+                    if (actionPowers[i].Mana > remainingMana)
+                    {
+                        card.BorderColor(Color.Red);
+                        card.Header = new PanelHeader("[bold red]Not Enough Mana[/]").Justify(Justify.Center);
+                    }
+                    else if (selectedIndexes.Contains(i) && i == currentIndex)
                     {
                         card.Border = BoxBorder.Double;
                         card.Header = new PanelHeader("[bold yellow]X[/]").Justify(Justify.Center);
@@ -520,32 +647,84 @@ namespace Gerle_Lib.UIReleated
                 var key = Console.ReadKey(true).Key;
                 if (key == ConsoleKey.LeftArrow)
                 {
-                    currentIndex = (currentIndex == 0) ? actionCards.Length - 1 : currentIndex - 1;
+                    currentIndex = (currentIndex == 0) ? actionPowers.Count - 1 : currentIndex - 1;
                 }
                 else if (key == ConsoleKey.RightArrow)
                 {
-                    currentIndex = (currentIndex == actionCards.Length - 1) ? 0 : currentIndex + 1;
+                    currentIndex = (currentIndex == actionPowers.Count - 1) ? 0 : currentIndex + 1;
                 }
                 else if (key == ConsoleKey.Enter)
                 {
-                    if (selectedIndexes.Contains(currentIndex))
+                    if (actionPowers[currentIndex].Mana <= remainingMana)
                     {
-                        selectedIndexes.Remove(currentIndex);
-                    }
-                    else
-                    {
-                        selectedIndexes.Add(currentIndex);
+                        if (selectedIndexes.Contains(currentIndex))
+                        {
+                            selectedIndexes.Remove(currentIndex);
+                        }
+                        else
+                        {
+                            selectedIndexes.Add(currentIndex);
+                        }
                     }
                 }
                 else if (key == ConsoleKey.Spacebar)
                 {
-                    List<string> actions = selectedIndexes.Select(index => actionCards[index]).ToList();
-                    SelectedActionsPrint(actions);
-                    return actions;
-                    break;
+                    List<Power> selectedPowers = selectedIndexes.Select(index => actionPowers[index]).ToList();
+                    currentMana = (ushort)remainingMana;
+                    enemyHealth = (ushort)updatedEnemyHealth;
+                    return selectedPowers;
                 }
             }
         }
+
+        #endregion
+
+
+        #region FightingUI (function)
+
+        public static List<Power> FightingUI(List<Power> inputPowers, bool canSelectPowers, ref ushort currentMana, ref ushort enemyHealth, ref ushort yourHealth)
+        {
+            if (canSelectPowers)
+            {
+                var selectedPowers = SelectActionCards(inputPowers, ref currentMana, ref enemyHealth, ref yourHealth);
+                foreach (var power in selectedPowers)
+                {
+                    currentMana -= power.Mana;
+                    // Simulate the action on the UI
+                    TemplateFightScene(
+                        UsedPowerName: power.Name,
+                        DemageText: power.DamageText,
+                        enemyHealth: enemyHealth,
+                        yourHealth: yourHealth,
+                        yourMana: currentMana,
+                        selectedPowerManaCost: power.Mana
+                    );
+                    Thread.Sleep(1000);
+                }
+                return selectedPowers;
+            }
+            else
+            {
+                foreach (var power in inputPowers)
+                {
+                    // Simulate the enemy action on the UI
+                    TemplateFightScene(
+                        UsedPowerName: power.Name,
+                        DemageText: power.DamageText,
+                        enemyHealth: enemyHealth,
+                        yourHealth: yourHealth,
+                        yourMana: currentMana,
+                        selectedPowerManaCost: power.Mana
+                    );
+                    Thread.Sleep(1000);
+                }
+                return new List<Power>();
+            }
+        }
+
+        #endregion
+
+
 
         public static void SelectedActionsPrint(List<string> actions)
         {
@@ -553,7 +732,7 @@ namespace Gerle_Lib.UIReleated
             Console.ReadKey();
         }
 
-        #endregion
+        //#endregion
 
 
         public static void Exit()
