@@ -9,8 +9,6 @@ using Gerle_Lib.Controllers;
 using MenuSystem;
 using BarChartItem = Gerle_Lib.BaseClasses.BarChartItem;
 using SysColor = System.Drawing.Color;
-using Gerle_Lib.Data;
-
 namespace Gerle_Lib.UIReleated
 {
     public class UI
@@ -234,7 +232,7 @@ namespace Gerle_Lib.UIReleated
         /// A sorok színe a beszélő (Actor) alapján változik.
         /// A sorok egyenként jelennek meg, gépelési effektussal.
         /// </summary>
-        public static async void CutsceneUI(Line[] lines)
+        public static async Task<SceneVersion> CutsceneUI(Line[] lines)
         {
             var grid = new Grid();
             grid.AddColumn(new GridColumn());
@@ -242,6 +240,11 @@ namespace Gerle_Lib.UIReleated
             foreach (var line in lines)
             {
                 Task voiceOver = Task.Run(() => line.PlayAudioFile(line.VoiceFile));
+
+                if (line is ChoiceScreen choice)
+                {
+                    return choice.PresentChoiceToPlayer().SceneVersion;
+                }
 
                 var text = new Text(line.Text);
 
@@ -286,6 +289,8 @@ namespace Gerle_Lib.UIReleated
 
                 Thread.Sleep(2000); // Wait for 2 seconds before showing the next line
             }
+            
+            return SceneVersion.BASE;
         }
         #endregion
 

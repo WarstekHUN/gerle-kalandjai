@@ -56,8 +56,8 @@ namespace Gerle_Lib.Controllers
         {
             if (CurrentPlayer is null || CurrentlyPlaying is null) return;
 
-            using(Mp3FileReader reader = new Mp3FileReader(filepath))
-            {
+            Mp3FileReader reader = new Mp3FileReader(filepath);
+            
                 //Fájl felkészítése, betöltése RAM-ba.
                 WaveOutEvent player = new WaveOutEvent();
                 player.Init(reader);
@@ -103,7 +103,7 @@ namespace Gerle_Lib.Controllers
 
                 CurrentPlayer.Dispose();
                 CurrentPlayer = player;
-            }
+            
         }
 
         /// <summary>
@@ -138,8 +138,8 @@ namespace Gerle_Lib.Controllers
         {
             AutoResetEvent waitHandle = new AutoResetEvent(false);
 
-            using (Mp3FileReader file = new Mp3FileReader(path))
-            {
+            Mp3FileReader file = new Mp3FileReader(path);
+            
                 if (CurrentPlayer != null)
                 {
                     CurrentPlayer.Dispose();
@@ -169,7 +169,7 @@ namespace Gerle_Lib.Controllers
  
                 CurrentPlayer = localPlayer;
                 waitHandle.WaitOne();
-            }
+            
         }
 
         /// <summary>
@@ -182,8 +182,7 @@ namespace Gerle_Lib.Controllers
         {
             AutoResetEvent waitHandle = new AutoResetEvent(false);
 
-            using (Mp3FileReader file = new Mp3FileReader(path))
-            {
+            Mp3FileReader file = new Mp3FileReader(path);
                 if (CurrentPlayer != null)
                 {
                     CurrentPlayer.Dispose();
@@ -207,7 +206,6 @@ namespace Gerle_Lib.Controllers
                 CurrentPlayer = localPlayer;
 
                 waitHandle.WaitOne();
-            }
         }
     }
 }

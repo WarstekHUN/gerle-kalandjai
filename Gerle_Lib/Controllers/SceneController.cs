@@ -149,7 +149,7 @@ namespace Gerle_Lib.Controllers
         /// <c>PlayScenes</c> a jeleneteket játssza le az ellenőrző pontoktól (<c>CurrentCheckpoint</c>).
         /// </summary>
         #endregion
-        public static void PlayScenes()
+        public static async void PlayScenes()
         {
             if (CurrentCheckpoint >= Scenes.Length)
             {
@@ -163,8 +163,7 @@ namespace Gerle_Lib.Controllers
             {
                 if (PlayerChoice != SceneVersion.BASE && i > 0 && Scenes[i - 1].Version == SceneVersion.BASE && Scenes[i].Version != SceneVersion.BASE && Scenes[i].Version != PlayerChoice && Scenes[i] is not EndCreditScene) continue;
 
-                SceneVersion? version = Scenes[i].PlayScene();
-                if (version is not null) PlayerChoice = (SceneVersion)version;
+                PlayerChoice = await Scenes[i].PlayScene();
 
                 FightEndingReason? fightEnd = null;
                 if (Scenes[i].Opponent is not null)

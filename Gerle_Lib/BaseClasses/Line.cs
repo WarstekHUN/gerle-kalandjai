@@ -36,7 +36,7 @@ public class Line
     /// </summary>
     #endregion
     public string? NoiseFile { get; init; }
-    
+
     #region Line (paraméteres konstruktor) - comment
     /// <summary>
     /// <c>Line</c> paraméteres konstruktor a fentebb megadott tulajdonságoknak adja meg a beállítandó értékeket.
@@ -46,30 +46,28 @@ public class Line
     {
         Text = text;
         Talker = talker;
-        VoiceFile = voiceFile;
+        VoiceFile = Path.Join("Data/Audio/Scenes/", voiceFile);
         NoiseFile = noiseFile;
     }
 
     internal async Task PlayAudioFile(string filePath, CancellationToken? token = null)
     {
         TaskCompletionSource source = new TaskCompletionSource();
-        using (Mp3FileReader reader = new Mp3FileReader(filePath))
-        {
+        Mp3FileReader reader = new Mp3FileReader(filePath);
             WaveOutEvent player = new WaveOutEvent();
-            player.Init(reader);
-            player.Volume = SettingsController.MasterVolume * SettingsController.MusicVolume;
-            player.Play();
+        player.Init(reader);
+        player.Volume = SettingsController.MasterVolume * SettingsController.MusicVolume;
+        player.Play();
 
-            token?.Register(player.Stop);
+        token?.Register(player.Stop);
 
-            player.PlaybackStopped += (object? sender, StoppedEventArgs e) =>
-            {
-                if(e.Exception is not null) source.SetException(e.Exception);
-                player.Dispose();
-                reader.Dispose();
-                source.SetResult();
-            };
-        }
+        player.PlaybackStopped += (object? sender, StoppedEventArgs e) =>
+        {
+            if (e.Exception is not null) source.SetException(e.Exception);
+            player.Dispose();
+            reader.Dispose();
+            source.SetResult();
+        };
 
         await source.Task;
     }

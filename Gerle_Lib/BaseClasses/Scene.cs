@@ -82,7 +82,7 @@ public class Scene
     /// <c>PlayScene</c> metódus felel az adott jelenet lejátszásáért.
     /// </summary>
     #endregion
-    public virtual SceneVersion? PlayScene()
+    public virtual async Task<SceneVersion> PlayScene()
     {
         CancellationTokenSource cts = new CancellationTokenSource();
         Task noisePlayer = Task.Run(async () =>
@@ -91,8 +91,8 @@ public class Scene
 
             if (NoiseFile is null) completionSource.SetResult();
 
-            using (Mp3FileReader noiseReader = new Mp3FileReader(NoiseFile))
-            {
+            Mp3FileReader noiseReader = new Mp3FileReader(NoiseFile);
+            
                 WaveOutEvent player = new WaveOutEvent();
                 player.Init(noiseReader);
                 player.Volume = SettingsController.MasterVolume * SettingsController.FXVolume;
@@ -107,24 +107,12 @@ public class Scene
                     noiseReader.Dispose();
                     completionSource.SetResult();
                 };
-            }
+            
 
             await completionSource.Task;
         });
 
-        SceneVersion? version = null;
-
-        foreach (var line in Lines)
-        {
-            if(line is ChoiceScreen choice)
-            {
-                version = choice.PresentChoiceToPlayer().SceneVersion;
-            }else
-            {
-                UI.CutsceneUI(Lines);
-                //line.PlayLine();
-            }
-        }
+        SceneVersion version = await UI.CutsceneUI(Lines);
 
         cts.Cancel();
         return version;

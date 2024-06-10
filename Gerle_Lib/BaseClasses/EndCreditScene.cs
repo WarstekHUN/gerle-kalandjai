@@ -39,11 +39,13 @@ namespace Gerle_Lib.BaseClasses
             }
         }
 
-        public override SceneVersion? PlayScene()
+        public override async Task<SceneVersion> PlayScene()
         {
             CancellationTokenSource tokenSource = new CancellationTokenSource();
 
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             Task.Run(() => PlayMusic(tokenSource.Token));
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
             foreach (EndCredit credit in EndCredits)
             {
@@ -53,7 +55,7 @@ namespace Gerle_Lib.BaseClasses
 
             tokenSource.Cancel();
 
-            return null;
+            return SceneVersion.BASE;
 
         }
     }

@@ -72,9 +72,9 @@ public class Actor
         Name = name;
         Powers = powers;
         Aggression = Math.Clamp(aggression, (byte)1, (byte)10);
-        AverageManaCostOfPowers = (float?)powers?.Average(el => el.Mana);
+        AverageManaCostOfPowers =  powers?.Length == 0 ? 0 : (float?)powers?.Average(el => el.Mana);
         LeastManaExpensiveAttackingPower = powers?.SkipWhile(el => el is HealingPower).MinBy(el => el.Mana);
-        HealingPowers = (HealingPower[]?)powers?.Where(el => el is HealingPower);
-        MostDamagingPower = powers?.MaxBy(el => el.Damage);
+        HealingPowers = (powers?.OfType<HealingPower>().ToArray());
+        MostDamagingPower = powers?.Length == 0 ? null : powers?.MaxBy(el => el.Damage);
     }
 }
