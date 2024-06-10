@@ -852,8 +852,6 @@ namespace Gerle_Lib.UIReleated
         }
 
         #endregion
-
-
         #region FightingUI (function)
 
         public static List<Power> FightingUI(List<Power> inputPowers, bool canSelectPowers, ushort currentMana, ushort enemyHealth, ushort yourHealth, string enemyName = "enemyName")
@@ -899,30 +897,38 @@ namespace Gerle_Lib.UIReleated
             }
             else
             {
+                ushort replayYourHealth = yourHealth;
+
                 foreach (var power in inputPowers)
                 {
                     Console.Clear();
-                    dummyCurrentMana -= power.Mana;
-                    dummyEnemyHealth = (ushort)Math.Max(0, dummyEnemyHealth - power.Damage);
 
                     // Simulate the enemy action on the UI
                     TemplateFightScene(
                         UsedPowerName: power.Name,
                         DemageText: power.DamageText,
                         enemyName: enemyName,
-                        enemyHealth: dummyEnemyHealth,
-                        yourHealth: dummyYourHealth,
-                        yourMana: dummyCurrentMana,
+                        enemyHealth: enemyHealth,
+                        yourHealth: replayYourHealth,
+                        yourMana: currentMana,
                         selectedPowerManaCost: power.Mana
                     );
                     Thread.Sleep(1000);
+
+                    // Update player's health based on enemy attack
+                    replayYourHealth = (ushort)Math.Max(0, replayYourHealth - power.Damage);
                 }
+
+                // Update original health reference after enemy attack replay
+                yourHealth = replayYourHealth;
 
                 return new List<Power>();
             }
         }
 
         #endregion
+
+
 
 
 
