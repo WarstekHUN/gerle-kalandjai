@@ -5,7 +5,9 @@ VisualStudioVersion = 17.10.34607.79
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GerleKalandjai", "GerleKalandjai\GerleKalandjai.csproj", "{EA2FA6BA-EDB5-441D-868C-DAC789272715}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerle_Lib", "Gerle_Lib\Gerle_Lib.csproj", "{BB55D384-AF33-449E-95CC-DB75543FD89D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gerle_Lib", "Gerle_Lib\Gerle_Lib.csproj", "{BB55D384-AF33-449E-95CC-DB75543FD89D}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WindowsSetup", "WindowsSetup\WindowsSetup.vdproj", "{FA89A1FA-ADDA-431B-BB23-6DACA6BDD788}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,8 @@ Global
 		{BB55D384-AF33-449E-95CC-DB75543FD89D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB55D384-AF33-449E-95CC-DB75543FD89D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB55D384-AF33-449E-95CC-DB75543FD89D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA89A1FA-ADDA-431B-BB23-6DACA6BDD788}.Debug|Any CPU.ActiveCfg = Debug
+		{FA89A1FA-ADDA-431B-BB23-6DACA6BDD788}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
