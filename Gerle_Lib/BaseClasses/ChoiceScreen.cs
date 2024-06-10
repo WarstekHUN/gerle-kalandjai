@@ -1,4 +1,6 @@
-﻿using Gerle_Lib.Data;
+﻿using Gerle_Lib.Controllers;
+using Gerle_Lib.Data;
+using NAudio.Wave;
 
 namespace Gerle_Lib.BaseClasses
 {
@@ -16,9 +18,28 @@ namespace Gerle_Lib.BaseClasses
             Choices = choices;
         }
 
-        private void PlayNarratorVoice(CancellationToken token)
+        private async void PlayNarratorVoice(CancellationToken token)
         {
-            throw new NotImplementedException();
+            TaskCompletionSource completionSource = new TaskCompletionSource();
+
+            using(Mp3FileReader reader = new Mp3FileReader(VoiceFile))
+            {
+                WaveOutEvent player = new WaveOutEvent();
+                player.Init(reader);
+                player.Volume = SettingsController.MasterVolume * SettingsController.DialogueVolume;
+                player.Play();
+
+                player.PlaybackStopped += (object? sender, StoppedEventArgs e) =>
+                {
+                    if(e.Exception != null) throw e.Exception;
+
+                    player.Dispose();
+                    reader.Dispose();
+                    completionSource.SetResult();
+                };
+            }
+
+            await completionSource.Task;
         }
 
         #region PresentChoiceToPlayer (függvény)
