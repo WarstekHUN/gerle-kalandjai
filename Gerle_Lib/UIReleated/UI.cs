@@ -9,6 +9,7 @@ using Gerle_Lib.Controllers;
 using MenuSystem;
 using BarChartItem = Gerle_Lib.BaseClasses.BarChartItem;
 using SysColor = System.Drawing.Color;
+using Gerle_Lib.Data;
 
 namespace Gerle_Lib.UIReleated
 {
@@ -71,20 +72,61 @@ namespace Gerle_Lib.UIReleated
             while (true)
             {
                 Console.Clear();
-                TemplateScene();
+                //TemplateScene();
+                string[] actionCards = {
+                "Attack", "Defend", "Heal", "Special Move", "Test"
+            };
+                List<string> SelectedCards = SelectActionCards(actionCards);
+                SelectedActionsPrint(SelectedCards);
 
-                DeathScreenSelection result = DeathScreen("JÁTÉK VÉGE");
-                if (result == DeathScreenSelection.Restart)
-                {
-                    Console.WriteLine("Restarting game...");
-                }
-                else if (result == DeathScreenSelection.Exit)
-                {
-                    Console.WriteLine("Exiting game...");
-                }
+                //DeathScreenSelection result = DeathScreen("JÁTÉK VÉGE");
+                //if (result == DeathScreenSelection.Restart)
+                //{
+                //    Console.WriteLine("Restarting game...");
+                //}
+                //else if (result == DeathScreenSelection.Exit)
+                //{
+                //    Console.WriteLine("Exiting game...");
+                //}
             }
         }
 
+
+
+        #region Choice Screen
+        public enum ChoiceScreenSelection
+        {
+            Restart,
+            Exit
+        }
+
+        public static DeathScreenSelection ChoiceScreen(Choice choice)
+        {
+            AnsiConsole.Clear();
+            AnsiConsole.Write(BeautyWriter.Spacer(6));
+            var figletText = new FigletText("Válaszz!")
+                .Centered()
+                .Color(Color.Red);
+            AnsiConsole.Write(figletText);
+
+            var selection = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title($"[red]{choice.Text}[/]")
+                    .AddChoices(new[] { "A", "B" })
+                    .HighlightStyle(new Style(Color.Yellow)));
+
+            return selection switch
+            {
+                "Újrakezdés (korábbi mentési pont betöltése)" => DeathScreenSelection.Restart,
+                "Kilépés" => DeathScreenSelection.Exit,
+                _ => DeathScreenSelection.Exit
+            };
+        }
+        #endregion
+
+
+
+        #region Death Screen
         public enum DeathScreenSelection
         {
             Restart,
@@ -113,6 +155,11 @@ namespace Gerle_Lib.UIReleated
                 _ => DeathScreenSelection.Exit
             };
         }
+        #endregion
+
+
+
+
 
         public static void GameMenu()
         {
@@ -133,12 +180,13 @@ namespace Gerle_Lib.UIReleated
 
         public static void NewGameMenu()
         {
-            Menu sm = new Menu(new string[] { "Nehézség ✂️", "Játék neve🔤" }, new Action[] {
-                        () => BeautyWriter.Write("[bold yellow on blue]Nehézség![/] :globe_showing_europe_africa:"),
-                        () => BeautyWriter.Write("[bold yellow on blue]Játék neve![/] :globe_showing_europe_africa:")
-                    }, true, mainMenu);
+            SceneController.CurrentCheckpoint = 0;
+            SceneController.PlayScenes();
         }
 
+
+
+        #region Beállítások
         public static void SettingsMenu()
         {
             Menu sm = new Menu(new string[] { "Hang 📋" }, new Action[] { SoundSettingsMenu }, true, mainMenu);
@@ -251,11 +299,94 @@ namespace Gerle_Lib.UIReleated
             VolumeSetPan.Header = new PanelHeader("[green]Beállítások[/]");
             AnsiConsole.Write(VolumeSetPan);
         }
+        #endregion
+
+
+
+        #region TemplateFightScene
+        public static void TemplateFightScene(
+    string UsedPowerName = "Sakármit Döjcs", string DemageText = "centerText", string otherText = "otherText",
+    string enemyName = "enemyName", ushort enemyHealth = 50,
+    ushort yourHealth = 100, ushort yourMana = 100, ushort selectedPowerManaCost = 10
+)
+        {
+            var grid = new Grid();
+            grid.AddColumn(new GridColumn());
+
+            SysColor col100 = BeautyWriter.FromColor(ConsoleColor.Gray);
+
+            var BossHPItems = new List<BarChartItem>
+    {
+        new BarChartItem("", enemyHealth, SysColor.IndianRed),
+        new BarChartItem("", 100, bgColor),
+    };
+            var BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems, "")));
+            BossHP.Border = BoxBorder.None;
+            BossHP.Header = new PanelHeader($"[red3_1 bold underline]{enemyName}[/]").Justify(Justify.Center);
+            BossHP.Expand = false;
+            BossHP.Padding = new Padding(1, 1, 1, 1);
+
+            var YourHPBar = new List<BarChartItem>
+    {
+        new BarChartItem("", yourHealth, SysColor.IndianRed),
+        new BarChartItem("", 100, bgColor),
+    };
+            var YourHP = new Panel(
+                Align.Center(
+                    ProgressBarMaker.CreateBarChart(YourHPBar, "")
+                )
+            );
+            YourHP.Border = BoxBorder.None;
+            YourHP.Header = new PanelHeader(($"[indianred1]Gerle élete[/]")).Justify(Justify.Center);
+
+            var YourManBar = new BreakdownChart()
+                .AddItem("Megmaradt mana", yourMana - selectedPowerManaCost, Color.Purple)
+                .AddItem("Felhasznált Mana", selectedPowerManaCost, Color.Purple3);
+
+            var YourMana = new Panel(YourManBar);
+            YourMana.Border = BoxBorder.None;
+            YourMana.Header = new PanelHeader(($"[purple_2]Gerle manája[/]")).Justify(Justify.Center);
+
+            var yourGrid = new Grid();
+            yourGrid.AddColumn(new GridColumn());
+            yourGrid.AddColumn(new GridColumn());
+            yourGrid.AddRow(BeautyWriter.Spacer(1), BeautyWriter.Spacer(1));
+            yourGrid.AddRow(YourHP, YourMana);
+
+            var rows = new List<dynamic>()
+    {
+        BossHP,
+        BeautyWriter.Spacer(1),
+        new Rule("[yellow]Használt erő[/]"),
+        BeautyWriter.Spacer(1),
+        new Text(UsedPowerName, new Style(Color.Red, Color.Black)).Centered(),
+        new Text(DemageText, new Style(Color.Green, Color.Black)).Centered(),
+        new Text(otherText, new Style(Color.Blue, Color.Black)).Centered(),
+        BeautyWriter.Spacer(2),
+        new Rule($""),
+        yourGrid,
+        BeautyWriter.Spacer(2),
+        new Rule("[yellow]Akciók[/]"),
+        BeautyWriter.Spacer(1),
+    };
+
+            foreach (var item in rows)
+            {
+                grid.AddRow(item);
+            }
+
+            AnsiConsole.Write(grid);
+        }
+
+
+        #endregion
+
+
+
 
         public static void TemplateScene(
             bool doIneedCards = true,
-            string UsedPowerText = "Sakármit Döjcs", string centerText = "centerText", string otherText = "otherText", string UsedBy = "UsedBy", string enemyName = "enemyName"
-            )
+            string UsedPowerText = "Sakármit Döjcs", string centerText = "centerText", string otherText = "otherText", string enemyName = "enemyName")
         {
             var grid = new Grid();
             grid.AddColumn(new GridColumn());
@@ -330,18 +461,24 @@ namespace Gerle_Lib.UIReleated
             AnsiConsole.Write(grid);
         }
 
-        public static void DisplayActionCards()
+        
+        
+        #region Select Action Cards
+
+        public static List<string> SelectActionCards(
+            
+            string[] actionCards
+            
+            )
         {
-            string[] actionCards = {
-                "Attack", "Defend", "Heal", "Special Move",
-                "test",
-            };
-            int selectedIndex = 0;
+
+            var selectedIndexes = new HashSet<int>();
+            int currentIndex = 0;
 
             while (true)
             {
                 Console.Clear();
-                TemplateScene();
+                TemplateFightScene();
 
                 var actionGrid = new Grid();
                 foreach (var _ in actionCards)
@@ -350,7 +487,6 @@ namespace Gerle_Lib.UIReleated
                 }
 
                 var row = new List<IRenderable>();
-
                 for (int i = 0; i < actionCards.Length; i++)
                 {
                     var card = new Panel(actionCards[i])
@@ -359,42 +495,66 @@ namespace Gerle_Lib.UIReleated
                         Padding = new Padding(1, 1, 1, 1)
                     };
 
-                    if (i == selectedIndex)
+                    if (selectedIndexes.Contains(i) && i == currentIndex)
                     {
                         card.Border = BoxBorder.Double;
-                        card.Header = new PanelHeader("[bold yellow]Selected[/]").Justify(Justify.Center);
-
+                        card.Header = new PanelHeader("[bold yellow]X[/]").Justify(Justify.Center);
+                    }
+                    else if (selectedIndexes.Contains(i))
+                    {
+                        card.Border = BoxBorder.Double;
+                        card.Header = new PanelHeader("[bold red]X[/]").Justify(Justify.Center);
+                    }
+                    else if (i == currentIndex)
+                    {
+                        card.Border = BoxBorder.Rounded;
+                        card.Header = new PanelHeader("[bold yellow]X[/]").Justify(Justify.Center);
                     }
 
                     row.Add(card);
                 }
 
                 actionGrid.AddRow(row.ToArray());
-
                 AnsiConsole.Write(actionGrid);
 
                 var key = Console.ReadKey(true).Key;
                 if (key == ConsoleKey.LeftArrow)
                 {
-                    selectedIndex = (selectedIndex == 0) ? actionCards.Length - 1 : selectedIndex - 1;
+                    currentIndex = (currentIndex == 0) ? actionCards.Length - 1 : currentIndex - 1;
                 }
                 else if (key == ConsoleKey.RightArrow)
                 {
-                    selectedIndex = (selectedIndex == actionCards.Length - 1) ? 0 : selectedIndex + 1;
+                    currentIndex = (currentIndex == actionCards.Length - 1) ? 0 : currentIndex + 1;
                 }
                 else if (key == ConsoleKey.Enter)
                 {
-                    TriggerAction(actionCards[selectedIndex]);
+                    if (selectedIndexes.Contains(currentIndex))
+                    {
+                        selectedIndexes.Remove(currentIndex);
+                    }
+                    else
+                    {
+                        selectedIndexes.Add(currentIndex);
+                    }
+                }
+                else if (key == ConsoleKey.Spacebar)
+                {
+                    List<string> actions = selectedIndexes.Select(index => actionCards[index]).ToList();
+                    SelectedActionsPrint(actions);
+                    return actions;
                     break;
                 }
             }
         }
 
-        public static void TriggerAction(string action)
+        public static void SelectedActionsPrint(List<string> actions)
         {
-            AnsiConsole.MarkupLine($"[bold green]Action triggered: {action}[/]");
+            AnsiConsole.MarkupLine($"[bold green]Actions triggered: {string.Join(", ", actions)}[/]");
             Console.ReadKey();
         }
+
+        #endregion
+
 
         public static void Exit()
         {
