@@ -67,56 +67,74 @@ namespace Gerle_Lib.UIReleated
             mainMenu.SetToScreen();
         }
 
+        #region LiveRefresher (metódus) - comment
+        /// <summary>
+        /// <c>LiveRefresher</c> metódus tesztadatokkal hívja meg a <c>CutsceneUI</c> metódust.
+        /// </summary>
         public static void LiveRefresher()
         {
             while (true)
             {
                 Console.Clear();
 
-                // Sample Powers
-                var actionPowers = new List<Power>
-        {
-            new Power("Attack", 20, 10, true, "You dealt 20 damage."),
-            new Power("Defend", 0, 5, false, "You defended."),
-            new Power("Heal", 0, 15, false, "You healed 20 HP."),
-            new Power("Special Move", 30, 20, true, "You dealt 30 damage."),
-            new Power("Test", 10, 5, true, "You tested the action.")
-        };
+                var hero = new Actor("Hero");
+                var villain = new Actor("Villain");
+                var narrator = new Actor("Narrator");
 
-                // Current Mana and Health for testing purposes
-                ushort currentMana = 50;
-                ushort enemyHealth = 100;
-                ushort yourHealth = 100;
+                var lines = new List<Line>
+    {
+        new Line("Once upon a time in a faraway land...", ref narrator, "narrator_intro.mp3"),
+        new Line("I will defeat you, villain!", ref hero, "hero_taunt.mp3"),
+        new Line("You cannot stop me, hero!", ref villain, "villain_reply.mp3"),
+        new Line("The battle between good and evil has begun.", ref narrator, "narrator_battle.mp3")
+    };
 
-                // Test the FightingUI function with canSelectPowers as true
-                bool canSelectPowers = true;
-                List<Power> selectedPowers = FightingUI(actionPowers, canSelectPowers, ref currentMana, ref enemyHealth, ref yourHealth);
+                CutsceneUI(lines);
 
-                // Display the selected powers
-                Console.Clear();
-                AnsiConsole.MarkupLine($"[bold green]Selected Powers:[/]");
-                foreach (var power in selectedPowers)
-                {
-                    AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
-                }
-                Console.ReadKey();
+                //        // Sample Powers
+                //        var actionPowers = new List<Power>
+                //{
+                //    new Power("Attack", 20, 10, true, "You dealt 20 damage."),
+                //    new Power("Defend", 0, 5, false, "You defended."),
+                //    new Power("Heal", 0, 15, false, "You healed 20 HP."),
+                //    new Power("Special Move", 30, 20, true, "You dealt 30 damage."),
+                //    new Power("Test", 10, 5, true, "You tested the action.")
+                //};
 
-                // Test the FightingUI function with canSelectPowers as false
-                canSelectPowers = false;
-                List<Power> enemyActions = FightingUI(actionPowers, canSelectPowers, ref currentMana, ref enemyHealth, ref yourHealth);
+                //        // Current Mana and Health for testing purposes
+                //        ushort currentMana = 50;
+                //        ushort enemyHealth = 100;
+                //        ushort yourHealth = 100;
 
-                // Display the enemy actions
-                Console.Clear();
-                AnsiConsole.MarkupLine($"[bold red]Enemy Actions:[/]");
-                foreach (var power in enemyActions)
-                {
-                    AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
-                }
+                //        // Test the FightingUI function with canSelectPowers as true
+                //        bool canSelectPowers = true;
+                //        List<Power> selectedPowers = FightingUI(actionPowers, canSelectPowers, ref currentMana, ref enemyHealth, ref yourHealth);
+
+                //        // Display the selected powers
+                //        Console.Clear();
+                //        AnsiConsole.MarkupLine($"[bold green]Selected Powers:[/]");
+                //        foreach (var power in selectedPowers)
+                //        {
+                //            AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
+                //        }
+                //        Console.ReadKey();
+
+                //        // Test the FightingUI function with canSelectPowers as false
+                //        canSelectPowers = false;
+                //        List<Power> enemyActions = FightingUI(actionPowers, canSelectPowers, ref currentMana, ref enemyHealth, ref yourHealth);
+
+                //        // Display the enemy actions
+                //        Console.Clear();
+                //        AnsiConsole.MarkupLine($"[bold red]Enemy Actions:[/]");
+                //        foreach (var power in enemyActions)
+                //        {
+                //            AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
+                //        }
                 Console.ReadKey();
             }
         }
 
-
+        #endregion
 
 
         #region Choice Screen
@@ -210,7 +228,150 @@ namespace Gerle_Lib.UIReleated
             SceneController.PlayScenes();
         }
 
+        #region CutsceneUI (metódus) - comment
+        /// <summary>
+        /// <c>CutsceneUI</c> metódus a jelenet sorait jeleníti meg egymás alatt, középre igazítva.
+        /// A sorok színe a beszélő (Actor) alapján változik.
+        /// A sorok egyenként jelennek meg, gépelési effektussal.
+        /// </summary>
+        public static void CutsceneUI(List<Line> lines)
+        {
+            var grid = new Grid();
+            grid.AddColumn(new GridColumn());
 
+            foreach (var line in lines)
+            {
+                var text = new Text(line.Text);
+
+                if (line.Talker != null)
+                {
+                    switch (line.Talker.Name)
+                    {
+                        case "Narrator":
+                            text = new Text(line.Text, new Style(Color.Gold1, Color.Black));
+                            break;
+                        case "Hero":
+                            text = new Text(line.Text, new Style(Color.Green, Color.Black));
+                            break;
+                        case "Villain":
+                            text = new Text(line.Text, new Style(Color.Red, Color.Black));
+                            break;
+                        default:
+                            text = new Text(line.Text, new Style(Color.White, Color.Black));
+                            break;
+                    }
+                }
+                else
+                {
+                    text = new Text(line.Text, new Style(Color.White, Color.Black));
+                }
+
+                // Typing effect
+                foreach (char c in line.Text)
+                {
+                    Console.Write(c);
+                    Thread.Sleep(50); // Adjust the speed of the typing effect
+                }
+
+                Console.WriteLine();
+
+                grid.AddRow(text.Centered());
+
+                AnsiConsole.Clear();
+                AnsiConsole.Write(grid);
+
+                Thread.Sleep(2000); // Wait for 2 seconds before showing the next line
+            }
+        }
+        #endregion
+
+
+        //#region CutsceneUI (metódus) - comment
+        ///// <summary>
+        ///// <c>CutsceneUI</c> metódus a jelenet sorait jeleníti meg egymás alatt, középre igazítva.
+        ///// A sorok színe a beszélő (Actor) alapján változik.
+        ///// A sorok egyenként jelennek meg, gépelési effektussal.
+        ///// </summary>
+        //public static void CutsceneUI(List<Line> lines)
+        //{
+        //    var layout = new Layout("Root")
+        //        .SplitColumns(
+        //            new Layout("Left"),
+        //            new Layout("Center")
+        //                .SplitRows(
+        //                    new Layout("Top"),
+        //                    new Layout("Middle"),
+        //                    new Layout("Bottom")),
+        //            new Layout("Right"));
+
+        //    layout["Left"].Size(1);
+        //    layout["Right"].Size(1);
+        //    layout["Top"].Size(1);
+        //    layout["Bottom"].Size(1);
+
+        //    var grid = new Grid();
+        //    grid.AddColumn(new GridColumn());
+
+        //    foreach (var line in lines)
+        //    {
+        //        var text = new Text(line.Text);
+
+        //        if (line.Talker != null)
+        //        {
+        //            switch (line.Talker.Name)
+        //            {
+        //                case "Narrator":
+        //                    text = new Text(line.Text, new Style(Color.Gold1, Color.Black));
+        //                    break;
+        //                case "Hero":
+        //                    text = new Text(line.Text, new Style(Color.Green, Color.Black));
+        //                    break;
+        //                case "Villain":
+        //                    text = new Text(line.Text, new Style(Color.Red, Color.Black));
+        //                    break;
+        //                default:
+        //                    text = new Text(line.Text, new Style(Color.White, Color.Black));
+        //                    break;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            text = new Text(line.Text, new Style(Color.White, Color.Black));
+        //        }
+
+        //        // Typing effect
+        //        var typedText = "";
+        //        foreach (char c in line.Text)
+        //        {
+        //            typedText += c;
+        //            var typingText = new Text(typedText);
+
+        //            var tempGrid = new Grid();
+        //            tempGrid.AddColumn(new GridColumn());
+
+        //            foreach (var row in grid.Rows)
+        //            {
+        //                foreach (var cell in row)
+        //                {
+        //                    tempGrid.AddRow(cell);
+        //                }
+        //            }
+
+        //            tempGrid.AddRow(typingText.Centered());
+
+        //            layout["Middle"].Update(new Panel(tempGrid).Expand());
+
+        //            AnsiConsole.Clear();
+        //            AnsiConsole.Write(layout);
+
+        //            Thread.Sleep(50); // Adjust the speed of the typing effect
+        //        }
+
+        //        grid.AddRow(text.Centered());
+        //        Thread.Sleep(2000); // Wait for 2 seconds before showing the next line
+        //    }
+        //}
+        //#endregion
 
         #region Beállítások
         public static void SettingsMenu()
@@ -661,7 +822,7 @@ namespace Gerle_Lib.UIReleated
                 {
                     currentIndex = (currentIndex == actionPowers.Count - 1) ? 0 : currentIndex + 1;
                 }
-                else if (key == ConsoleKey.Enter)
+                else if (key == ConsoleKey.Spacebar)
                 {
                     if (selectedIndexes.Contains(currentIndex))
                     {
@@ -676,7 +837,7 @@ namespace Gerle_Lib.UIReleated
                         enemyHealth = (ushort)Math.Max(0, enemyHealth - actionPowers[currentIndex].Damage);
                     }
                 }
-                else if (key == ConsoleKey.Spacebar)
+                else if (key == ConsoleKey.Enter)
                 {
                     List<Power> selectedPowers = selectedIndexes.Select(index => actionPowers[index]).ToList();
                     return selectedPowers;
