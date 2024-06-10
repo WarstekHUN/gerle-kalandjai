@@ -88,46 +88,63 @@ namespace Gerle_Lib.UIReleated
     };
 
                 //CutsceneUI(lines);
-
-                // Sample Powers
-                var actionPowers = new Power[]
-                {
-                    new Power("Attack", 20, 10, true, "You dealt 20 damage."),
-                    new Power("Defend", 0, 5, false, "You defended."),
-                    new Power("Heal", 0, 15, false, "You healed 20 HP."),
-                    new Power("Special Move", 30, 20, true, "You dealt 30 damage."),
-                    new Power("Test", 10, 5, true, "You tested the action.")
-                };
-
-                // Current Mana and Health for testing purposes
-                ushort currentMana = 50;
-                ushort enemyHealth = 100;
-                ushort yourHealth = 100;
-
-                // Test the FightingUI function with canSelectPowers as true
-                bool canSelectPowers = true;
-                List<Power> selectedPowers = FightingUI(actionPowers, canSelectPowers, currentMana, enemyHealth, yourHealth, "Ellenség Neve");
-
-                // Display the selected powers
-                Console.Clear();
-                AnsiConsole.MarkupLine($"[bold green]Selected Powers:[/]");
-                foreach (var power in selectedPowers)
-                {
-                    AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
-                }
                 Console.ReadKey();
 
-                // Test the FightingUI function with canSelectPowers as false
-                canSelectPowers = false;
-                List<Power> enemyActions = FightingUI(actionPowers, canSelectPowers, currentMana, enemyHealth, yourHealth, "Ellenség 2 neve");
+                //// Sample Powers
+                //var actionPowers = new List<Power>
+                //{
+                //    new Power("Attack", 20, 10, true, "You dealt 20 damage."),
+                //    new Power("Defend", 0, 5, false, "You defended."),
+                //    new Power("Heal", 0, 15, false, "You healed 20 HP."),
+                //    new Power("Special Move", 30, 20, true, "You dealt 30 damage."),
+                //    new Power("Test", 10, 5, true, "You tested the action.")
+                //};
 
-                // Display the enemy actions
-                Console.Clear();
-                AnsiConsole.MarkupLine($"[bold red]Enemy Actions:[/]");
-                foreach (var power in enemyActions)
+                //// Current Mana and Health for testing purposes
+                //ushort currentMana = 50;
+                //ushort enemyHealth = 100;
+                //ushort yourHealth = 100;
+
+                //// Test the FightingUI function with canSelectPowers as true
+                //bool canSelectPowers = true;
+                //List<Power> selectedPowers = FightingUI(actionPowers, canSelectPowers, currentMana, enemyHealth, yourHealth, "Ellenség Neve");
+
+                //// Display the selected powers
+                //Console.Clear();
+                //AnsiConsole.MarkupLine($"[bold green]Selected Powers:[/]");
+                //foreach (var power in selectedPowers)
+                //{
+                //    AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
+                //}
+                //Console.ReadKey();
+
+                //// Test the FightingUI function with canSelectPowers as false
+                //canSelectPowers = false;
+                //List<Power> enemyActions = FightingUI(actionPowers, canSelectPowers, currentMana, enemyHealth, yourHealth, "Ellenség 2 neve");
+
+                //// Display the enemy actions
+                //Console.Clear();
+                //AnsiConsole.MarkupLine($"[bold red]Enemy Actions:[/]");
+                //foreach (var power in enemyActions)
+                //{
+                //    AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
+                //}
+                //Console.ReadKey();
+
+
+                // Test EndCreditUI
+                var credits = new EndCredit[]
                 {
-                    AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
-                }
+            new EndCredit("Lead Developer", "Balogh Levente"),
+            new EndCredit("Sound Engineer", "Kluitenberg Alex"),
+            new EndCredit("Story Artist", "Gáspár Mihály"),
+            new EndCredit("Game Designer", "Tatár Mátyás Bence")
+                };
+
+                EndCreditUI(credits);
+
+                // Wait for user input before restarting the loop
+                Console.WriteLine("Press any key to restart...");
                 Console.ReadKey();
             }
         }
@@ -861,8 +878,6 @@ namespace Gerle_Lib.UIReleated
         }
 
         #endregion
-
-
         #region FightingUI (function)
 
         public static List<Power> FightingUI(Power[] inputPowers, bool canSelectPowers, ushort currentMana, ushort enemyHealth, ushort yourHealth, string enemyName)
@@ -908,24 +923,30 @@ namespace Gerle_Lib.UIReleated
             }
             else
             {
+                ushort replayYourHealth = yourHealth;
+
                 foreach (var power in inputPowers)
                 {
                     Console.Clear();
-                    dummyCurrentMana -= power.Mana;
-                    dummyEnemyHealth = (ushort)Math.Max(0, dummyEnemyHealth - power.Damage);
 
                     // Simulate the enemy action on the UI
                     TemplateFightScene(
                         UsedPowerName: power.Name,
                         DemageText: power.DamageText,
                         enemyName: enemyName,
-                        enemyHealth: dummyEnemyHealth,
-                        yourHealth: dummyYourHealth,
-                        yourMana: dummyCurrentMana,
+                        enemyHealth: enemyHealth,
+                        yourHealth: replayYourHealth,
+                        yourMana: currentMana,
                         selectedPowerManaCost: power.Mana
                     );
                     Thread.Sleep(1000);
+
+                    // Update player's health based on enemy attack
+                    replayYourHealth = (ushort)Math.Max(0, replayYourHealth - power.Damage);
                 }
+
+                // Update original health reference after enemy attack replay
+                yourHealth = replayYourHealth;
 
                 return new List<Power>();
             }
@@ -935,14 +956,38 @@ namespace Gerle_Lib.UIReleated
 
 
 
-
         public static void SelectedActionsPrint(List<string> actions)
         {
             AnsiConsole.MarkupLine($"[bold green]Actions triggered: {string.Join(", ", actions)}[/]");
             Console.ReadKey();
         }
 
-        //#endregion
+        #region EndCreditUI (metódus) - comment
+        /// <summary>
+        /// <c>EndCreditUI</c> metódus a játék végén megjeleníti a stáblistát.
+        /// A nevek egymás alatt, középre igazítva jelennek meg.
+        /// </summary>
+        public static void EndCreditUI(EndCredit[] credits)
+        {
+            var grid = new Grid();
+            grid.AddColumn(new GridColumn());
+
+            foreach (var credit in credits)
+            {
+                var roleText = new Text(credit.Role, new Style(Color.Yellow, Color.Black)).Centered();
+                var nameText = new Text(credit.Name, new Style(Color.White, Color.Black)).Centered();
+
+                grid.AddRow(roleText);
+                grid.AddRow(nameText);
+                grid.AddRow(new Text("").Centered()); // Add an empty row for spacing
+
+                AnsiConsole.Clear();
+                AnsiConsole.Write(grid);
+
+                Thread.Sleep(2000); // Wait for 2 seconds before showing the next credit
+            }
+        }
+        #endregion
 
 
         public static void Exit()

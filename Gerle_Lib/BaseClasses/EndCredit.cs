@@ -1,6 +1,6 @@
 ﻿namespace Gerle_Lib.BaseClasses
 {
-    class EndCredit
+    public class EndCredit
     {
         public string Role { get; init; }
         public string Name { get; init; }
