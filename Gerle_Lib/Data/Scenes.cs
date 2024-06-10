@@ -3,6 +3,7 @@ using Gerle_Lib.BaseClasses;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Net;
 using Spectre.Console;
+using System.Numerics;
 
 namespace Gerle_Lib.Controllers
 {
@@ -220,6 +221,29 @@ namespace Gerle_Lib.Controllers
                      "A győzelem édes íze még hosszan megmarad Gerle számára, hiszen nemcsak az unokáját mentette meg, hanem rámutatott az őszinte " +
                      "szeretetre és a bölcsesség erejére is.", ref Actors.Narrator, "08/23_narrátor_B.mp3"),
              }, Actors.Narrator.Name ,SceneVersion.B),
+             new EndCreditScene(new EndCredit[]
+             {
+                 new EndCredit("Gerle Kalandjai", "Köszönjük, hogy végigjátszottad a játékunkat!"),
+                 new EndCredit("Írta", "Balogh Levente, Gáspár Mihály, Kluitenberg Alex, Tatár Mátyás Bence"),
+                 new EndCredit("Szereposztás", " "),
+                 new EndCredit("Gerle", "Balogh Levente"),
+                 new EndCredit("Aggresszív óvodás", "Tatár Domonkos"),
+                 new EndCredit("Laura", "Tatár Mátyás Bence"),
+                 new EndCredit("Jegyellenőr", "Balogh Levente"),
+                 new EndCredit("Ápoló", "Tatár Mátyás Bence"),
+                 new EndCredit("Portás", "Gáspár Mihály"),
+                 new EndCredit("Galamb 1", "Simon Viktor"),
+                 new EndCredit("Galamb 2", "Gáspár Mihály"),
+                 new EndCredit("Unoka", "Tatár Mátyás Bence"),
+                 new EndCredit("Olvasó", "Kluitenberg Alex"),
+                 new EndCredit("Jézus", "Kluitenberg Alex"),
+                 new EndCredit("Femináci", "Balogh Levente"),
+                 new EndCredit("Random ","Gáspár Mihály"),
+                 new EndCredit("Anyuka", "Kluitenberg Alex"),
+                 new EndCredit("Sanyi", "Balogh Levente"),
+                 new EndCredit("Fejlesztők", "Balogh Levente, Gáspár Mihály, Kluitenberg Alex, Tatár Mátyás Bence"),
+                 new EndCredit("Zenei producer", "Kluitenberg Alex")
+             }, "GERLE-final-track-levente-godmode_147-bpm")
         };
     }
 }
