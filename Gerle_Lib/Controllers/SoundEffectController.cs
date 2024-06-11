@@ -49,7 +49,7 @@ namespace Gerle_Lib.Controllers
 
                 foreach (string fileVariant in fileName)
                 {
-                    current.Add(new SoundEffect(fileVariant));
+                    current.Add(new SoundEffect(fileVariant.Replace('\\', '/')));
                 }
 
                effects.Add(EnumExtender.GetEnumByName<SoundEffects>(Path.GetFileNameWithoutExtension(fileName.Key)!.Split('_')[0]), current);

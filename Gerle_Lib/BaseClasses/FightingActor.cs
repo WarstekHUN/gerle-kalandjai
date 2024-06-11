@@ -10,7 +10,7 @@ public class FightingActor
 {
     public Actor Actor { get; init; }
 
-    private ushort _Health {  get; set; }
+    private ushort _Health {  get; set; } = Actor.MaxHealth;
 
     #region Health (mező) - comment
     /// <summary>
@@ -24,7 +24,7 @@ public class FightingActor
         set => _Health = Math.Clamp(value, (ushort)0, (ushort)100);
     }
 
-    private ushort _Mana { get; set; }
+    private ushort _Mana { get; set; } = Actor.MaxMana;
 
     #region Mana (mező) - comment
     /// <summary>
@@ -59,8 +59,6 @@ public class FightingActor
 #pragma warning restore CS8618
     {
         Actor = actor;
-        Health = Actor.MaxHealth;
-        Mana = Actor.MaxMana;
     }
 
     public FightingActor SetupOpponent(ref Actor opponent)
@@ -162,6 +160,6 @@ public class FightingActor
     {
         Health -= damage;
         //TODO: Hangeffekt lejátszás
-        throw new NotImplementedException("Hangeffekt-lejátszás hiányzik");
+        //throw new NotImplementedException("Hangeffekt-lejátszás hiányzik");
     }
 }
