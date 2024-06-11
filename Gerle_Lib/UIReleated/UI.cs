@@ -590,7 +590,6 @@ namespace Gerle_Lib.UIReleated
                 {
                     BossHP,
                     BeautyWriter.Spacer(1),
-                    new Rule("[yellow]Használt erő[/]"),
                     BeautyWriter.Spacer(2),
                     BeautyWriter.Spacer(2),
                     new Rule($""),
