@@ -24,7 +24,7 @@ namespace Gerle_Lib.BaseClasses
         {
             if(PlayingTask is not null)
             {
-                PlayingTask.Dispose();
+                //PlayingTask.Dispose();
             }
         }
 

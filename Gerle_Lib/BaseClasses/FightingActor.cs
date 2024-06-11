@@ -34,7 +34,10 @@ public class FightingActor
     public ushort Mana
     {
         get => _Mana;
-        set => Math.Max(value, (ushort)0);
+        set {
+            _Mana = Math.Max(value, (ushort)0);
+
+        }
     }
 
     /// <summary>
