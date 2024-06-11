@@ -18,10 +18,10 @@ namespace Gerle_Lib.Controllers
         private static Scene[] Scenes = {
             new Scene(new Line[]
             {
-                new Line("Egy szép csodás szerdai napon Gerle telefonja egyszer csak megcsörren.", ref Actors.Narrator, "01/01_narrátor.mp3"),
-                new Line("Haló! Szia Kicsim! Igeen, minden rendben köszönöm... Na mi történt... Hogy micsodaa?? Dehát ezt nem teheti meg... Najó akkor végére járok ennek... Puszi Drágám, szeretlek!", ref Actors.Gerle, "01/02_Gerle.mp3"),
+                /*new Line("Egy szép csodás szerdai napon Gerle telefonja egyszer csak megcsörren.", ref Actors.Narrator, "01/01_narrátor.mp3"),
+                new Line("Haló! Szia Kicsim! Igeen, minden rendben köszönöm... Na mi történt... Hogy micsodaa?? Dehát ezt nem teheti meg... Najó akkor végére járok ennek... Puszi Drágám, szeretlek!", ref Actors.Gerle, "01/02_Gerle.mp3"),*/
                 new Line("Az ápoló bejön az ajtón", ref Actors.Narrator, "01/03_narrátor.mp3"),
-                new Line("Szép napot Gerle! Meséljen, hogyan érzi magát. Minden rendben volt az este folyamán? Nem volt hideg a szobában, nem fázott?", ref Actors.Apolo, "01/04_apolo.mp3"),
+                /*new Line("Szép napot Gerle! Meséljen, hogyan érzi magát. Minden rendben volt az este folyamán? Nem volt hideg a szobában, nem fázott?", ref Actors.Apolo, "01/04_apolo.mp3"),
                 new Line("Szép napot aranyoskám! Nem, minden a legtökéletesebb volt, de képzelje mi történt. Az imént hívott a kislányom: Azt mondta, hogy az én kis egyetlen unokámat bent akarja tartani a dajka" +
                     " este 9-ig és elvileg tegnap is ezt csinálta.", ref Actors.Gerle, "01/05_Gerle.mp3"),
                 new Line("Jézusom ez szörnyű! Hogyan tehet ilyet valaki!", ref Actors.Apolo, "01/06_apolo.mp3"),
@@ -31,9 +31,9 @@ namespace Gerle_Lib.Controllers
                     " Esetleg akkor távozhat el még, ha sürgős orvosi ellátásra van szüksége, de azt is csak akkor, hogyha az önt elszállítók tudják igazolni, " +
                     "hogy az Országos Mentő Szolgálatnál folytatnak aktív munkaviszonyt, vagy pedig akut halál beállta igazolódott!", ref Actors.Apolo, "01/08_apolo.mp3"),
                 new Line("Nem érdekel, nekem meg KELL megmentenem az édes kis unokámat!", ref Actors.Gerle, "01/09_Gerle.mp3"),
-                new Line("Sajnálom, de nem engedhetem ezt.", ref Actors.Apolo, "01/10_apolo.mp3"),
+                new Line("Sajnálom, de nem engedhetem ezt.", ref Actors.Apolo, "01/10_apolo.mp3"),*/
                 new Line("Erről is a szőröstalpúak tehetnek!", ref Actors.Gerle, "01/11_Gerle.mp3"),
-            }, ref Actors.Apolo, new SceneMusic("01_start", "01_loop", "01_end", 160)), //Ez egy olyan jelenet, aminek a végén van harc. A SceneMusic a harc zenéjét veszi be. Csak a fájlnevek kellenek, amik bele vannak rakva a Data/Audio/Music mappába. Fájlkiterjesztés sem kell.
+            }, ref Actors.Apolo, new SceneMusic("Harc1_intro_180-bpm", "Harc1_kozep-loop_180-bpm", "Harc1_outro_180-bpm", 180)), //Ez egy olyan jelenet, aminek a végén van harc. A SceneMusic a harc zenéjét veszi be. Csak a fájlnevek kellenek, amik bele vannak rakva a Data/Audio/Music mappába. Fájlkiterjesztés sem kell.
         
             new Scene(new Line[]{
                 new Line("Pfúú ez kemény volt. De ne aggódj kicsikém jön már érted a nagyikád. Remélem Marika nem csinál nagyobb problémát", ref Actors.Gerle, "02/01_Gerle.mp3"),

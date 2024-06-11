@@ -76,77 +76,77 @@ namespace Gerle_Lib.UIReleated
             {
                 Console.Clear();
 
-                var hero = new Actor("Hero");
-                var villain = new Actor("Villain");
-                var narrator = new Actor("Narrator");
+                //            var hero = new Actor("Hero");
+                //            var villain = new Actor("Villain");
+                //            var narrator = new Actor("Narrator");
 
-                var lines = new Line[]
-    {
-        new Line("Once upon a time in a faraway land...", ref narrator, "narrator_intro.mp3"),
-        new Line("I will defeat you, villain!", ref hero, "hero_taunt.mp3"),
-        new Line("You cannot stop me, hero!", ref villain, "villain_reply.mp3"),
-        new Line("The battle between good and evil has begun.", ref narrator, "narrator_battle.mp3")
-    };
-
-                await CutsceneUI(lines);
-                Console.ReadKey();
-
-                //// Sample Powers
-                //var actionPowers = new List<Power>
+                //            var lines = new Line[]
                 //{
-                //    new Power("Attack", 20, 10, true, "You dealt 20 damage."),
-                //    new Power("Defend", 0, 5, false, "You defended."),
-                //    new Power("Heal", 0, 15, false, "You healed 20 HP."),
-                //    new Power("Special Move", 30, 20, true, "You dealt 30 damage."),
-                //    new Power("Test", 10, 5, true, "You tested the action.")
+                //    new Line("Once upon a time in a faraway land...", ref narrator, "narrator_intro.mp3"),
+                //    new Line("I will defeat you, villain!", ref hero, "hero_taunt.mp3"),
+                //    new Line("You cannot stop me, hero!", ref villain, "villain_reply.mp3"),
+                //    new Line("The battle between good and evil has begun.", ref narrator, "narrator_battle.mp3")
                 //};
 
-                //// Current Mana and Health for testing purposes
-                //ushort currentMana = 50;
-                //ushort enemyHealth = 100;
-                //ushort yourHealth = 100;
+                //            await CutsceneUI(lines);
+                //            Console.ReadKey();
 
-                //// Test the FightingUI function with canSelectPowers as true
-                //bool canSelectPowers = true;
-                //List<Power> selectedPowers = FightingUI(actionPowers, canSelectPowers, currentMana, enemyHealth, yourHealth, "Ellenség Neve");
-
-                //// Display the selected powers
-                //Console.Clear();
-                //AnsiConsole.MarkupLine($"[bold green]Selected Powers:[/]");
-                //foreach (var power in selectedPowers)
-                //{
-                //    AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
-                //}
-                //Console.ReadKey();
-
-                //// Test the FightingUI function with canSelectPowers as false
-                //canSelectPowers = false;
-                //List<Power> enemyActions = FightingUI(actionPowers, canSelectPowers, currentMana, enemyHealth, yourHealth, "Ellenség 2 neve");
-
-                //// Display the enemy actions
-                //Console.Clear();
-                //AnsiConsole.MarkupLine($"[bold red]Enemy Actions:[/]");
-                //foreach (var power in enemyActions)
-                //{
-                //    AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
-                //}
-                //Console.ReadKey();
-
-
-                // Test EndCreditUI
-                var credits = new EndCredit[]
+                //// Sample Powers
+                var actionPowers = new Power[]
                 {
-            new EndCredit("Lead Developer", "Balogh Levente"),
-            new EndCredit("Sound Engineer", "Kluitenberg Alex"),
-            new EndCredit("Story Artist", "Gáspár Mihály"),
-            new EndCredit("Game Designer", "Tatár Mátyás Bence")
+                    new Power("Attack", 20, 10, true, "You dealt 20 damage."),
+                    new Power("Defend", 0, 5, false, "You defended."),
+                    new Power("Heal", 0, 15, false, "You healed 20 HP."),
+                    new Power("Special Move", 30, 20, true, "You dealt 30 damage."),
+                    new Power("Test", 10, 5, true, "You tested the action.")
                 };
 
-                EndCreditUI(credits);
+                // Current Mana and Health for testing purposes
+                ushort currentMana = 50;
+                ushort enemyHealth = 100;
+                ushort yourHealth = 100;
 
-                // Wait for user input before restarting the loop
-                Console.WriteLine("Press any key to restart...");
+                // Test the FightingUI function with canSelectPowers as true
+                bool canSelectPowers = true;
+                List<Power> selectedPowers = FightingUI(actionPowers, canSelectPowers, currentMana, enemyHealth, yourHealth, "ennemx");
+
+                // Display the selected powers
+                Console.Clear();
+                AnsiConsole.MarkupLine($"[bold green]Selected Powers:[/]");
+                foreach (var power in selectedPowers)
+                {
+                    AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
+                }
                 Console.ReadKey();
+
+                // Test the FightingUI function with canSelectPowers as false
+                canSelectPowers = false;
+                List<Power> enemyActions = FightingUI(actionPowers, canSelectPowers, currentMana, enemyHealth, yourHealth, "ennemx2");
+
+                // Display the enemy actions
+                Console.Clear();
+                AnsiConsole.MarkupLine($"[bold red]Enemy Actions:[/]");
+                foreach (var power in enemyActions)
+                {
+                    AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
+                }
+                Console.ReadKey();
+
+
+            //    // Test EndCreditUI
+            //    var credits = new EndCredit[]
+            //    {
+            //new EndCredit("Lead Developer", "Balogh Levente"),
+            //new EndCredit("Sound Engineer", "Kluitenberg Alex"),
+            //new EndCredit("Story Artist", "Gáspár Mihály"),
+            //new EndCredit("Game Designer", "Tatár Mátyás Bence")
+            //    };
+
+            //    EndCreditUI(credits);
+
+            //    // Wait for user input before restarting the loop
+            //    Console.WriteLine("Press any key to restart...");
+            //    Console.ReadKey();
             }
         }
 
