@@ -980,7 +980,7 @@ namespace Gerle_Lib.UIReleated
         /// <c>EndCreditUI</c> metódus a játék végén megjeleníti a stáblistát.
         /// A nevek egymás alatt, középre igazítva jelennek meg.
         /// </summary>
-        public static void EndCreditUI(EndCredit[] credits)
+        public static void EndCreditUI(EndCredit[] credits, ushort musicDurationInSec)
         {
             var grid = new Grid();
             grid.AddColumn(new GridColumn());

@@ -1,5 +1,6 @@
 ﻿using Gerle_Lib.Controllers;
 using NAudio.Wave;
+using Gerle_Lib.UIReleated;
 
 namespace Gerle_Lib.BaseClasses
 {
@@ -7,13 +8,13 @@ namespace Gerle_Lib.BaseClasses
     {
         private string MusicFile { get; init; }
         private EndCredit[] EndCredits { get; init; }
-        private ushort MusicLengthInSec { get; init; }
+        private ushort MusicDurationInSec { get; init; }
 
-        public EndCreditScene(EndCredit[] credits, string musicFile, ushort musicLenghtInSec, SceneVersion choiceVersion = SceneVersion.BASE) : base(new Line[] { }, musicFile, choiceVersion)
+        public EndCreditScene(EndCredit[] credits, string musicFile, ushort musicDurationInSec, SceneVersion choiceVersion = SceneVersion.BASE) : base(new Line[] { }, musicFile, choiceVersion)
         {
             MusicFile = musicFile;
             EndCredits = credits;
-            MusicLengthInSec = musicLenghtInSec;
+            MusicDurationInSec = musicDurationInSec;
         }
 
         private async void PlayMusic(CancellationToken token)
@@ -49,11 +50,7 @@ namespace Gerle_Lib.BaseClasses
             Task.Run(() => PlayMusic(tokenSource.Token));
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
-            foreach (EndCredit credit in EndCredits)
-            {
-                //Renderelés
-                Thread.Sleep(3500);
-            }
+            UI.EndCreditUI(EndCredits, MusicDurationInSec);
 
             tokenSource.Cancel();
 
