@@ -40,15 +40,14 @@ namespace Gerle_Lib.Controllers
                 new Line("Gerle elmegy a legközelebbi buszmegállóhoz. A menetrend szerint 5 perc múlva jön a következő busz. Unalmában elővesz egy szendvicset, és beleharap. Jóízűen szív mélyet a szendvicsből érkező illatokba. " +
                     "Eközben egy macska dörgölőzik a lábához, a szendvicsért kuncsorogva." +
                     " Bélától, a benti elosztótól mindig rendes adagokat kapott, erre most ez a macska el akarja előle enni. Hiába, kemény hely ez az idősek otthona.", ref Actors.Narrator, "02/02_narrátor.mp3"),
-
-            }),
-
-            new Scene(new Line[]{
                  new ChoiceScreen(new Choice[]
                 {
                     new Choice("Nagylelkű leszel és adsz egy kis elemózsiát a cicának ezzel példát mutatsz a burzsoáziának.", SceneVersion.A),
                     new Choice("Bunkó leszel és nem adsz neki semmi kaját mert, eszedbe jut, hogy véletlen reggel saláta helyett füvet használtál az elkészítésekor.", SceneVersion.B)
                 }, "03/01_narrátor_A.mp3"), // TODO: Hangfájlt az összevotra kicserélni
+            }),
+
+            new Scene(new Line[]{
                 new Line("Gerle végre felszáll a buszra. A buszon már csak egyetlen ülőhely maradt. Ez egy alkoholtól megboldogult férfi mellett volt, pedig még csak reggel 10 óra. Mivel nem tehetett mást, így leült mellé. " +
                     "Egyszer csak lenéző szemekkel megjelenik egy 170cm-es 120kg-os ember: Ottó, a kaller. " +
                     "Először az alkeszhez fordul, akit egy kis vita után le is szállít, majd Gerléhez „gurul”:", ref Actors.Narrator, "03/03_narrátor.mp3"),
@@ -60,7 +59,7 @@ namespace Gerle_Lib.Controllers
                 new Line("De hát nincsenek nálam, nagyon siettem, és az otthonban felejtettem. Kérem nézze el most ezt egy ilyen törékeny és kedves öreg nénikének.", ref Actors.Gerle, "03/09_Gerle.mp3"),
                 new Line("Így járt, nagyika! Nincs igazolvány? Kap a helyébe egy a Budapesti Közlekedési Központ által meghatározott mértékben kiszabadandó 50.000 magyar forint nagyságértékű pénzbírságmennyiséget!", ref Actors.Jegykezelo, "03/10_Kaller.mp3"),
                 new Line("De hát nekem pont annyi a nyugdíjam, nem teheti ezt! Ez ellen muszáj tennem valamit!", ref Actors.Gerle, "03/11_Gerle.mp3"),
-                }, Actors.Narrator.Name ,SceneVersion.A),
+                }, ref Actors.Jegykezelo, new SceneMusic("Harc2_intro_180-bpm", "Harc2_kozep-loop_180-bpm", "Harc2_outro_180-bpm", 180)),
 
             new Scene(new Line[]{
                  new Line("Gerle végre felszáll a buszra. A buszon már csak egyetlen ülőhely maradt. Ez egy alkoholtól megboldogult férfi mellett volt, pedig még csak reggel 10 óra. Mivel nem tehetett mást, így leült mellé. " +
