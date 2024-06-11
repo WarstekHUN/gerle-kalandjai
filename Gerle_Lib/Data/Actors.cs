@@ -103,5 +103,18 @@ namespace Gerle_Lib.Data
             new Power("Plüssmackó",45,45,true,"A dajka két kővel kitömött plüssmackót vágott Gerléhez amitől Gerle 45 életerőt vesztett."),
         });
         public static Actor Unoka = new Actor("Unoka");
+
+        public static Actor Jezus = new Actor("Jézus");
+
+        public static Actor Portas = new Actor("Portás");
+
+        public static Actor Sanyi = new Actor("Sanyi");
+
+        public static Actor Anyuka = new Actor("Anyuka");
+
+        public static Actor Random_csavo = new Actor("Random csávó");
+
+        public static Actor Fiminista = new Actor("Femináci");
+
     }
 }

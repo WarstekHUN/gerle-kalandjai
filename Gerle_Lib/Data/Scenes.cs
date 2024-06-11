@@ -44,7 +44,7 @@ namespace Gerle_Lib.Controllers
                 {
                     new Choice("Nagylelkű leszel és adsz egy kis elemózsiát a cicának ezzel példát mutatsz a burzsoáziának.", SceneVersion.A),
                     new Choice("Bunkó leszel és nem adsz neki semmi kaját mert, eszedbe jut, hogy véletlen reggel saláta helyett füvet használtál az elkészítésekor.", SceneVersion.B)
-                }, "03/01_narrátor_A.mp3"), // TODO: Hangfájlt az összevotra kicserélni
+                }, "03/01_narrátor_A_B.mp3"), // TODO: Hangfájlt az összevotra kicserélni
             }),
 
             new Scene(new Line[]{
@@ -61,21 +61,6 @@ namespace Gerle_Lib.Controllers
                 new Line("De hát nekem pont annyi a nyugdíjam, nem teheti ezt! Ez ellen muszáj tennem valamit!", ref Actors.Gerle, "03/11_Gerle.mp3"),
                 }, ref Actors.Jegykezelo, new SceneMusic("Harc2_intro_180-bpm", "Harc2_kozep-loop_180-bpm", "Harc2_outro_180-bpm", 180)),
 
-            new Scene(new Line[]{
-                 new Line("Gerle végre felszáll a buszra. A buszon már csak egyetlen ülőhely maradt. Ez egy alkoholtól megboldogult férfi mellett volt, pedig még csak reggel 10 óra. Mivel nem tehetett mást, így leült mellé. " +
-                    "Egyszer csak lenéző szemekkel megjelenik egy 170cm-es 120kg-os ember: Ottó, a kaller. " +
-                    "Először az alkeszhez fordul, akit egy kis vita után le is szállít, majd Gerléhez „gurul”:", ref Actors.Narrator, "03/03_narrátor.mp3"),
-                new Line("Üdv Hölgyem! Jegyeket és bérleteket.", ref Actors.Jegykezelo, "03/04_Kaller.mp3"),
-                new Line("Szép napot uram! Én már a nyugdíjas éveimben vagyok nekem már nem kell bérletet használnom.", ref Actors.Gerle, "03/05_Gerle.mp3"),
-                new Line("Akkor kérem, azonnal mutassa meg valamelyik az ön személyazonosságát igazoló okmányát.", ref Actors.Jegykezelo, "03/06_Kaller.mp3"),
-                new Line("Jaj, édesem, nagyon sietek az unokámhoz, nincsenek nálam az irataim. Képzelje a dajkája este 9-ig bent akarja tartani őt. Meg kell, hogy mentsem!", ref Actors.Gerle, "03/07_Gerle.mp3"),
-                new Line("Nem érdekel, mutassa valamilyen igazolványát.", ref Actors.Jegykezelo, "03/08_Kaller.mp3"),
-                new Line("De hát nincsenek nálam, nagyon siettem, és az otthonban felejtettem. Kérem nézze el most ezt egy ilyen törékeny és kedves öreg nénikének.", ref Actors.Gerle, "03/09_Gerle.mp3"),
-                new Line("Így járt, nagyika! Nincs igazolvány? Kap a helyébe egy a Budapesti Közlekedési Központ által meghatározott mértékben kiszabadandó 50.000 magyar forint nagyságértékű pénzbírságmennyiséget!", ref Actors.Jegykezelo, "03/10_Kaller.mp3"),
-                new Line("De hát nekem pont annyi a nyugdíjam, nem teheti ezt! Ez ellen muszáj tennem valamit!", ref Actors.Gerle, "03/11_Gerle.mp3"),
-
-                }, Actors.Narrator.Name ,SceneVersion.B),
-
              new Scene(new Line[]{
                 new Line("Ezek a gonosz kallerek mindig csak megakarnak büntetni. Sosem hiszik el, hogy már nyugdíjas vagyok, ha nincs nálam igazolvány. Bár én ezt egy kicsit bóknak is veszem...", ref Actors.Gerle, "04/01_Gerle.mp3"),
                 new Line("Kis idő elteltével Gerle leszáll a buszról. Bár már nem választotta el őt nagy távolság az unokájától, fájó térdei miatt ez mégis soknak tűnt. Mikor már az útjának majdnem a felét megtette, megállt. " +
@@ -91,7 +76,7 @@ namespace Gerle_Lib.Controllers
                 new Line("Aztán semmi próbálkozás, mer’ véged, te bányarém!", ref Actors.Galambok, "04/08_galamb2.mp3"),
                 new Line("*galamb hangok*", ref Actors.Galambok, "04/09_galamb_hangok.mp3"),
                 new Line("Miiiiiiiiiiiiiiiiii!? Hát adok én nektek mindjárt valamit, de azt nem teszitek zsebre! Huligánok!", ref Actors.Gerle, "04/10_Gerle.mp3"),
-                }),
+                }, ref Actors.Galambok, new SceneMusic("Harc3_intro_180-bpm.mp3", "Harc3_kozep_loop_180-bpm.mp3", "Harc3_outro_180-bpm.mp3", 180)),
 
              new Scene(new Line[]{
                new Line("Miután eltelt körülbelül 2 óra, Gerle már újra rendben volt.", ref Actors.Narrator, "05/01_narrátor.mp3"),
@@ -101,15 +86,15 @@ namespace Gerle_Lib.Controllers
                    "Az egyik egy dupla copfos ürge, a másik egy hosszú rasztás hajó fickó volt. Mindketten fekete pólót hordtak, amire az volt írva, hogy free valami. " +
                    "Sajnos Gerle nem tudta teljesen elolvasni, biztosan rockkerek lehettek, azért voltak fekete pólóban. Egy harmadik apuka is megjelenik. " +
                    "Ő teljesen magán kívül van, a közel múltban történtek miatt. Azt ordította a telefonba, hogy:", ref Actors.Narrator, "05/03_narrátor.mp3"),
-               new Line("Értsd már meg, hogy nem körülötted forog a világ, vannak rajtad kívül más emberek is!", ref Actors.Narrator, "05/04_random_csavo.mp3"),
+               new Line("Értsd már meg, hogy nem körülötted forog a világ, vannak rajtad kívül más emberek is!", ref Actors.Random_csavo, "05/04_random_csavo.mp3"),
                new Line("Illetve a váróban egy teljesen kiakadt anyuka is ott volt. Gerle féle fordul, hogy megkérdezze mi a baj.", ref Actors.Narrator, "05/05_narrátor.mp3"),
                new Line("Jajj, édesem mi a baj?", ref Actors.Gerle, "05/06_Gerle.mp3"),
-               new Line("A gyerekemet itt bent tartja ez a gonosz óvónő és már nagyon szeretném hazavinni. Valterkám gyere haza, otthon a tesód, Peti már nagyon vár.", ref Actors.Narrator, "05/07_anyuka.mp3"),
+               new Line("A gyerekemet itt bent tartja ez a gonosz óvónő és már nagyon szeretném hazavinni. Valterkám gyere haza, otthon a tesód, Peti már nagyon vár.", ref Actors.Anyuka, "05/07_anyuka.mp3"),
                new Line("Ugyan ne aggódj, én megszabadítom a gyerekeket ettől a banyától.", ref Actors.Gerle, "05/08_Gerle.mp3"),
                new Line("Gerle ezután nagy léptekkel indul a csoport szobája felé, viszont mikor az ajtóhoz ér, egy kicsi, ám agresszív óvodás az útját állja.", ref Actors.Narrator, "05/09_narrátor.mp3"),
                new Line("Édeském, hát miért vagy ilyen ideges?", ref Actors.Gerle, "05/10_Gerle.mp3"),
                new Line("MERT LAURA NÉNI ELVETTE AZ IPAD 18 PRO-MAT ÉS MÉG AZ AIRPODS 67 PRO MAX ULTRA X-EMET IS! NEM HISZEM EL! ADJA VISSZA! ADJA VISSZA! ADJA VISSZA! ADJA VISSZA! L.L. JUNIORT AKAROK HALLGATNI! „T’aves Baxtalo, shavale, T’aves Baxtalo", ref Actors.Agressziv_kis_ovis, "05/11_AKO.mp3"),
-             }),
+             }, ref Actors.Agressziv_kis_ovis, new SceneMusic("Harc4_intro_90-bpm.mp3", "Harc4_kozep_90-bpm.mp3", "Harc4_outro_90-bpm.mp3", 90)),
 
              new Scene(new Line[]{
                new Line("NA JÓLVAN MOSTMÁR! ELEGEM VAN EBBŐL... ITT MINDENKI OLYAN BUNKÓ ÉS AGGRESSZÍV VELEM... ÉS MÉG MINDIG NINCS ITT AZ UNOKÁM!!! HOL VAN AZ A BOSZI! Mindegy, nem is érdekel, csak kerüljön hozzám a kis édesem.", ref Actors.Gerle, "06/01_Gerle.mp3"),
@@ -146,19 +131,19 @@ namespace Gerle_Lib.Controllers
 
              new Scene(new Line[]{
                 new Line("Hirtelen betoppan egy apuka. Egy picit zilált volt a frizurája, de egyébként normálisnak tűnt. Egészen addig amíg meg nem szólalt.", ref Actors.Narrator, "07/01_narrátor_A.mp3"),
-                new Line("LAURA!! SANYI ITT VAN GYEREKÉRT!", ref Actors.Narrator, "07/02_Sanyi.mp3"),
+                new Line("LAURA!! SANYI ITT VAN GYEREKÉRT!", ref Actors.Sanyi, "07/02_Sanyi.mp3"),
                 new Line("Jajj, nemár, megint te jöttél érte?. Lali annyival jobb nevelője volt, viszont amióta kiment a németekhez, azóta te meg Csoki jön csak érte...", ref Actors.Dajka_Laura_neni, "07/03_Laura.mp3"),
-                new Line("ÚÚÚÚ.... TUDSZ NEKEM MESÉLNI EGY MESÉT?? A KIRÁLYLÁNYOS MESÉT.", ref Actors.Narrator, "07/04_Sanyi.mp3"),
+                new Line("ÚÚÚÚ.... TUDSZ NEKEM MESÉLNI EGY MESÉT?? A KIRÁLYLÁNYOS MESÉT.", ref Actors.Sanyi, "07/04_Sanyi.mp3"),
                 new Line("Ahhoz korábban kell bejönni, alvás idő elött.", ref Actors.Dajka_Laura_neni, "07/05_Laura.mp3"),
-                new Line("ÉS AZ MIKOR VAN??", ref Actors.Narrator, "07/06_Sanyi.mp3"),
+                new Line("ÉS AZ MIKOR VAN??", ref Actors.Sanyi, "07/06_Sanyi.mp3"),
                 new Line("Olyan délután 2 környékén.", ref Actors.Dajka_Laura_neni, "07/07_Laura.mp3"),
-                new Line("ÉS AZ MIKOR VAAN??", ref Actors.Narrator, "07/08_Sanyi.mp3"),
+                new Line("ÉS AZ MIKOR VAAN??", ref Actors.Sanyi, "07/08_Sanyi.mp3"),
                 new Line("Dél után 2 órával.", ref Actors.Dajka_Laura_neni, "07/09_Laura.mp3"),
-                new Line("RENDBEN, ADDIG ITT MARADOK.", ref Actors.Narrator, "07/10_Sanyi.mp3"),
+                new Line("RENDBEN, ADDIG ITT MARADOK.", ref Actors.Sanyi, "07/10_Sanyi.mp3"),
                 new Line("De hisz neked saját otthonod van és ráadásul egy gyerekért jöttél.", ref Actors.Dajka_Laura_neni, "07/11_Laura.mp3"),
-                new Line("NEM BAJ, Ő IS SZERETNÉ HALLANI BIZTOSAN.", ref Actors.Narrator, "07/12_Sanyi.mp3"),
+                new Line("NEM BAJ, Ő IS SZERETNÉ HALLANI BIZTOSAN.", ref Actors.Sanyi, "07/12_Sanyi.mp3"),
                 new Line("De az óvoda be fog zárni.", ref Actors.Dajka_Laura_neni, "07/13_Laura.mp3"),
-                new Line("JÓ AKKOR ITT ALSZUNK.", ref Actors.Narrator, "07/14_Sanyi.mp3"),
+                new Line("JÓ AKKOR ITT ALSZUNK.", ref Actors.Sanyi, "07/14_Sanyi.mp3"),
                 new Line("Amíg Laura és Sanyi tovább folytatták a beszélgetésüket, addig Gerlének sikerült elráncigálnia az unokáját. " +
                     "Szegény Andriska nagyon kivolt, még szívesen maradt volna. Azonban Gerle nem feledkezett meg róla, ezért hozott neki egy Snickers-t így máris jókedvre derült. " +
                     "Mikor sikerült Andrisnak lenyugodnia, és már tisztán látott, felismerte, hogy nagymamája csak jót akart neki. " +
@@ -170,13 +155,13 @@ namespace Gerle_Lib.Controllers
                 new Line("Rendben édesem, én bízok benned.", ref Actors.Gerle, "07/19_Gerle.mp3"),
                 new Line("Ezután Gerle és Andris boldogan és jókedvűen sétált hazafelé. Mikor eljött a búcsú ideje mind a ketten könnybe lábadt szemekkel köszöntek el egymástól. " +
                     "Gerle elindult haza, majd mikor visszaért a portánál megszólítja a portás.", ref Actors.Narrator, "07/20_narrátor_A.mp3"),
-                new Line("Látom Gerle megint kalandos egy napod volt. Remélem azt tudod, hogy történtek miatt bajba kerülhetsz.", ref Actors.Narrator, "07/21_portas_A.mp3"),
+                new Line("Látom Gerle megint kalandos egy napod volt. Remélem azt tudod, hogy történtek miatt bajba kerülhetsz.", ref Actors.Portas, "07/21_portas_A.mp3"),
                 new Line("Ugyan már... Ti fiatalok nem tudjátok milyen is az igazi szeretet. Most pedig állj arrébb aranyoskám, sietek a lakásomba. " +
                     "Már nagyon szeretnék aludni, nagyon kimerített ez nap.", ref Actors.Gerle, "07/22_Gerle.mp3"),
                 new Line("Andris tervei sikeresek voltak és pár hónappal később már Gerlével együtt buliztak Ibizán a legjobb DJ-k zenéire. " +
                     "Andris hazajött, viszont Gerle kint maradt, ugyanis számára jobb a kinti élet, nincs annyi időjárás változás, így se a feje, se a végtagjai nem fájnak annyit.. " +
                     "Persze, Andriska rendszeresen látogatta őt. Ekkor mindig csaptak egy jó nagy partyt.", ref Actors.Narrator, "07/23_narrátor_A.mp3"),
-             }, Actors.Narrator.Name ,SceneVersion.A),
+             }, Actors.Unoka.Name ,SceneVersion.A),
 
              new Scene(new Line[]{
                 new Line("Gerle nem jut messzire: Laurával, az óvónővel találja szemben magát.", ref Actors.Narrator, "07/01_narrátor_B.mp3"),
@@ -191,29 +176,29 @@ namespace Gerle_Lib.Controllers
                     "A csöndet varjúkárogás töri meg. Mindketten tudják: Amint a madár elrepül, a harc elkezdődik. Néma csendben várnak a madár első szárnycsapására." +
                     "Gerle a cukorért nyúl, Laura a macikért. Dobás. " +
                     "Se a macik, se a cukrok nem találtak célba – a levegőben összeütköztek, és kettőjük között pont középen a padlón landoltak.", ref Actors.Narrator, "07/06_narrátor_B.mp3"),
-             }, Actors.Narrator.Name ,SceneVersion.B),
+             }, ref Actors.Dajka_Laura_neni, new SceneMusic("Western_Intro_120-bpm.mp3", "Western_kozep_120-bpm.mp3", "Western_outro_120-bpm.mp3", 120), SceneVersion.B),
 
              new Scene(new Line[]{
                  new Line("Mikor az életereje az óvodásnak és Laurának is lent van, a harcot a mennyből alászálló messiás szakítja meg", ref Actors.Narrator, "08/01_narrátor_B.mp3"),
                  new Line("Gyermekeiiiiiiiiim! Fejezzétek be a harcot! Jöttem az Atya utasításából igazságot tenni. " +
                      "A Tétény András által képviselt eszmék nagy része káros az emberiségre. " +
-                     "Mindenki egyenlő, és Isten minden bárányát egyiránt szereti.", ref Actors.Narrator, "08/02_Jézus_B.mp3"),
+                     "Mindenki egyenlő, és Isten minden bárányát egyiránt szereti.", ref Actors.Jezus, "08/02_Jézus_B.mp3"),
                  new Line("Jézus Middle G felé fordul", ref Actors.Narrator, "08/03_narrátor_B.mp3"),
-                 new Line("András....", ref Actors.Narrator, "08/04_Jézus.mp3"),
+                 new Line("András....", ref Actors.Jezus, "08/04_Jézus.mp3"),
                  new Line("Hirtelen egy rövidre vágott rózsaszín hajú, piercinges viszonylag testesebb anyuka lép be a beszélgetésbe hívatlanul, aki igazából az örökbe fogadott gyerekéért jött.", ref Actors.Narrator, "08/05_narrátor_B.mp3"),
                  new Line("Aha, szóval mindenki egyenlő, mi? Peeersze! Mert ezt tényleg igaz is! Az összes férfi egy utolsó senkiházi! " +
-                     "Mindegyik egy „creep”! Mindegyik csak a hatalomra és a nők kihasználására vágyik! Slayyyy!", ref Actors.Narrator, "08/06_Femináci.mp3"),
-                 new Line("Gyermekem, ez nem igaz. Isten az embert a saját képére teremtette. Isten a nőt és a férfit egyenlőnek teremtette, mert mindkettő Isten képmása.", ref Actors.Narrator, "08/07_Jézus_B.mp3"),
-                 new Line("Jaaaj hagyjál már! Ki vagy te? Jézus Krisztus....", ref Actors.Narrator, "08/08_Femináci.mp3"),
-                 new Line("Pontosan, Emőke. Jézus vagyok. Jézus Krisztus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.", ref Actors.Narrator, "08/09_Jézus_B.mp3"),
+                     "Mindegyik egy „creep”! Mindegyik csak a hatalomra és a nők kihasználására vágyik! Slayyyy!", ref Actors.Fiminista, "08/06_Femináci.mp3"),
+                 new Line("Gyermekem, ez nem igaz. Isten az embert a saját képére teremtette. Isten a nőt és a férfit egyenlőnek teremtette, mert mindkettő Isten képmása.", ref Actors.Jezus, "08/07_Jézus_B.mp3"),
+                 new Line("Jaaaj hagyjál már! Ki vagy te? Jézus Krisztus....", ref Actors.Fiminista, "08/08_Femináci.mp3"),
+                 new Line("Pontosan, Emőke. Jézus vagyok. Jézus Krisztus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.", ref Actors.Jezus, "08/09_Jézus_B.mp3"),
                  new Line("Jézus ekkor felvett a mellettük lévő asztalról egy vízzel teli poharat, majd borrá változtatta.", ref Actors.Narrator, "08/10_narrátor_B.mp3"),
-                 new Line("Ez itt az én vérem", ref Actors.Narrator, "08/11_Jézus_B.mp3"),
+                 new Line("Ez itt az én vérem", ref Actors.Jezus, "08/11_Jézus_B.mp3"),
                  new Line("Nyújtá a nő felé Jézus a poharat", ref Actors.Narrator, "08/12_narrátor_B.mp3"),
                  new Line("Az utóbbi szavak elhangzására a femináci aktivistán egyértelműen látszódott, hogy átkapcsolt benne valami. Körülbelül fél percnek kellett eltennie, mire újból meg tudott szólalni.", ref Actors.Narrator, "08/13_narrátor_B.mp3"),
-                 new Line("Ámen!", ref Actors.Narrator, "08/14_Femináci.mp3"),
+                 new Line("Ámen!", ref Actors.Fiminista, "08/14_Femináci.mp3"),
                  new Line("Mondá a nő, majd ijedve elrohant.", ref Actors.Narrator, "08/15_narrátor_B.mp3"),
                  new Line("Ezután a rövid reklámszünet után, Isten fia folytatta a monológját. Rátette a jobb kezét Middle G homlokára.", ref Actors.Narrator, "08/16_narrátor_B.mp3"),
-                 new Line("András, neked adom a racionalitás ajándékát. Használd felelősséggel!", ref Actors.Narrator, "08/17_Jézus_B.mp3"),
+                 new Line("András, neked adom a racionalitás ajándékát. Használd felelősséggel!", ref Actors.Jezus, "08/17_Jézus_B.mp3"),
                  new Line("mondta Jézus, majd nagy fényességgel eltűnt.", ref Actors.Narrator, "08/18_narrátor_B.mp3"),
                  new Line("mondta Jézus, majd nagy fényességgel eltűnt. Az unoka, aki látszólag felismerte Gerle méltóságát és bölcsességét, megkönnyebbülten öleli át őt.", ref Actors.Narrator, "08/19_narrátor_B.mp3"),
                  new Line("Nagyi, végre itt vagy! Milyen jó, hogy jöttél! Nem is kérdés, hogy te vagy az igazi hősünk!", ref Actors.Unoka, "08/20_Unoka.mp3"),
@@ -222,7 +207,7 @@ namespace Gerle_Lib.Controllers
                  new Line("Az unoka boldogan mosolyog, és együtt hagyják el az óvodát kéz a kézben, kezükben egymáséval, ahol már várják őt a szülei." +
                      "A győzelem édes íze még hosszan megmarad Gerle számára, hiszen nemcsak az unokáját mentette meg, hanem rámutatott az őszinte " +
                      "szeretetre és a bölcsesség erejére is.", ref Actors.Narrator, "08/23_narrátor_B.mp3"),
-             }, Actors.Narrator.Name ,SceneVersion.B),
+             }, Actors.Jezus.Name , SceneVersion.B),
              new EndCreditScene(new EndCredit[]
              {
                  new EndCredit("Gerle Kalandjai", "Köszönjük, hogy végigjátszottad a játékunkat!"),
