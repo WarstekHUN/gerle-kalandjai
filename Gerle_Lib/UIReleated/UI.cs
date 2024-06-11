@@ -605,7 +605,7 @@ namespace Gerle_Lib.UIReleated
                     BeautyWriter.Spacer(1),
                 };
 
-            if (canSelectPowers)
+            if (!canSelectPowers)
             {
                 rows = new List<dynamic>()
                 {
