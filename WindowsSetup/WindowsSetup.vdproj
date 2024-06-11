@@ -43,6 +43,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -59,6 +75,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -167,7 +191,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Gerle Kalandjai"
         "ProductCode" = "8:{38CC80F4-2B4F-46D4-91DF-C1B5F09F80D0}"
-        "PackageCode" = "8:{57444D38-5611-4951-AEC4-2E3E685919CF}"
+        "PackageCode" = "8:{890D5D7A-5E39-4226-B77F-70422C18A72D}"
         "UpgradeCode" = "8:{EE559E96-BDAA-40F9-BAD6-D4A71491515C}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -303,7 +327,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_74E27FD71E594F7E81C6B7FA898F3913"
             {
-            "Name" = "8:Shortcut to %sPublish Items from GerleKalandjai (Active)"
+            "Name" = "8:Gerle Kalandjai"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:3"
@@ -744,7 +768,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B899CA05190C4B7F936E4826F1D058FC"
             {
-            "SourcePath" = "8:..\\GerleKalandjai\\obj\\Release\\net7.0\\apphost.exe"
+            "SourcePath" = "8:..\\GerleKalandjai\\obj\\Debug\\net7.0\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_235C9F02196A4316A8647BD96B96BB34"
