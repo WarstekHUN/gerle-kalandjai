@@ -914,6 +914,11 @@ namespace Gerle_Lib.UIReleated
                     replayCurrentMana -= power.Mana;
                     replayEnemyHealth = (ushort)Math.Max(0, replayEnemyHealth - power.Damage);
 
+                    if (power.Damage != 0)
+                    {
+                        SoundEffectController.PlayEffect(SoundEffectController.SoundEffects.DealDamage);
+                    }
+
                     // Simulate the action on the UI
                     TemplateFightScene(
                         UsedPowerName: power.Name,
@@ -941,6 +946,11 @@ namespace Gerle_Lib.UIReleated
                 foreach (var power in inputPowers)
                 {
                     Console.Clear();
+
+                    if (power.Damage != 0)
+                    {
+                        SoundEffectController.PlayEffect(SoundEffectController.SoundEffects.ReceiveDamage);
+                    }
 
                     // Simulate the enemy action on the UI
                     TemplateFightScene(
