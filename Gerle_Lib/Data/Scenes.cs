@@ -245,7 +245,7 @@ namespace Gerle_Lib.Controllers
                  new EndCredit("Sanyi", "Balogh Levente"),
                  new EndCredit("Fejlesztők", "Balogh Levente, Gáspár Mihály, Kluitenberg Alex, Tatár Mátyás Bence"),
                  new EndCredit("Zenei producer", "Kluitenberg Alex")
-             }, "GERLE-final-track-levente-godmode_147-bpm")
+             }, "GERLE-final-track-levente-godmode_147-bpm", 130)
         };
     }
 }

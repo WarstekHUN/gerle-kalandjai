@@ -16,6 +16,7 @@ class Program
 
     static void Main(string[] args)
     {
+        SoundEffectController.LoadEffects();
         UI.InitializeUI();
     }
 }

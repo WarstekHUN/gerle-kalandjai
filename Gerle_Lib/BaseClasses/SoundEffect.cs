@@ -1,5 +1,6 @@
 ﻿using Gerle_Lib.Controllers;
 using NAudio.Wave;
+using System.Diagnostics;
 
 namespace Gerle_Lib.BaseClasses
 {
@@ -11,6 +12,7 @@ namespace Gerle_Lib.BaseClasses
 
         public SoundEffect(string path)
         {
+            Debug.WriteLine(path);
             FileReader = new Mp3FileReader(path);
             Player = new WaveOutEvent();
             Player.Init(FileReader);
