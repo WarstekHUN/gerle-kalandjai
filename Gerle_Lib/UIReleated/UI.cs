@@ -615,7 +615,7 @@ namespace Gerle_Lib.UIReleated
                     BeautyWriter.Spacer(1),
                     new Text(UsedPowerName, new Style(Color.Red, Color.Black)).Centered(),
                     new Text(DemageText, new Style(Color.Green, Color.Black)).Centered(),
-                    new Text(otherText, new Style(Color.Blue, Color.Black)).Centered(),
+                    //new Text(otherText, new Style(Color.Blue, Color.Black)).Centered(),
                     BeautyWriter.Spacer(2),
                     new Rule($""),
                     yourGrid,
