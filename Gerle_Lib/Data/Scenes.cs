@@ -72,7 +72,7 @@ namespace Gerle_Lib.Controllers
                     "Ahogy ette, csak ette, egyre jobban ellazult, és jobb kedvre derült, csak a galambok nem csillapodtak és egyre vadabbak lettek.", ref Actors.Narrator, "04/04_narrátor.mp3"),
                 new Line("EZEK MEGTÁMADTAK, SEGÍTSÉG!", ref Actors.Gerle, "04/05_Gerle.mp3"),
                 new Line("Mikor kiabálni kezdett, a körülötte lévő emberek nagyon furcsán néztek rá, ugyanis egy galamb, sőt egy lélek se volt Gerle 20 méteres körzetében.", ref Actors.Narrator, "04/06_narrátor.mp3"),
-                new Line("Csákány, muter! Pakoljá kifelé! Szétcsípdesem a gégéd!", ref Actors.Galambok, "04/07_galamb.mp3"),
+                new Line("Csákány, muter! Pakoljá kifelé! Szétcsípdesem a gégéd!", ref Actors.Galambok, "04/07_galamb1.mp3"),
                 new Line("Aztán semmi próbálkozás, mer’ véged, te bányarém!", ref Actors.Galambok, "04/08_galamb2.mp3"),
                 new Line("*galamb hangok*", ref Actors.Galambok, "04/09_galamb_hangok.mp3"),
                 new Line("Miiiiiiiiiiiiiiiiii!? Hát adok én nektek mindjárt valamit, de azt nem teszitek zsebre! Huligánok!", ref Actors.Gerle, "04/10_Gerle.mp3"),
