@@ -89,7 +89,7 @@ namespace Gerle_Lib.UIReleated
         new Line("The battle between good and evil has begun.", ref narrator, "narrator_battle.mp3")
     };
 
-                //CutsceneUI(lines);
+                CutsceneUI(lines);
                 Console.ReadKey();
 
                 //// Sample Powers
