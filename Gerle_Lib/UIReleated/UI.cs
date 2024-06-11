@@ -553,6 +553,7 @@ namespace Gerle_Lib.UIReleated
         new BarChartItem("", enemyHealth, SysColor.IndianRed),
         new BarChartItem("", 100, bgColor),
     };
+
             var BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems, "")));
             BossHP.Border = BoxBorder.None;
             BossHP.Header = new PanelHeader($"[red3_1 bold underline]{enemyName}[/]").Justify(Justify.Center);
@@ -573,8 +574,13 @@ namespace Gerle_Lib.UIReleated
             YourHP.Header = new PanelHeader(($"[indianred1]Gerle élete[/]")).Justify(Justify.Center);
 
             var YourManBar = new BreakdownChart()
-                .AddItem("Megmaradt mana", yourMana, Color.Purple)
-                .AddItem("Felhasznált Mana", selectedPowerManaCost, Color.Purple3);
+                .AddItem("Megmaradt mana", yourMana, Color.Purple);
+
+            if (canSelectPowers)
+            {
+                YourManBar.AddItem("Felhasznált Mana", selectedPowerManaCost, Color.Purple3);
+            }
+
 
             var YourMana = new Panel(YourManBar);
             YourMana.Border = BoxBorder.None;
