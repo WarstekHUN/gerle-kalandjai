@@ -9,6 +9,7 @@ using Gerle_Lib.Controllers;
 using MenuSystem;
 using BarChartItem = Gerle_Lib.BaseClasses.BarChartItem;
 using SysColor = System.Drawing.Color;
+using Gerle_Lib.Data;
 namespace Gerle_Lib.UIReleated
 {
     public class UI
@@ -87,7 +88,7 @@ namespace Gerle_Lib.UIReleated
         new Line("The battle between good and evil has begun.", ref narrator, "narrator_battle.mp3")
     };
 
-                //CutsceneUI(lines);
+                CutsceneUI(lines);
                 Console.ReadKey();
 
                 //// Sample Powers
@@ -251,11 +252,13 @@ namespace Gerle_Lib.UIReleated
         /// </summary>
         public static async Task<SceneVersion> CutsceneUI(Line[] lines)
         {
-            var grid = new Grid();
-            grid.AddColumn(new GridColumn());
+            AnsiConsole.Clear();
 
             foreach (var line in lines)
             {
+                var grid = new Grid();
+                grid.AddColumn(new GridColumn().Alignment(Justify.Center));
+                
                 Task voiceOver = Task.Run(() => line.PlayAudioFile(line.VoiceFile));
 
                 if (line is ChoiceScreen choice)
@@ -264,23 +267,25 @@ namespace Gerle_Lib.UIReleated
                 }
 
                 var text = new Text(line.Text);
+                text.Justify(Justify.Center);
 
                 if (line.Talker != null)
                 {
-                    switch (line.Talker.Name)
+                    if (line.Talker == Actors.Narrator)
                     {
-                        case "Narrator":
-                            text = new Text(line.Text, new Style(Color.Gold1, Color.Black));
-                            break;
-                        case "Hero":
-                            text = new Text(line.Text, new Style(Color.Green, Color.Black));
-                            break;
-                        case "Villain":
-                            text = new Text(line.Text, new Style(Color.Red, Color.Black));
-                            break;
-                        default:
-                            text = new Text(line.Text, new Style(Color.White, Color.Black));
-                            break;
+                        text = new Text(line.Talker.Name + ": " + line.Text, new Style(Color.Gold1, Color.Black));
+                    }
+                    else if (line.Talker == Actors.Gerle)
+                    {
+                        text = new Text(line.Talker.Name + ": " + line.Text, new Style(Color.Green, Color.Black));
+                    }
+                    else if (line.Talker == Actors.Apolo || line.Talker == Actors.Unoka)
+                    {
+                        text = new Text(line.Talker.Name + ": " + line.Text, new Style(Color.White, Color.Black));
+                    }
+                    else
+                    {
+                        text = new Text(line.Talker.Name + ": " + line.Text, new Style(Color.Red, Color.Black));
                     }
                 }
                 else
@@ -288,6 +293,7 @@ namespace Gerle_Lib.UIReleated
                     text = new Text(line.Text, new Style(Color.White, Color.Black));
                 }
 
+                /*
                 // Typing effect
                 foreach (char c in line.Text)
                 {
@@ -295,18 +301,25 @@ namespace Gerle_Lib.UIReleated
                     Thread.Sleep(50); // Adjust the speed of the typing effect
                 }
 
-                Console.WriteLine();
+                Console.WriteLine();*/
 
                 grid.AddRow(text.Centered());
 
-                AnsiConsole.Clear();
-                AnsiConsole.Write(grid);
+                //AnsiConsole.Clear();
+
+                while(!voiceOver.IsCompleted)
+                {
+                    AnsiConsole.Write(grid);
+                    Thread.Sleep(1200);
+                    AnsiConsole.Clear();
+                }
 
                 await voiceOver;
 
                 Thread.Sleep(2000); // Wait for 2 seconds before showing the next line
+
             }
-            
+
             return SceneVersion.BASE;
         }
         #endregion
