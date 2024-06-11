@@ -44,7 +44,11 @@ namespace Gerle_Lib.Controllers
             }),
 
             new Scene(new Line[]{
-                new Line("Nagylelkű leszel és adsz egy kis elemózsiát a cicának ezzel példát mutatsz a burzsoáziának.", ref Actors.Narrator, "03/01_narrátor_A.mp3"),
+                 new ChoiceScreen(new Choice[]
+                {
+                    new Choice("Nagylelkű leszel és adsz egy kis elemózsiát a cicának ezzel példát mutatsz a burzsoáziának.", SceneVersion.A),
+                    new Choice("Bunkó leszel és nem adsz neki semmi kaját mert, eszedbe jut, hogy véletlen reggel saláta helyett füvet használtál az elkészítésekor.", SceneVersion.B)
+                }, "03/01_narrátor_A.mp3"), // TODO: Hangfájlt az összevotra kicserélni
                 new Line("Gerle végre felszáll a buszra. A buszon már csak egyetlen ülőhely maradt. Ez egy alkoholtól megboldogult férfi mellett volt, pedig még csak reggel 10 óra. Mivel nem tehetett mást, így leült mellé. " +
                     "Egyszer csak lenéző szemekkel megjelenik egy 170cm-es 120kg-os ember: Ottó, a kaller. " +
                     "Először az alkeszhez fordul, akit egy kis vita után le is szállít, majd Gerléhez „gurul”:", ref Actors.Narrator, "03/03_narrátor.mp3"),
@@ -59,7 +63,6 @@ namespace Gerle_Lib.Controllers
                 }, Actors.Narrator.Name ,SceneVersion.A),
 
             new Scene(new Line[]{
-                new Line("Nagylelkű leszel és adsz egy kis elemózsiát a cicának ezzel példát mutatsz a burzsoáziának.", ref Actors.Narrator, "03/02_narrátor_B.mp3"),
                  new Line("Gerle végre felszáll a buszra. A buszon már csak egyetlen ülőhely maradt. Ez egy alkoholtól megboldogult férfi mellett volt, pedig még csak reggel 10 óra. Mivel nem tehetett mást, így leült mellé. " +
                     "Egyszer csak lenéző szemekkel megjelenik egy 170cm-es 120kg-os ember: Ottó, a kaller. " +
                     "Először az alkeszhez fordul, akit egy kis vita után le is szállít, majd Gerléhez „gurul”:", ref Actors.Narrator, "03/03_narrátor.mp3"),
