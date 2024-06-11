@@ -85,15 +85,15 @@ namespace Gerle_Lib.Data
         public static Actor Dajka_Laura_neni = new Actor("Dajka (Laura néni)", new Power[] {
             new Power("Kinderkommandó",20,140,false,"Toddlers! Assemble! - jelmondattal hívja harcba Laura néni a csoport többi mozgósítható tagját. Gerle 20 életerőt vesztett."),
             //TODO: new Power("Kajadobálás",Gerle képességei nevének minden 3-dik betűje látszódik csak,140,false,"A dajka a  megmaradt ebédet Gerle arcához vágta. Gerle nem lát ki a "),
-            new SpecialPower("Kajadobálás",140,false,"Gerle képességei nevének minden 3-dik betűje látszódik csak.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
-            {
+            //new SpecialPower("Kajadobálás",140,false,"Gerle képességei nevének minden 3-dik betűje látszódik csak.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
+            //{
 
-            }),
+            //}),
             //TODO: new Power("Párna páncél",Ha Laura neni élete már kevés (40 alatt van) pajzsot használ,60,false,"Hárítja Gerle következő támadását."),
-             new SpecialPower("Párna páncél",60,false,"Ha Laura néni élete már kevés (40 alatt van), pajzsot használ, hárítja Gerle következő támadását.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
-            {
+            // new SpecialPower("Párna páncél",60,false,"Ha Laura néni élete már kevés (40 alatt van), pajzsot használ, hárítja Gerle következő támadását.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
+            //{
 
-            }),
+            //}),
              new SpecialPower("A Férj", 50, true, "Ha a csata több mint 10 körig tart, Laura néni életereje 70%-kal nő.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
             {
                 if (SceneController.Turn == 10){
