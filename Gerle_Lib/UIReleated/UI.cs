@@ -70,7 +70,7 @@ namespace Gerle_Lib.UIReleated
         /// <summary>
         /// <c>LiveRefresher</c> metódus tesztadatokkal hívja meg a <c>CutsceneUI</c> metódust.
         /// </summary>
-        public static void LiveRefresher()
+        public static async void LiveRefresher()
         {
             while (true)
             {
@@ -88,7 +88,7 @@ namespace Gerle_Lib.UIReleated
         new Line("The battle between good and evil has begun.", ref narrator, "narrator_battle.mp3")
     };
 
-                CutsceneUI(lines);
+                await CutsceneUI(lines);
                 Console.ReadKey();
 
                 //// Sample Powers
@@ -226,22 +226,22 @@ namespace Gerle_Lib.UIReleated
             if (ProgressController.LoadFromSaveFile())
             {
                 Menu sm = new Menu(new string[] { "Meglévő folytatása 🆕", "Új játék 📂" }, new Action[] {
-                            () => SceneController.PlayScenes(),
-                            NewGameMenu
+                            async () => {await SceneController.PlayScenes(); },
+                            async() => { await NewGameMenu(); }
                         }, true, mainMenu);
             }
             else
             {
                 Menu sm = new Menu(new string[] { "Új játék 📂" }, new Action[] {
-                            NewGameMenu
+                            async() => { await NewGameMenu(); }
                         }, true, mainMenu);
             }
         }
 
-        public static void NewGameMenu()
+        public static async Task NewGameMenu()
         {
             SceneController.CurrentCheckpoint = 0;
-            SceneController.PlayScenes();
+            await SceneController.PlayScenes();
         }
 
         #region CutsceneUI (metódus) - comment

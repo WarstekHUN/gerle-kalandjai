@@ -149,7 +149,7 @@ namespace Gerle_Lib.Controllers
         /// <c>PlayScenes</c> a jeleneteket játssza le az ellenőrző pontoktól (<c>CurrentCheckpoint</c>).
         /// </summary>
         #endregion
-        public static async void PlayScenes()
+        public static async Task PlayScenes()
         {
             if (CurrentCheckpoint >= Scenes.Length)
             {
