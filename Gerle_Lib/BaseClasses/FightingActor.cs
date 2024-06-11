@@ -10,14 +10,14 @@ public class FightingActor
 {
     public Actor Actor { get; init; }
 
-    private ushort _Health {  get; set; } = Actor.MaxHealth;
+    private ushort _Health { get; set; } = Actor.MaxHealth;
 
     #region Health (mező) - comment
     /// <summary>
     /// <c>Health</c> mező az éppen harcoló karakter életerejét tartalmazza.
     /// </summary>
     #endregion
-    public ushort Health 
+    public ushort Health
     {
         get => _Health;
         //Imádom, hogy csak ezekkel a castokkal fogadja el, mert különben azt hiszi, hogy ez egy byte...
@@ -47,7 +47,7 @@ public class FightingActor
     /// <c>Opponent</c> mező az éppen harcoló karakter ellenségét tartalmazza.
     /// </summary>
     #endregion
-    public FightingActor Opponent { get; private set; }
+    public FightingActor Opponent { get; set; }
 
     #region FightingActor (paraméteres konstruktor) - comment
     /// <summary>
@@ -78,8 +78,8 @@ public class FightingActor
     {
         List<Power> chosenPowers = new List<Power>();
 
-        if(_Mana == 0) return chosenPowers;
-        if(Actor.Powers is null) throw new ActorIsNotFighterException();
+        if (_Mana == 0) return chosenPowers;
+        if (Actor.Powers is null) throw new ActorIsNotFighterException();
         if (_Mana < Actor.LeastManaExpensiveAttackingPower!.Mana) return chosenPowers;
 
         ushort virtualMana = _Mana;
@@ -91,7 +91,7 @@ public class FightingActor
             virtualMana -= power.Mana;
             notUsedPowers.Remove(power);
             chosenPowers.Add(power);
-            if(power.IsUsed is not null) power.IsUsed = true;
+            if (power.IsUsed is not null) power.IsUsed = true;
         }
 
         //Az ellenfél életereje kisebb-e, mint a legnagyob damageű elérhető támadás? Van rá elég mana?
@@ -112,15 +112,15 @@ public class FightingActor
         }
 
         //Eldöntjük, hogy akarunk-e támadni, maradt-e még elhasználható mana
-        if(Random.Shared.Next(Actor.Aggression - 5, 10) >= 3 && virtualMana >= Actor.LeastManaExpensiveAttackingPower.Mana)
+        if (Random.Shared.Next(Actor.Aggression - 5, 10) >= 3 && virtualMana >= Actor.LeastManaExpensiveAttackingPower.Mana)
         {
             //Támadunk
             //Ha 5-ös az aggresszió, akkor minimum 0-szor, maximum 2-ször támadunk
             byte numberOfAttackTries = (byte)Random.Shared.Next(0, Math.Max(Actor.Aggression - 3, 1) + 1);
 
             byte i = 0;
-            
-            while(virtualMana >= Actor.LeastManaExpensiveAttackingPower.Mana && i < numberOfAttackTries)
+
+            while (virtualMana >= Actor.LeastManaExpensiveAttackingPower.Mana && i < numberOfAttackTries)
             {
                 //Összes képesség, amire van elég Mana
                 List<Power> currentlyAvailablePowers = affordableNotUsedPowers();
@@ -140,16 +140,16 @@ public class FightingActor
     #endregion
     public bool Attack(Power power)
     {
-        if (_Mana - power.Mana < 0) { 
-            return false; 
+        if (_Mana - power.Mana < 0)
+        {
+            return false;
         }
-        else {
-            _Mana -= power.Mana;
-            Opponent.RecieveDamage((ushort)Math.Round(power.Damage * DamageModifier));
-            //TODO: Képernyő közepére jelenjen meg a szöveg 3 másodpercre, ami kiírja a power.DamageText-et.
-            //BeautyWriter.Write($"{power.DamageText}");
-            return true;
-        }
+
+        _Mana -= power.Mana;
+        Opponent.RecieveDamage((ushort)Math.Round(power.Damage * DamageModifier));
+        //TODO: Képernyő közepére jelenjen meg a szöveg 3 másodpercre, ami kiírja a power.DamageText-et.
+        //BeautyWriter.Write($"{power.DamageText}");
+        return Opponent.Health == 0;
     }
     #region DealDamage (metódus) - comment
     /// <summary>

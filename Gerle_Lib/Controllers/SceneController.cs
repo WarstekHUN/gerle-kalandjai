@@ -1,6 +1,7 @@
 ﻿using Gerle_Lib.BaseClasses;
 using Gerle_Lib.BaseClasses.Powers;
 using Gerle_Lib.Data;
+using Gerle_Lib.UIReleated;
 
 namespace Gerle_Lib.Controllers
 {
@@ -46,6 +47,7 @@ namespace Gerle_Lib.Controllers
             Player player = new Player(ref Actors.Gerle);
 
             FightingActor opponent = player.SetupOpponent(ref opponentCharacter);
+            opponent.Opponent = player;
 
             MusicController.PlayMusic(scene.FightMusic!);
 
@@ -74,6 +76,15 @@ namespace Gerle_Lib.Controllers
 
                 List<Power> attacks = currentTurnActor.Think();
 
+#if DEBUG
+                if(currentTurnActor == opponent)
+                {
+                    attacks.Add(opponent.Actor.LeastManaExpensiveAttackingPower!);
+                }
+#endif
+
+                UI.FightingUI(attacks.ToArray(), false, player.Mana, opponent.Health, player.Health, opponent.Actor.Name);
+
                 bool death = false;
 
                 /*Task.Run(() =>
@@ -98,13 +109,13 @@ namespace Gerle_Lib.Controllers
 
                         //TODO: attack.damageText kiírása
 
-                        if (currentTurnActor is Player)
-                            SoundEffectController.PlayEffect(SoundEffectController.SoundEffects.DealDamage);
-                        else
-                            SoundEffectController.PlayEffect(SoundEffectController.SoundEffects.ReceiveDamage);
+                        //if (currentTurnActor is Player)
+                        //    SoundEffectController.PlayEffect(SoundEffectController.SoundEffects.DealDamage);
+                        //else
+                        //    SoundEffectController.PlayEffect(SoundEffectController.SoundEffects.ReceiveDamage);
 
                         //3mp várakozás, hogy a játékos el tudja olvasni a damageText-et.
-                        Thread.Sleep(3000);
+                        //Thread.Sleep(3000);
 
                         if (death)
                         {
@@ -140,6 +151,8 @@ namespace Gerle_Lib.Controllers
                     //Ref alapúnak kéne lennie
                     Task.WaitAll(Task.Run(() => ResetPowers(opponentCharacter)), Task.Run(() => ResetPowers(player.Actor)));
                 }
+
+                Turn++;
             }
 
             return (FightEndingReason)fightEnd;
