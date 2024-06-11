@@ -6,12 +6,14 @@ namespace Gerle_Lib.BaseClasses
     class EndCreditScene : Scene
     {
         private string MusicFile { get; init; }
-        private EndCredit[] EndCredits {  get; init; }
+        private EndCredit[] EndCredits { get; init; }
+        private ushort MusicLengthInSec { get; init; }
 
-        public EndCreditScene(EndCredit[] credits, string musicFile, SceneVersion choiceVersion = SceneVersion.BASE) : base(new Line[] { }, musicFile, choiceVersion)
+        public EndCreditScene(EndCredit[] credits, string musicFile, ushort musicLenghtInSec, SceneVersion choiceVersion = SceneVersion.BASE) : base(new Line[] { }, musicFile, choiceVersion)
         {
             MusicFile = musicFile;
             EndCredits = credits;
+            MusicLengthInSec = musicLenghtInSec;
         }
 
         private async void PlayMusic(CancellationToken token)
