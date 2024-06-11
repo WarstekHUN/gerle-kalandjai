@@ -10,6 +10,7 @@ using MenuSystem;
 using BarChartItem = Gerle_Lib.BaseClasses.BarChartItem;
 using SysColor = System.Drawing.Color;
 using Gerle_Lib.Data;
+using System.Globalization;
 namespace Gerle_Lib.UIReleated
 {
     public class UI
@@ -536,6 +537,7 @@ namespace Gerle_Lib.UIReleated
 
         #region TemplateFightScene
         public static void TemplateFightScene(
+           bool canSelectPowers,
     string UsedPowerName = "Sakármit Döjcs", string DemageText = "centerText", string otherText = "otherText",
     string enemyName = "enemyName", ushort enemyHealth = 50,
     ushort yourHealth = 100, ushort yourMana = 100, ushort selectedPowerManaCost = 10
@@ -585,21 +587,38 @@ namespace Gerle_Lib.UIReleated
             yourGrid.AddRow(YourHP, YourMana);
 
             var rows = new List<dynamic>()
-    {
-        BossHP,
-        BeautyWriter.Spacer(1),
-        new Rule("[yellow]Használt erő[/]"),
-        BeautyWriter.Spacer(1),
-        new Text(UsedPowerName, new Style(Color.Red, Color.Black)).Centered(),
-        new Text(DemageText, new Style(Color.Green, Color.Black)).Centered(),
-        new Text(otherText, new Style(Color.Blue, Color.Black)).Centered(),
-        BeautyWriter.Spacer(2),
-        new Rule($""),
-        yourGrid,
-        BeautyWriter.Spacer(2),
-        new Rule("[yellow]Akciók[/]"),
-        BeautyWriter.Spacer(1),
-    };
+                {
+                    BossHP,
+                    BeautyWriter.Spacer(1),
+                    new Rule("[yellow]Használt erő[/]"),
+                    BeautyWriter.Spacer(2),
+                    BeautyWriter.Spacer(2),
+                    new Rule($""),
+                    yourGrid,
+                    BeautyWriter.Spacer(2),
+                    new Rule("[yellow]Akciók[/]"),
+                    BeautyWriter.Spacer(1),
+                };
+
+            if (canSelectPowers)
+            {
+                rows = new List<dynamic>()
+                {
+                    BossHP,
+                    BeautyWriter.Spacer(1),
+                    new Rule("[yellow]Használt erő[/]"),
+                    BeautyWriter.Spacer(1),
+                    new Text(UsedPowerName, new Style(Color.Red, Color.Black)).Centered(),
+                    new Text(DemageText, new Style(Color.Green, Color.Black)).Centered(),
+                    new Text(otherText, new Style(Color.Blue, Color.Black)).Centered(),
+                    BeautyWriter.Spacer(2),
+                    new Rule($""),
+                    yourGrid,
+                    BeautyWriter.Spacer(2),
+                    new Rule("[yellow]Akciók[/]"),
+                    BeautyWriter.Spacer(1),
+                };
+            }
 
             foreach (var item in rows)
             {
@@ -801,6 +820,7 @@ namespace Gerle_Lib.UIReleated
 
                 // Re-render the fight scene with updated values
                 TemplateFightScene(
+                    canSelectPowers: true,
                     enemyName: enemyName,
                     enemyHealth: (ushort)updatedEnemyHealth,
                     yourHealth: yourHealth,
@@ -921,6 +941,7 @@ namespace Gerle_Lib.UIReleated
 
                     // Simulate the action on the UI
                     TemplateFightScene(
+                        canSelectPowers: false,
                         UsedPowerName: power.Name,
                         DemageText: power.DamageText,
                         enemyName: enemyName,
@@ -954,6 +975,7 @@ namespace Gerle_Lib.UIReleated
 
                     // Simulate the enemy action on the UI
                     TemplateFightScene(
+                        canSelectPowers: false,
                         UsedPowerName: power.Name,
                         DemageText: power.DamageText,
                         enemyName: enemyName,
