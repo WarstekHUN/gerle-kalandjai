@@ -1,18 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Scene">
-    <Position X="5.5" Y="3.25" Width="1.5" />
+    <Position X="7.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAAAAAAAABQAAAACAAAAAACAAAAAAEAAAA=</HashCode>
       <FileName>BaseClasses\Scene.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Opponent" />
       <Property Name="Lines" />
+      <Property Name="Opponent" />
+      <Property Name="FightMusic" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Line">
-    <Position X="10.5" Y="3" Width="1.5" />
+    <Position X="12.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAABAAAAAAAIAAAAAAAAAAAAACQEgAAA=</HashCode>
       <FileName>BaseClasses\Line.cs</FileName>
@@ -22,7 +23,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Actor">
-    <Position X="3" Y="2.25" Width="1.5" />
+    <Position X="4.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAEAAABAAACAAAAAAAAAQAAACAgAAhAAAAAAAIAAA=</HashCode>
       <FileName>BaseClasses\Actor.cs</FileName>
@@ -32,21 +33,21 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Gerle_Lib.BaseClasses.SceneMusic">
-    <Position X="15" Y="3.25" Width="1.5" />
+    <Position X="8.25" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQABAAIAAAAAAAAAAEA=</HashCode>
       <FileName>BaseClasses\SceneMusic.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Gerle_Lib.BaseClasses.Power">
-    <Position X="0.5" Y="1.25" Width="1.5" />
+    <Position X="2.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BAAAAQCAAAAAQAAAAAAAQAQAAAAAAAAAAAAAIAAAAAA=</HashCode>
       <FileName>BaseClasses\Power.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FightingActor">
-    <Position X="13.25" Y="2.5" Width="1.5" />
+    <Position X="15" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACAQAAAAAgAACAABAAAAAAIEAAAAAAAAAIAAACAA=</HashCode>
       <FileName>BaseClasses\FightingActor.cs</FileName>
@@ -56,16 +57,16 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Gerle_Lib.BaseClasses.Player">
-    <Position X="14.25" Y="6.75" Width="1.5" />
+    <Position X="16" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
       <FileName>BaseClasses\Player.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Gerle_Lib.BaseClasses.EndCreditScene">
-    <Position X="5.5" Y="6.25" Width="1.5" />
+    <Position X="5.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAABEACAAAAAAAAAAAAAgAAAA=</HashCode>
+      <HashCode>AAAACAAAAAAAAAAAAAAAABEACAAAAAAAAAAAAAgAAAA=</HashCode>
       <FileName>BaseClasses\EndCreditScene.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -73,21 +74,21 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Gerle_Lib.BaseClasses.EndCredit" Collapsed="true">
-    <Position X="2.5" Y="7.25" Width="1.5" />
+    <Position X="3.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>BaseClasses\EndCredit.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Gerle_Lib.BaseClasses.Choice" Collapsed="true">
-    <Position X="10.75" Y="8.5" Width="1.5" />
+    <Position X="12.5" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAACAAAAAA=</HashCode>
       <FileName>BaseClasses\Choice.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Gerle_Lib.BaseClasses.ChoiceScreen">
-    <Position X="10.5" Y="5.75" Width="1.5" />
+    <Position X="12.25" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>BaseClasses\ChoiceScreen.cs</FileName>
@@ -97,7 +98,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Gerle_Lib.Controllers.SceneController">
-    <Position X="8.25" Y="4.5" Width="1.5" />
+    <Position X="10" Y="4.75" Width="1.5" />
     <NestedTypes>
       <Enum Name="Gerle_Lib.Controllers.SceneController.FightEndingReason" Collapsed="true">
         <TypeIdentifier>
