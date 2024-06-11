@@ -176,7 +176,7 @@ namespace Gerle_Lib.Controllers
                     "A csöndet varjúkárogás töri meg. Mindketten tudják: Amint a madár elrepül, a harc elkezdődik. Néma csendben várnak a madár első szárnycsapására." +
                     "Gerle a cukorért nyúl, Laura a macikért. Dobás. " +
                     "Se a macik, se a cukrok nem találtak célba – a levegőben összeütköztek, és kettőjük között pont középen a padlón landoltak.", ref Actors.Narrator, "07/06_narrátor_B.mp3"),
-             }, ref Actors.Dajka_Laura_neni, new SceneMusic("Western_Intro_120-bpm.mp3", "Western_kozep_120-bpm.mp3", "Western_outro_120-bpm.mp3", 120), SceneVersion.B),
+             }, ref Actors.Dajka_Laura_neni, new SceneMusic("Western_Intro_120-bpm.mp3", "Western_kozep_120-bpm.mp3", "Western_outro_120-bpm.mp3", 120), null ,SceneVersion.B),
 
              new Scene(new Line[]{
                  new Line("Mikor az életereje az óvodásnak és Laurának is lent van, a harcot a mennyből alászálló messiás szakítja meg", ref Actors.Narrator, "08/01_narrátor_B.mp3"),
