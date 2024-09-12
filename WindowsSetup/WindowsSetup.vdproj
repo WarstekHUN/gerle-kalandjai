@@ -82,6 +82,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -190,15 +198,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Gerle Kalandjai"
-        "ProductCode" = "8:{38CC80F4-2B4F-46D4-91DF-C1B5F09F80D0}"
-        "PackageCode" = "8:{890D5D7A-5E39-4226-B77F-70422C18A72D}"
+        "ProductCode" = "8:{1A2D306E-EEB2-4C54-89DE-299C84F20679}"
+        "PackageCode" = "8:{3CBB6D79-5ACF-42A8-BBB3-184544971A1D}"
         "UpgradeCode" = "8:{EE559E96-BDAA-40F9-BAD6-D4A71491515C}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.0.1"
         "Manufacturer" = "8:NJIT 11_szft2 4. csoport"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -768,7 +776,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B899CA05190C4B7F936E4826F1D058FC"
             {
-            "SourcePath" = "8:..\\GerleKalandjai\\obj\\Debug\\net7.0\\apphost.exe"
+            "SourcePath" = "8:..\\GerleKalandjai\\obj\\Release\\net7.0\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_235C9F02196A4316A8647BD96B96BB34"

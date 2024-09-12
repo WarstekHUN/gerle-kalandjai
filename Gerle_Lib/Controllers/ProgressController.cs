@@ -44,7 +44,7 @@ public static class ProgressController
     #endregion
     public static void SaveToFile()
     {
-        GameData gameData = new GameData(
+       /* GameData gameData = new GameData(
             SceneController.CurrentCheckpoint,
             SettingsController.MusicVolume,
             SettingsController.FXVolume,
@@ -55,6 +55,6 @@ public static class ProgressController
         string fullPath = Path.Combine(documentsPath, "Gerle", "savegame.gerle");
 
         string jsonData = JsonConvert.SerializeObject(gameData, Formatting.None);
-        File.WriteAllText(fullPath, jsonData);
+        File.WriteAllText(fullPath, jsonData);*/
     }
 }

@@ -990,7 +990,7 @@ namespace Gerle_Lib.UIReleated
                         selectedPowerManaCost: power.Mana
                     );
                     Thread.Sleep(1000);
-
+                    
                     // Update player's health based on enemy attack
                     replayYourHealth = (ushort)Math.Max(0, replayYourHealth - power.Damage);
                 }

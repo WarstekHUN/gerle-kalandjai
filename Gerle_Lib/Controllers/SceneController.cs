@@ -53,12 +53,6 @@ namespace Gerle_Lib.Controllers
 
             while (fightEnd == null)
             {
-                if (Turn != 0)
-                {
-                    player.Mana += MANA_PER_ROUND;
-                    opponent.Mana += MANA_PER_ROUND;
-                }
-
                 FightingActor currentTurnActor;
                 FightingActor currentTurnOpponent;
 
@@ -72,6 +66,11 @@ namespace Gerle_Lib.Controllers
                 {
                     currentTurnActor = opponent;
                     currentTurnOpponent = player;
+                }
+
+                if (Turn != 0)
+                {
+                    currentTurnActor.Mana += MANA_PER_ROUND;
                 }
 
                 List<Power> attacks = currentTurnActor.Think();

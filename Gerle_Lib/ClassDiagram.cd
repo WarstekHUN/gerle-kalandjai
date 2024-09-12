@@ -99,20 +99,10 @@
   </Class>
   <Class Name="Gerle_Lib.Controllers.SceneController">
     <Position X="10" Y="4.75" Width="1.5" />
-    <NestedTypes>
-      <Enum Name="Gerle_Lib.Controllers.SceneController.FightEndingReason" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Controllers\SceneController.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAgAAAAAAAAAAAgAACAAAAAAAAAwBEAAAAAAAAAAA=</HashCode>
-      <FileName>Controllers\SceneController.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Scenes.cs</FileName>
     </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Field Name="Scenes" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
