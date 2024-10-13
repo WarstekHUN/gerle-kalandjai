@@ -12,7 +12,7 @@ namespace Gerle_Lib.BaseClasses
 
         public EndCreditScene(EndCredit[] credits, string musicFile, ushort musicDurationInSec, SceneVersion choiceVersion = SceneVersion.BASE) : base(new Line[] { }, musicFile, choiceVersion)
         {
-            MusicFile = musicFile;
+            MusicFile = Path.Join("Data/Audio/Music/", musicFile + ".mp3");
             EndCredits = credits;
             MusicDurationInSec = musicDurationInSec;
         }
@@ -52,10 +52,12 @@ namespace Gerle_Lib.BaseClasses
 
             UI.EndCreditUI(EndCredits, MusicDurationInSec);
 
+            Console.WriteLine("Nyomj meg egy gombot a kilépéshez!");
+            Console.ReadKey();
+            
             tokenSource.Cancel();
 
             return SceneVersion.BASE;
-
         }
     }
 }

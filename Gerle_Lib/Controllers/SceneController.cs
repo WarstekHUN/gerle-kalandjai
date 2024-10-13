@@ -74,14 +74,14 @@ namespace Gerle_Lib.Controllers
                 }
 
                 List<Power> attacks = currentTurnActor.Think();
-
+/*
 #if DEBUG
                 if(currentTurnActor == opponent)
                 {
                     attacks.Add(opponent.Actor.LeastManaExpensiveAttackingPower!);
                 }
 #endif
-
+*/
                 UI.FightingUI(attacks.ToArray(), false, player.Mana, opponent.Health, player.Health, opponent.Actor.Name);
 
                 bool death = false;
@@ -90,6 +90,7 @@ namespace Gerle_Lib.Controllers
                 {*/
                 foreach (Power attack in attacks)
                 {
+                    //Ez a nullcheck miért van itt? Mit szívtam, amikor ezt leírtam?
                     if (attack != null)
                     {
                         if (attack is SpecialPower)

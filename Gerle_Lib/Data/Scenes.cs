@@ -33,7 +33,7 @@ namespace Gerle_Lib.Controllers
                 new Line("Nem érdekel, nekem meg KELL megmentenem az édes kis unokámat!", ref Actors.Gerle, "01/09_Gerle.mp3"),
                 new Line("Sajnálom, de nem engedhetem ezt.", ref Actors.Apolo, "01/10_apolo.mp3"),
                 new Line("Erről is a szőröstalpúak tehetnek!", ref Actors.Gerle, "01/11_Gerle.mp3"),*/
-            }, ref Actors.Apolo, new SceneMusic("Harc1_intro_180-bpm", "Harc1_kozep-loop_180-bpm", "Harc1_outro_180-bpm", 180)), //Ez egy olyan jelenet, aminek a végén van harc. A SceneMusic a harc zenéjét veszi be. Csak a fájlnevek kellenek, amik bele vannak rakva a Data/Audio/Music mappába. Fájlkiterjesztés sem kell.
+            }/*, ref Actors.Apolo, new SceneMusic("Harc1_intro_180-bpm", "Harc1_kozep-loop_180-bpm", "Harc1_outro_180-bpm", 180)*/), //Ez egy olyan jelenet, aminek a végén van harc. A SceneMusic a harc zenéjét veszi be. Csak a fájlnevek kellenek, amik bele vannak rakva a Data/Audio/Music mappába. Fájlkiterjesztés sem kell.
         
             new Scene(new Line[]{
                /* new Line("Pfúú ez kemény volt. De ne aggódj kicsikém jön már érted a nagyikád. Remélem Marika nem csinál nagyobb problémát", ref Actors.Gerle, "02/01_Gerle.mp3"),
@@ -179,7 +179,7 @@ namespace Gerle_Lib.Controllers
              }/*, ref Actors.Dajka_Laura_neni, new SceneMusic("Western_Intro_120-bpm.mp3", "Western_kozep_120-bpm.mp3", "Western_outro_120-bpm.mp3", 120)/*, null ,/*SceneVersion.B),*/
 
              new Scene(new Line[]{
-                 new Line("Mikor az életereje az óvodásnak és Laurának is lent van, a harcot a mennyből alászálló messiás szakítja meg", ref Actors.Narrator, "08/01_narrátor_B.mp3"),
+                 /*new Line("Mikor az életereje az óvodásnak és Laurának is lent van, a harcot a mennyből alászálló messiás szakítja meg", ref Actors.Narrator, "08/01_narrátor_B.mp3"),
                  new Line("Gyermekeiiiiiiiiim! Fejezzétek be a harcot! Jöttem az Atya utasításából igazságot tenni. " +
                      "A Tétény András által képviselt eszmék nagy része káros az emberiségre. " +
                      "Mindenki egyenlő, és Isten minden bárányát egyiránt szereti.", ref Actors.Jezus, "08/02_Jézus_B.mp3"),
@@ -202,7 +202,7 @@ namespace Gerle_Lib.Controllers
                  new Line("mondta Jézus, majd nagy fényességgel eltűnt.", ref Actors.Narrator, "08/18_narrátor_B.mp3"),
                  new Line("mondta Jézus, majd nagy fényességgel eltűnt. Az unoka, aki látszólag felismerte Gerle méltóságát és bölcsességét, megkönnyebbülten öleli át őt.", ref Actors.Narrator, "08/19_narrátor_B.mp3"),
                  new Line("Nagyi, végre itt vagy! Milyen jó, hogy jöttél! Nem is kérdés, hogy te vagy az igazi hősünk!", ref Actors.Unoka, "08/20_Unoka.mp3"),
-                 new Line("Gerle meghatódik az unoka szeretetétől és hálájától.", ref Actors.Narrator, "08/21_narrátor_B.mp3"),
+                 new Line("Gerle meghatódik az unoka szeretetétől és hálájától.", ref Actors.Narrator, "08/21_narrátor_B.mp3"),*/
                  new Line("Drágám, nem hagytalak volna egy percig sem veszélyben. Most pedig haza viszlek, ahol vár a családod és a biztonság.", ref Actors.Gerle, "08/22_Gerle.mp3"),
                  new Line("Az unoka boldogan mosolyog, és együtt hagyják el az óvodát kéz a kézben, kezükben egymáséval, ahol már várják őt a szülei." +
                      "A győzelem édes íze még hosszan megmarad Gerle számára, hiszen nemcsak az unokáját mentette meg, hanem rámutatott az őszinte " +

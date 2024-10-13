@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using Spectre.Console;
 using Spectre.Console.Rendering;
 using Gerle_Lib.BaseClasses;
@@ -10,7 +7,7 @@ using MenuSystem;
 using BarChartItem = Gerle_Lib.BaseClasses.BarChartItem;
 using SysColor = System.Drawing.Color;
 using Gerle_Lib.Data;
-using System.Globalization;
+using IntPtr = System.IntPtr;
 
 namespace Gerle_Lib.UIReleated
 {
@@ -1269,7 +1266,6 @@ namespace Gerle_Lib.UIReleated
                 var nameText = new Text(credit.Name,
                     new Style(Color.White,
                         Color.Black)).Centered();
-
                 grid.AddRow(roleText);
                 grid.AddRow(nameText);
                 grid.AddRow(new Text("").Centered()); // Add an empty row for spacing
