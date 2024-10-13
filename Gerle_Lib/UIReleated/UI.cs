@@ -11,6 +11,7 @@ using BarChartItem = Gerle_Lib.BaseClasses.BarChartItem;
 using SysColor = System.Drawing.Color;
 using Gerle_Lib.Data;
 using System.Globalization;
+
 namespace Gerle_Lib.UIReleated
 {
     public class UI
@@ -23,12 +24,20 @@ namespace Gerle_Lib.UIReleated
         public static int CastVolume { get; set; } = 70;
         public static int SfxVolume { get; set; } = 100;
 
-        private static Menu mainMenu = new Menu(new[] { "temp", "Játék 📁", "Beállítások 📝", "Kilépés 🚪" }, new Action[] {
-                        () => LiveRefresher(),
-                        GameMenu,
-                        SettingsMenu,
-                        Exit
-                    });
+        private static Menu mainMenu = new Menu(new[]
+            {
+                "temp",
+                "Játék 📁",
+                "Beállítások 📝",
+                "Kilépés 🚪"
+            },
+            new Action[]
+            {
+                () => LiveRefresher(),
+                GameMenu,
+                SettingsMenu,
+                Exit
+            });
 
         struct Rect
         {
@@ -40,34 +49,59 @@ namespace Gerle_Lib.UIReleated
 
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
+
         [DllImport("user32.dll")]
-        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        private static extern bool ShowWindow(IntPtr hWnd,
+            int nCmdShow);
+
         [DllImport("user32.dll")]
-        private static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
+        private static extern bool GetWindowRect(IntPtr hWnd,
+            out Rect lpRect);
+
         [DllImport("user32.dll")]
-        private static extern bool MoveWindow(IntPtr hWnd, int x, int y, int nWidth, int nHeight, bool bRepaint);
+        private static extern bool MoveWindow(IntPtr hWnd,
+            int x,
+            int y,
+            int nWidth,
+            int nHeight,
+            bool bRepaint);
 
         public static void InitializeUI()
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             Console.BackgroundColor = ConsoleColor.Gray;
 
-            string[] creators = { "Tatár Mátyás Bence", "Kluitenberg Alex", "Gáspár Mihály", "Balogh Levente" };
-            string shuffledCreators = string.Join(", ", creators.OrderBy(x => Guid.NewGuid()));
+            string[] creators =
+            {
+                "Tatár Mátyás Bence",
+                "Kluitenberg Alex",
+                "Gáspár Mihály",
+                "Balogh Levente"
+            };
+            string shuffledCreators = string.Join(", ",
+                creators.OrderBy(x => Guid.NewGuid()));
 
             Menu.SetCreator(shuffledCreators);
 
             IntPtr consoleWindowHandle = GetForegroundWindow();
-            ShowWindow(consoleWindowHandle, 3);
-            GetWindowRect(consoleWindowHandle, out Rect screenRect);
+            ShowWindow(consoleWindowHandle,
+                3);
+            GetWindowRect(consoleWindowHandle,
+                out Rect screenRect);
             int width = screenRect.Right - screenRect.Left;
             int height = screenRect.Bottom - screenRect.Top;
-            MoveWindow(consoleWindowHandle, screenRect.Left, screenRect.Top, width, height, true);
+            MoveWindow(consoleWindowHandle,
+                screenRect.Left,
+                screenRect.Top,
+                width,
+                height,
+                true);
             Thread.Sleep(120);
             mainMenu.SetToScreen();
         }
 
         #region LiveRefresher (metódus) - comment
+
         /// <summary>
         /// <c>LiveRefresher</c> metódus tesztadatokkal hívja meg a <c>CutsceneUI</c> metódust.
         /// </summary>
@@ -95,11 +129,31 @@ namespace Gerle_Lib.UIReleated
                 //// Sample Powers
                 var actionPowers = new Power[]
                 {
-                    new Power("Attack", 20, 10, true, "You dealt 20 damage."),
-                    new Power("Defend", 0, 5, false, "You defended."),
-                    new Power("Heal", 0, 15, false, "You healed 20 HP."),
-                    new Power("Special Move", 30, 20, true, "You dealt 30 damage."),
-                    new Power("Test", 10, 5, true, "You tested the action.")
+                    new Power("Attack",
+                        20,
+                        10,
+                        true,
+                        "You dealt 20 damage."),
+                    new Power("Defend",
+                        0,
+                        5,
+                        false,
+                        "You defended."),
+                    new Power("Heal",
+                        0,
+                        15,
+                        false,
+                        "You healed 20 HP."),
+                    new Power("Special Move",
+                        30,
+                        20,
+                        true,
+                        "You dealt 30 damage."),
+                    new Power("Test",
+                        10,
+                        5,
+                        true,
+                        "You tested the action.")
                 };
 
                 // Current Mana and Health for testing purposes
@@ -109,7 +163,12 @@ namespace Gerle_Lib.UIReleated
 
                 // Test the FightingUI function with canSelectPowers as true
                 bool canSelectPowers = true;
-                List<Power> selectedPowers = FightingUI(actionPowers, canSelectPowers, currentMana, enemyHealth, yourHealth, "ennemx");
+                List<Power> selectedPowers = FightingUI(actionPowers,
+                    canSelectPowers,
+                    currentMana,
+                    enemyHealth,
+                    yourHealth,
+                    "ennemx");
 
                 // Display the selected powers
                 Console.Clear();
@@ -118,11 +177,17 @@ namespace Gerle_Lib.UIReleated
                 {
                     AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
                 }
+
                 Console.ReadKey();
 
                 // Test the FightingUI function with canSelectPowers as false
                 canSelectPowers = false;
-                List<Power> enemyActions = FightingUI(actionPowers, canSelectPowers, currentMana, enemyHealth, yourHealth, "ennemx2");
+                List<Power> enemyActions = FightingUI(actionPowers,
+                    canSelectPowers,
+                    currentMana,
+                    enemyHealth,
+                    yourHealth,
+                    "ennemx2");
 
                 // Display the enemy actions
                 Console.Clear();
@@ -131,23 +196,24 @@ namespace Gerle_Lib.UIReleated
                 {
                     AnsiConsole.MarkupLine($"- {power.Name} (Mana: {power.Mana}, Damage: {power.Damage})");
                 }
+
                 Console.ReadKey();
 
 
-            //    // Test EndCreditUI
-            //    var credits = new EndCredit[]
-            //    {
-            //new EndCredit("Lead Developer", "Balogh Levente"),
-            //new EndCredit("Sound Engineer", "Kluitenberg Alex"),
-            //new EndCredit("Story Artist", "Gáspár Mihály"),
-            //new EndCredit("Game Designer", "Tatár Mátyás Bence")
-            //    };
+                //    // Test EndCreditUI
+                //    var credits = new EndCredit[]
+                //    {
+                //new EndCredit("Lead Developer", "Balogh Levente"),
+                //new EndCredit("Sound Engineer", "Kluitenberg Alex"),
+                //new EndCredit("Story Artist", "Gáspár Mihály"),
+                //new EndCredit("Game Designer", "Tatár Mátyás Bence")
+                //    };
 
-            //    EndCreditUI(credits);
+                //    EndCreditUI(credits);
 
-            //    // Wait for user input before restarting the loop
-            //    Console.WriteLine("Press any key to restart...");
-            //    Console.ReadKey();
+                //    // Wait for user input before restarting the loop
+                //    Console.WriteLine("Press any key to restart...");
+                //    Console.ReadKey();
             }
         }
 
@@ -155,6 +221,7 @@ namespace Gerle_Lib.UIReleated
 
 
         #region Choice Screen
+
         public enum ChoiceScreenSelection
         {
             Restart,
@@ -173,7 +240,11 @@ namespace Gerle_Lib.UIReleated
             var selection = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title($"[red]{choice.Text}[/]")
-                    .AddChoices(new[] { "A", "B" })
+                    .AddChoices(new[]
+                    {
+                        "A",
+                        "B"
+                    })
                     .HighlightStyle(new Style(Color.Yellow)));
 
             return selection switch
@@ -183,11 +254,13 @@ namespace Gerle_Lib.UIReleated
                 _ => DeathScreenSelection.Exit
             };
         }
+
         #endregion
 
 
 
         #region Death Screen
+
         public enum DeathScreenSelection
         {
             Restart,
@@ -206,7 +279,11 @@ namespace Gerle_Lib.UIReleated
             var selection = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title("[red]Meghaltál. Most mihez kezdesz?[/]")
-                    .AddChoices(new[] { "Újrakezdés (korábbi mentési pont betöltése)", "Kilépés" })
+                    .AddChoices(new[]
+                    {
+                        "Újrakezdés (korábbi mentési pont betöltése)",
+                        "Kilépés"
+                    })
                     .HighlightStyle(new Style(Color.Yellow)));
 
             return selection switch
@@ -216,6 +293,7 @@ namespace Gerle_Lib.UIReleated
                 _ => DeathScreenSelection.Exit
             };
         }
+
         #endregion
 
 
@@ -226,16 +304,31 @@ namespace Gerle_Lib.UIReleated
         {
             if (ProgressController.LoadFromSaveFile())
             {
-                Menu sm = new Menu(new string[] { "Meglévő folytatása 🆕", "Új játék 📂" }, new Action[] {
-                            async () => {await SceneController.PlayScenes(); },
-                            async() => { await NewGameMenu(); }
-                        }, true, mainMenu);
+                Menu sm = new Menu(new string[]
+                    {
+                        "Meglévő folytatása 🆕",
+                        "Új játék 📂"
+                    },
+                    new Action[]
+                    {
+                        async () => { await SceneController.PlayScenes(); },
+                        async () => { await NewGameMenu(); }
+                    },
+                    true,
+                    mainMenu);
             }
             else
             {
-                Menu sm = new Menu(new string[] { "Új játék 📂" }, new Action[] {
-                            async() => { await NewGameMenu(); }
-                        }, true, mainMenu);
+                Menu sm = new Menu(new string[]
+                    {
+                        "Új játék 📂"
+                    },
+                    new Action[]
+                    {
+                        async () => { await NewGameMenu(); }
+                    },
+                    true,
+                    mainMenu);
             }
         }
 
@@ -246,6 +339,7 @@ namespace Gerle_Lib.UIReleated
         }
 
         #region CutsceneUI (metódus) - comment
+
         /// <summary>
         /// <c>CutsceneUI</c> metódus a jelenet sorait jeleníti meg egymás alatt, középre igazítva.
         /// A sorok színe a beszélő (Actor) alapján változik.
@@ -259,12 +353,13 @@ namespace Gerle_Lib.UIReleated
             {
                 var grid = new Grid();
                 grid.AddColumn(new GridColumn().Alignment(Justify.Center));
-                
+
                 Task voiceOver = Task.Run(() => line.PlayAudioFile(line.VoiceFile));
 
                 if (line is ChoiceScreen choice)
                 {
-                    return choice.PresentChoiceToPlayer().SceneVersion;
+                    return choice.PresentChoiceToPlayer()
+                        .SceneVersion;
                 }
 
                 var text = new Text(line.Text);
@@ -274,24 +369,34 @@ namespace Gerle_Lib.UIReleated
                 {
                     if (line.Talker == Actors.Narrator)
                     {
-                        text = new Text(line.Talker.Name + ": " + line.Text, new Style(Color.Gold1, Color.Black));
+                        text = new Text(line.Talker.Name + ": " + line.Text,
+                            new Style(Color.Gold1,
+                                Color.Black));
                     }
                     else if (line.Talker == Actors.Gerle)
                     {
-                        text = new Text(line.Talker.Name + ": " + line.Text, new Style(Color.Green, Color.Black));
+                        text = new Text(line.Talker.Name + ": " + line.Text,
+                            new Style(Color.Green,
+                                Color.Black));
                     }
                     else if (line.Talker == Actors.Apolo || line.Talker == Actors.Unoka)
                     {
-                        text = new Text(line.Talker.Name + ": " + line.Text, new Style(Color.White, Color.Black));
+                        text = new Text(line.Talker.Name + ": " + line.Text,
+                            new Style(Color.White,
+                                Color.Black));
                     }
                     else
                     {
-                        text = new Text(line.Talker.Name + ": " + line.Text, new Style(Color.Red, Color.Black));
+                        text = new Text(line.Talker.Name + ": " + line.Text,
+                            new Style(Color.Red,
+                                Color.Black));
                     }
                 }
                 else
                 {
-                    text = new Text(line.Text, new Style(Color.White, Color.Black));
+                    text = new Text(line.Text,
+                        new Style(Color.White,
+                            Color.Black));
                 }
 
                 /*
@@ -308,7 +413,7 @@ namespace Gerle_Lib.UIReleated
 
                 //AnsiConsole.Clear();
 
-                while(!voiceOver.IsCompleted)
+                while (!voiceOver.IsCompleted)
                 {
                     AnsiConsole.Write(grid);
                     Thread.Sleep(1200);
@@ -323,6 +428,7 @@ namespace Gerle_Lib.UIReleated
 
             return SceneVersion.BASE;
         }
+
         #endregion
 
 
@@ -419,36 +525,56 @@ namespace Gerle_Lib.UIReleated
 
 
         #region Beállítások
+
         public static void SettingsMenu()
         {
-            Menu sm = new Menu(new string[] { "Hang 📋" }, new Action[] { SoundSettingsMenu }, true, mainMenu);
+            Menu sm = new Menu(new string[]
+                {
+                    "Hang 📋"
+                },
+                new Action[]
+                {
+                    SoundSettingsMenu
+                },
+                true,
+                mainMenu);
         }
 
         public static void SoundSettingsMenu()
         {
-            Menu sm = new Menu(new string[] { "Fő hangerő🔊", "Zene hangereje🎵", "Szinkron hangereje🗣️", "Effektek hangereje🪄" }, new Action[] {
-                        () => OpenMasterVolumeMenu(),
-                        () => OpenMusicVolumeMenu(),
-                        () => OpenCastVolumeMenu(),
-                        () => OpenSFXVolumeMenu(),
-                    }, true, mainMenu);
+            Menu sm = new Menu(new string[]
+                {
+                    "Fő hangerő🔊",
+                    "Zene hangereje🎵",
+                    "Szinkron hangereje🗣️",
+                    "Effektek hangereje🪄"
+                },
+                new Action[]
+                {
+                    () => OpenMasterVolumeMenu(),
+                    () => OpenMusicVolumeMenu(),
+                    () => OpenCastVolumeMenu(),
+                    () => OpenSFXVolumeMenu(),
+                },
+                true,
+                mainMenu);
         }
 
         public static void OpenMasterVolumeMenu()
         {
             int mertek = AnsiConsole.Prompt(
-            new TextPrompt<int>("Add meg [green]1 és 100[/] között a [bold yellow]játék[/] hangerejét! ")
-                .PromptStyle("green")
-                .ValidationErrorMessage("[red]Ez nem egy szám![/]")
-                .Validate(age =>
-                {
-                    return age switch
+                new TextPrompt<int>("Add meg [green]1 és 100[/] között a [bold yellow]játék[/] hangerejét! ")
+                    .PromptStyle("green")
+                    .ValidationErrorMessage("[red]Ez nem egy szám![/]")
+                    .Validate(age =>
                     {
-                        <= 0 => ValidationResult.Error("[red]Az érték nem lehet 1-nél kisebb![/]"),
-                        >= 101 => ValidationResult.Error("[red]Az érték nem lehet 100-nál kisebb![/]"),
-                        _ => ValidationResult.Success(),
-                    };
-                })
+                        return age switch
+                        {
+                            <= 0 => ValidationResult.Error("[red]Az érték nem lehet 1-nél kisebb![/]"),
+                            >= 101 => ValidationResult.Error("[red]Az érték nem lehet 100-nál kisebb![/]"),
+                            _ => ValidationResult.Success(),
+                        };
+                    })
             );
             MasterVolume = mertek;
             PrintVolume();
@@ -457,18 +583,18 @@ namespace Gerle_Lib.UIReleated
         public static void OpenMusicVolumeMenu()
         {
             int mertek = AnsiConsole.Prompt(
-            new TextPrompt<int>("Add meg [green]1 és 100[/] között a [bold green3]zene[/] hangerejét! ")
-                .PromptStyle("green")
-                .ValidationErrorMessage("[red]Ez nem egy szám![/]")
-                .Validate(age =>
-                {
-                    return age switch
+                new TextPrompt<int>("Add meg [green]1 és 100[/] között a [bold green3]zene[/] hangerejét! ")
+                    .PromptStyle("green")
+                    .ValidationErrorMessage("[red]Ez nem egy szám![/]")
+                    .Validate(age =>
                     {
-                        <= 0 => ValidationResult.Error("[red]Az érték nem lehet 1-nél kisebb![/]"),
-                        >= 101 => ValidationResult.Error("[red]Az érték nem lehet 100-nál kisebb![/]"),
-                        _ => ValidationResult.Success(),
-                    };
-                })
+                        return age switch
+                        {
+                            <= 0 => ValidationResult.Error("[red]Az érték nem lehet 1-nél kisebb![/]"),
+                            >= 101 => ValidationResult.Error("[red]Az érték nem lehet 100-nál kisebb![/]"),
+                            _ => ValidationResult.Success(),
+                        };
+                    })
             );
             MusicVolume = mertek;
             PrintVolume();
@@ -477,18 +603,18 @@ namespace Gerle_Lib.UIReleated
         public static void OpenCastVolumeMenu()
         {
             int mertek = AnsiConsole.Prompt(
-            new TextPrompt<int>("Add meg [green]1 és 100[/] között a [bold yellow]szinkron[/] hangerejét! ")
-                .PromptStyle("green")
-                .ValidationErrorMessage("[red]Ez nem egy szám![/]")
-                .Validate(age =>
-                {
-                    return age switch
+                new TextPrompt<int>("Add meg [green]1 és 100[/] között a [bold yellow]szinkron[/] hangerejét! ")
+                    .PromptStyle("green")
+                    .ValidationErrorMessage("[red]Ez nem egy szám![/]")
+                    .Validate(age =>
                     {
-                        <= 0 => ValidationResult.Error("[red]Az érték nem lehet 1-nél kisebb![/]"),
-                        >= 101 => ValidationResult.Error("[red]Az érték nem lehet 100-nál kisebb![/]"),
-                        _ => ValidationResult.Success(),
-                    };
-                })
+                        return age switch
+                        {
+                            <= 0 => ValidationResult.Error("[red]Az érték nem lehet 1-nél kisebb![/]"),
+                            >= 101 => ValidationResult.Error("[red]Az érték nem lehet 100-nál kisebb![/]"),
+                            _ => ValidationResult.Success(),
+                        };
+                    })
             );
             CastVolume = mertek;
             PrintVolume();
@@ -497,18 +623,18 @@ namespace Gerle_Lib.UIReleated
         public static void OpenSFXVolumeMenu()
         {
             int mertek = AnsiConsole.Prompt(
-            new TextPrompt<int>("Add meg [green]1 és 100[/] között az [bold yellow]effektek[/] hangerejét! ")
-                .PromptStyle("green")
-                .ValidationErrorMessage("[red]Ez nem egy szám![/]")
-                .Validate(age =>
-                {
-                    return age switch
+                new TextPrompt<int>("Add meg [green]1 és 100[/] között az [bold yellow]effektek[/] hangerejét! ")
+                    .PromptStyle("green")
+                    .ValidationErrorMessage("[red]Ez nem egy szám![/]")
+                    .Validate(age =>
                     {
-                        <= 0 => ValidationResult.Error("[red]Az érték nem lehet 1-nél kisebb![/]"),
-                        >= 101 => ValidationResult.Error("[red]Az érték nem lehet 100-nál kisebb![/]"),
-                        _ => ValidationResult.Success(),
-                    };
-                })
+                        return age switch
+                        {
+                            <= 0 => ValidationResult.Error("[red]Az érték nem lehet 1-nél kisebb![/]"),
+                            >= 101 => ValidationResult.Error("[red]Az érték nem lehet 100-nál kisebb![/]"),
+                            _ => ValidationResult.Success(),
+                        };
+                    })
             );
             SfxVolume = mertek;
             PrintVolume();
@@ -519,29 +645,47 @@ namespace Gerle_Lib.UIReleated
             Console.Clear();
 
             var VolumeSet = new List<BarChartItem>
-                    {
-                        new BarChartItem("[green]Zene hangereje[/]", MusicVolume, SysColor.LightGreen),
-                        new BarChartItem("[yellow]Szinkron hangereje[/]", CastVolume, SysColor.Yellow),
-                        new BarChartItem("[blue]SFX hangereje[/]", SfxVolume, SysColor.LightBlue),
-                        new BarChartItem("[pink3]Master hangereje[/]", MasterVolume, SysColor.LightPink),
-                        new BarChartItem("[gray][/]", 100, bgColor),
-                    };
-            var VolumeSetPan = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(VolumeSet, "")));
+            {
+                new BarChartItem("[green]Zene hangereje[/]",
+                    MusicVolume,
+                    SysColor.LightGreen),
+                new BarChartItem("[yellow]Szinkron hangereje[/]",
+                    CastVolume,
+                    SysColor.Yellow),
+                new BarChartItem("[blue]SFX hangereje[/]",
+                    SfxVolume,
+                    SysColor.LightBlue),
+                new BarChartItem("[pink3]Master hangereje[/]",
+                    MasterVolume,
+                    SysColor.LightPink),
+                new BarChartItem("[gray][/]",
+                    100,
+                    bgColor),
+            };
+            var VolumeSetPan = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(VolumeSet,
+                "")));
             VolumeSetPan.Border = BoxBorder.Rounded;
             VolumeSetPan.Header = new PanelHeader("[green]Beállítások[/]");
             AnsiConsole.Write(VolumeSetPan);
         }
+
         #endregion
 
 
 
         #region TemplateFightScene
+
         public static void TemplateFightScene(
-           bool canSelectPowers,
-    string UsedPowerName = "Sakármit Döjcs", string DemageText = "centerText", string otherText = "otherText",
-    string enemyName = "enemyName", ushort enemyHealth = 50,
-    ushort yourHealth = 100, ushort yourMana = 100, ushort selectedPowerManaCost = 10
-)
+            bool canSelectPowers,
+            string UsedPowerName = "Sakármit Döjcs",
+            string DemageText = "centerText",
+            string otherText = "otherText",
+            string enemyName = "enemyName",
+            ushort enemyHealth = 50,
+            ushort yourHealth = 100,
+            ushort yourMana = 100,
+            ushort selectedPowerManaCost = 10
+        )
         {
             var grid = new Grid();
             grid.AddColumn(new GridColumn());
@@ -549,36 +693,53 @@ namespace Gerle_Lib.UIReleated
             SysColor col100 = BeautyWriter.FromColor(ConsoleColor.Gray);
 
             var BossHPItems = new List<BarChartItem>
-    {
-        new BarChartItem("", enemyHealth, SysColor.IndianRed),
-        new BarChartItem("", 100, bgColor),
-    };
+            {
+                new BarChartItem("",
+                    enemyHealth,
+                    SysColor.IndianRed),
+                new BarChartItem("",
+                    100,
+                    bgColor),
+            };
 
-            var BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems, "")));
+            var BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems,
+                "")));
             BossHP.Border = BoxBorder.None;
             BossHP.Header = new PanelHeader($"[red3_1 bold underline]{enemyName}[/]").Justify(Justify.Center);
             BossHP.Expand = false;
-            BossHP.Padding = new Padding(1, 1, 1, 1);
+            BossHP.Padding = new Padding(1,
+                1,
+                1,
+                1);
 
             var YourHPBar = new List<BarChartItem>
-    {
-        new BarChartItem("", yourHealth, SysColor.IndianRed),
-        new BarChartItem("", 100, bgColor),
-    };
+            {
+                new BarChartItem("",
+                    yourHealth,
+                    SysColor.IndianRed),
+                new BarChartItem("",
+                    100,
+                    bgColor),
+            };
             var YourHP = new Panel(
                 Align.Center(
-                    ProgressBarMaker.CreateBarChart(YourHPBar, "")
+                    ProgressBarMaker.CreateBarChart(YourHPBar,
+                        "")
                 )
             );
             YourHP.Border = BoxBorder.None;
             YourHP.Header = new PanelHeader(($"[indianred1]Gerle élete[/]")).Justify(Justify.Center);
 
             var YourManBar = new BreakdownChart()
-                .AddItem("Megmaradt mana", yourMana, Color.Purple);
+                .AddItem("Megmaradt mana",
+                    yourMana,
+                    Color.Purple);
 
             if (canSelectPowers)
             {
-                YourManBar.AddItem("Felhasznált Mana", selectedPowerManaCost, Color.Purple3);
+                YourManBar.AddItem("Felhasznált Mana",
+                    selectedPowerManaCost,
+                    Color.Purple3);
             }
 
 
@@ -589,21 +750,23 @@ namespace Gerle_Lib.UIReleated
             var yourGrid = new Grid();
             yourGrid.AddColumn(new GridColumn());
             yourGrid.AddColumn(new GridColumn());
-            yourGrid.AddRow(BeautyWriter.Spacer(1), BeautyWriter.Spacer(1));
-            yourGrid.AddRow(YourHP, YourMana);
+            yourGrid.AddRow(BeautyWriter.Spacer(1),
+                BeautyWriter.Spacer(1));
+            yourGrid.AddRow(YourHP,
+                YourMana);
 
             var rows = new List<dynamic>()
-                {
-                    BossHP,
-                    BeautyWriter.Spacer(1),
-                    BeautyWriter.Spacer(2),
-                    BeautyWriter.Spacer(2),
-                    new Rule($""),
-                    yourGrid,
-                    BeautyWriter.Spacer(2),
-                    new Rule("[yellow]Akciók[/]"),
-                    BeautyWriter.Spacer(1),
-                };
+            {
+                BossHP,
+                BeautyWriter.Spacer(1),
+                BeautyWriter.Spacer(2),
+                BeautyWriter.Spacer(2),
+                new Rule($""),
+                yourGrid,
+                BeautyWriter.Spacer(2),
+                new Rule("[yellow]Akciók[/]"),
+                BeautyWriter.Spacer(1),
+            };
 
             if (!canSelectPowers)
             {
@@ -613,8 +776,12 @@ namespace Gerle_Lib.UIReleated
                     BeautyWriter.Spacer(1),
                     new Rule("[yellow]Használt erő[/]"),
                     BeautyWriter.Spacer(1),
-                    new Text(UsedPowerName, new Style(Color.Red, Color.Black)).Centered(),
-                    new Text(DemageText, new Style(Color.Green, Color.Black)).Centered(),
+                    new Text(UsedPowerName,
+                        new Style(Color.Red,
+                            Color.Black)).Centered(),
+                    new Text(DemageText,
+                        new Style(Color.Green,
+                            Color.Black)).Centered(),
                     //new Text(otherText, new Style(Color.Blue, Color.Black)).Centered(),
                     BeautyWriter.Spacer(2),
                     new Rule($""),
@@ -641,7 +808,10 @@ namespace Gerle_Lib.UIReleated
 
         public static void TemplateScene(
             bool doIneedCards = true,
-            string UsedPowerText = "Sakármit Döjcs", string centerText = "centerText", string otherText = "otherText", string enemyName = "enemyName")
+            string UsedPowerText = "Sakármit Döjcs",
+            string centerText = "centerText",
+            string otherText = "otherText",
+            string enemyName = "enemyName")
         {
             var grid = new Grid();
             grid.AddColumn(new GridColumn());
@@ -649,57 +819,84 @@ namespace Gerle_Lib.UIReleated
             SysColor col100 = BeautyWriter.FromColor(ConsoleColor.Gray);
 
             var BossHPItems = new List<BarChartItem>
-                    {
-                        new BarChartItem("", 50, SysColor.IndianRed),
-                        new BarChartItem("", 100, bgColor),
-                    };
-            var BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems, "")));
+            {
+                new BarChartItem("",
+                    50,
+                    SysColor.IndianRed),
+                new BarChartItem("",
+                    100,
+                    bgColor),
+            };
+            var BossHP = new Panel(Align.Center(ProgressBarMaker.CreateBarChart(BossHPItems,
+                "")));
             BossHP.Border = BoxBorder.None;
             BossHP.Header = new PanelHeader($"[red3_1 bold underline]{enemyName}[/]").Justify(Justify.Center);
             BossHP.Expand = false;
-            BossHP.Padding = new Padding(1, 1, 1, 1);
+            BossHP.Padding = new Padding(1,
+                1,
+                1,
+                1);
 
             var YourHPBar = new List<BarChartItem>
-                    {
-                        new BarChartItem("", 50, SysColor.IndianRed),
-                        new BarChartItem("", 100, bgColor),
-                    };
+            {
+                new BarChartItem("",
+                    50,
+                    SysColor.IndianRed),
+                new BarChartItem("",
+                    100,
+                    bgColor),
+            };
             var YourHP = new Panel(
                 Align.Center(
-                    ProgressBarMaker.CreateBarChart(YourHPBar, "")
-                    )
-                );
+                    ProgressBarMaker.CreateBarChart(YourHPBar,
+                        "")
+                )
+            );
             YourHP.Border = BoxBorder.None;
             YourHP.Header = new PanelHeader(($"[indianred1]Gerle élete[/]")).Justify(Justify.Center);
 
             var YourManBar = new List<BarChartItem>
-                    {
-                        new BarChartItem("", 100, SysColor.RebeccaPurple),
-                        new BarChartItem("", 100, bgColor),
-                    };
+            {
+                new BarChartItem("",
+                    100,
+                    SysColor.RebeccaPurple),
+                new BarChartItem("",
+                    100,
+                    bgColor),
+            };
 
             var YourMana = new Panel(
                 Align.Center(
-                                   ProgressBarMaker.CreateBarChart(YourManBar, "")
-                                                  )
-                           );
+                    ProgressBarMaker.CreateBarChart(YourManBar,
+                        "")
+                )
+            );
             YourMana.Border = BoxBorder.None;
             YourMana.Header = new PanelHeader(($"[purple_2]Gerle manája[/]")).Justify(Justify.Center);
 
             var yourGrid = new Grid();
             yourGrid.AddColumn(new GridColumn());
             yourGrid.AddColumn(new GridColumn());
-            yourGrid.AddRow(BeautyWriter.Spacer(1), BeautyWriter.Spacer(1));
-            yourGrid.AddRow(YourHP, YourMana);
+            yourGrid.AddRow(BeautyWriter.Spacer(1),
+                BeautyWriter.Spacer(1));
+            yourGrid.AddRow(YourHP,
+                YourMana);
 
-            var rows = new List<dynamic>() {
+            var rows = new List<dynamic>()
+            {
                 BossHP,
                 BeautyWriter.Spacer(1),
                 new Rule("[yellow]Használt erő[/]"),
                 BeautyWriter.Spacer(1),
-                new Text(UsedPowerText, new Style(Color.Red, Color.Black)).Centered(),
-                new Text(centerText, new Style(Color.Green, Color.Black)).Centered(),
-                new Text(otherText, new Style(Color.Blue, Color.Black)).Centered(),
+                new Text(UsedPowerText,
+                    new Style(Color.Red,
+                        Color.Black)).Centered(),
+                new Text(centerText,
+                    new Style(Color.Green,
+                        Color.Black)).Centered(),
+                new Text(otherText,
+                    new Style(Color.Blue,
+                        Color.Black)).Centered(),
                 BeautyWriter.Spacer(2),
                 new Rule($""),
                 yourGrid,
@@ -804,7 +1001,11 @@ namespace Gerle_Lib.UIReleated
 
         #region SelectActionCards (function)
 
-        public static List<Power> SelectActionCards(Power[] actionPowers, ref ushort currentMana, ref ushort enemyHealth, ref ushort yourHealth, string enemyName)
+        public static List<Power> SelectActionCards(Power[] actionPowers,
+            ref ushort currentMana,
+            ref ushort enemyHealth,
+            ref ushort yourHealth,
+            string enemyName)
         {
             var selectedIndexes = new HashSet<int>();
             int currentIndex = 0;
@@ -814,13 +1015,17 @@ namespace Gerle_Lib.UIReleated
             while (true)
             {
                 Console.Clear();
-                var selectedPowerNames = selectedIndexes.Select(i => actionPowers[i].Name).ToList();
-                var selectedPowerMana = selectedIndexes.Select(i => actionPowers[i].Mana).Sum(m => (int)m);
-                var selectedPowerDamage = selectedIndexes.Select(i => actionPowers[i].Damage).Sum(d => (int)d);
+                var selectedPowerNames = selectedIndexes.Select(i => actionPowers[i].Name)
+                    .ToList();
+                var selectedPowerMana = selectedIndexes.Select(i => actionPowers[i].Mana)
+                    .Sum(m => (int)m);
+                var selectedPowerDamage = selectedIndexes.Select(i => actionPowers[i].Damage)
+                    .Sum(d => (int)d);
 
                 // Calculate the remaining mana after the selected powers
                 var remainingMana = (int)initialMana - selectedPowerMana;
-                remainingMana = Math.Max(remainingMana, 0); // Ensure remaining mana is not negative
+                remainingMana = Math.Max(remainingMana,
+                    0); // Ensure remaining mana is not negative
                 var updatedEnemyHealth = (int)initialEnemyHealth - selectedPowerDamage;
 
                 // Re-render the fight scene with updated values
@@ -836,16 +1041,22 @@ namespace Gerle_Lib.UIReleated
                 var actionGrid = new Grid();
                 foreach (var _ in actionPowers)
                 {
-                    actionGrid.AddColumn(new GridColumn().Width(AnsiConsole.Console.Profile.Width / actionPowers.Length));
+                    actionGrid.AddColumn(
+                        new GridColumn().Width(AnsiConsole.Console.Profile.Width / actionPowers.Length));
                 }
 
                 var row = new List<IRenderable>();
-                for (int i = 0; i < actionPowers.Length; i++)
+                for (int i = 0;
+                     i < actionPowers.Length;
+                     i++)
                 {
                     var card = new Panel($"{actionPowers[i].Name}\nMana: {actionPowers[i].Mana}")
                     {
                         Border = BoxBorder.Rounded,
-                        Padding = new Padding(1, 1, 1, 1)
+                        Padding = new Padding(1,
+                            1,
+                            1,
+                            1)
                     };
 
                     if (i == currentIndex && actionPowers[i].Mana > remainingMana && !selectedIndexes.Contains(i))
@@ -883,42 +1094,57 @@ namespace Gerle_Lib.UIReleated
                 actionGrid.AddRow(row.ToArray());
                 AnsiConsole.Write(actionGrid);
 
-                var key = Console.ReadKey(true).Key;
+                var key = Console.ReadKey(true)
+                    .Key;
                 if (key == ConsoleKey.LeftArrow)
                 {
-                    currentIndex = (currentIndex == 0) ? actionPowers.Length - 1 : currentIndex - 1;
+                    currentIndex = (currentIndex == 0)
+                        ? actionPowers.Length - 1
+                        : currentIndex - 1;
                 }
                 else if (key == ConsoleKey.RightArrow)
                 {
-                    currentIndex = (currentIndex == actionPowers.Length - 1) ? 0 : currentIndex + 1;
+                    currentIndex = (currentIndex == actionPowers.Length - 1)
+                        ? 0
+                        : currentIndex + 1;
                 }
                 else if (key == ConsoleKey.Spacebar)
                 {
                     if (selectedIndexes.Contains(currentIndex))
                     {
                         selectedIndexes.Remove(currentIndex);
-                        currentMana = (ushort)Math.Min(initialMana, currentMana + actionPowers[currentIndex].Mana);
-                        enemyHealth = (ushort)Math.Min(initialEnemyHealth, enemyHealth + actionPowers[currentIndex].Damage);
+                        currentMana = (ushort)Math.Min(initialMana,
+                            currentMana + actionPowers[currentIndex].Mana);
+                        enemyHealth = (ushort)Math.Min(initialEnemyHealth,
+                            enemyHealth + actionPowers[currentIndex].Damage);
                     }
                     else if (actionPowers[currentIndex].Mana <= remainingMana)
                     {
                         selectedIndexes.Add(currentIndex);
                         currentMana -= actionPowers[currentIndex].Mana;
-                        enemyHealth = (ushort)Math.Max(0, enemyHealth - actionPowers[currentIndex].Damage);
+                        enemyHealth = (ushort)Math.Max(0,
+                            enemyHealth - actionPowers[currentIndex].Damage);
                     }
                 }
                 else if (key == ConsoleKey.Enter)
                 {
-                    List<Power> selectedPowers = selectedIndexes.Select(index => actionPowers[index]).ToList();
+                    List<Power> selectedPowers = selectedIndexes.Select(index => actionPowers[index])
+                        .ToList();
                     return selectedPowers;
                 }
             }
         }
 
         #endregion
+
         #region FightingUI (function)
 
-        public static List<Power> FightingUI(Power[] inputPowers, bool canSelectPowers, ushort currentMana, ushort enemyHealth, ushort yourHealth, string enemyName)
+        public static List<Power> FightingUI(Power[] inputPowers,
+            bool canSelectPowers,
+            ushort currentMana,
+            ushort enemyHealth,
+            ushort yourHealth,
+            string enemyName)
         {
             ushort dummyCurrentMana = currentMana;
             ushort dummyEnemyHealth = enemyHealth;
@@ -926,7 +1152,11 @@ namespace Gerle_Lib.UIReleated
 
             if (canSelectPowers)
             {
-                var selectedPowers = SelectActionCards(inputPowers, ref dummyCurrentMana, ref dummyEnemyHealth, ref dummyYourHealth, enemyName);
+                var selectedPowers = SelectActionCards(inputPowers,
+                    ref dummyCurrentMana,
+                    ref dummyEnemyHealth,
+                    ref dummyYourHealth,
+                    enemyName);
 
                 // Play the selected powers using dummy2 references
                 ushort replayCurrentMana = currentMana;
@@ -937,7 +1167,11 @@ namespace Gerle_Lib.UIReleated
                 {
                     Console.Clear();
                     replayCurrentMana -= power.Mana;
-                    replayEnemyHealth = (ushort)Math.Max(0, replayEnemyHealth - power.Damage);
+
+                    if (replayEnemyHealth - power.Damage < 0)
+                        replayEnemyHealth = 0;
+                    else
+                        replayEnemyHealth -= power.Damage;
 
                     if (power.Damage != 0)
                     {
@@ -955,7 +1189,8 @@ namespace Gerle_Lib.UIReleated
                         yourMana: replayCurrentMana,
                         selectedPowerManaCost: power.Mana
                     );
-                    Thread.Sleep(1000);
+
+                    Thread.Sleep(5000);
                 }
 
                 // Update original references after replay
@@ -989,10 +1224,12 @@ namespace Gerle_Lib.UIReleated
                         yourMana: currentMana,
                         selectedPowerManaCost: power.Mana
                     );
-                    Thread.Sleep(1000);
-                    
+
+                    Thread.Sleep(5000);
+
                     // Update player's health based on enemy attack
-                    replayYourHealth = (ushort)Math.Max(0, replayYourHealth - power.Damage);
+                    replayYourHealth = (ushort)Math.Max(0,
+                        replayYourHealth - power.Damage);
                 }
 
                 // Update original health reference after enemy attack replay
@@ -1013,19 +1250,25 @@ namespace Gerle_Lib.UIReleated
         }
 
         #region EndCreditUI (metódus) - comment
+
         /// <summary>
         /// <c>EndCreditUI</c> metódus a játék végén megjeleníti a stáblistát.
         /// A nevek egymás alatt, középre igazítva jelennek meg.
         /// </summary>
-        public static void EndCreditUI(EndCredit[] credits, ushort musicDurationInSec)
+        public static void EndCreditUI(EndCredit[] credits,
+            ushort musicDurationInSec)
         {
             var grid = new Grid();
             grid.AddColumn(new GridColumn());
 
             foreach (var credit in credits)
             {
-                var roleText = new Text(credit.Role, new Style(Color.Yellow, Color.Black)).Centered();
-                var nameText = new Text(credit.Name, new Style(Color.White, Color.Black)).Centered();
+                var roleText = new Text(credit.Role,
+                    new Style(Color.Yellow,
+                        Color.Black)).Centered();
+                var nameText = new Text(credit.Name,
+                    new Style(Color.White,
+                        Color.Black)).Centered();
 
                 grid.AddRow(roleText);
                 grid.AddRow(nameText);
@@ -1037,6 +1280,7 @@ namespace Gerle_Lib.UIReleated
                 Thread.Sleep(2000); // Wait for 2 seconds before showing the next credit
             }
         }
+
         #endregion
 
 
