@@ -33,7 +33,7 @@ namespace Gerle_Lib.Controllers
                 new Line("Nem érdekel, nekem meg KELL megmentenem az édes kis unokámat!", ref Actors.Gerle, "01/09_Gerle.mp3"),
                 new Line("Sajnálom, de nem engedhetem ezt.", ref Actors.Apolo, "01/10_apolo.mp3"),
                 new Line("Erről is a szőröstalpúak tehetnek!", ref Actors.Gerle, "01/11_Gerle.mp3"),*/
-            }/*, ref Actors.Apolo, new SceneMusic("Harc1_intro_180-bpm", "Harc1_kozep-loop_180-bpm", "Harc1_outro_180-bpm", 180)*/), //Ez egy olyan jelenet, aminek a végén van harc. A SceneMusic a harc zenéjét veszi be. Csak a fájlnevek kellenek, amik bele vannak rakva a Data/Audio/Music mappába. Fájlkiterjesztés sem kell.
+            }, ref Actors.Apolo, new SceneMusic("Harc1_intro_180-bpm", "Harc1_kozep-loop_180-bpm", "Harc1_outro_180-bpm", 180)), //Ez egy olyan jelenet, aminek a végén van harc. A SceneMusic a harc zenéjét veszi be. Csak a fájlnevek kellenek, amik bele vannak rakva a Data/Audio/Music mappába. Fájlkiterjesztés sem kell.
         
             new Scene(new Line[]{
                /* new Line("Pfúú ez kemény volt. De ne aggódj kicsikém jön már érted a nagyikád. Remélem Marika nem csinál nagyobb problémát", ref Actors.Gerle, "02/01_Gerle.mp3"),

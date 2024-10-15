@@ -1145,6 +1145,10 @@ namespace Gerle_Lib.UIReleated
         {
             ushort dummyCurrentMana = currentMana;
             ushort dummyEnemyHealth = enemyHealth;
+            if (dummyEnemyHealth < 1)
+            {
+                Console.Write("");
+            }
             ushort dummyYourHealth = yourHealth;
 
             if (canSelectPowers)
