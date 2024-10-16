@@ -82,7 +82,7 @@ namespace Gerle_Lib.Controllers
                 }
 #endif
 */
-                UI.FightingUI(attacks.ToArray(), false, player.Mana, opponent.Health, player.Health, opponent.Actor.Name);
+                UI.FightingUI(attacks.ToArray(), false, player.Mana, (short) opponent.Health, player.Health, opponent.Actor.Name);
 
                 bool death = false;
 

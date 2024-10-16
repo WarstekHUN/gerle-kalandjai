@@ -155,7 +155,7 @@ namespace Gerle_Lib.UIReleated
 
                 // Current Mana and Health for testing purposes
                 ushort currentMana = 50;
-                ushort enemyHealth = 100;
+                short enemyHealth = 100;
                 ushort yourHealth = 100;
 
                 // Test the FightingUI function with canSelectPowers as true
@@ -678,7 +678,7 @@ namespace Gerle_Lib.UIReleated
             string DemageText = "centerText",
             string otherText = "otherText",
             string enemyName = "enemyName",
-            ushort enemyHealth = 50,
+            short enemyHealth = 50,
             ushort yourHealth = 100,
             ushort yourMana = 100,
             ushort selectedPowerManaCost = 10
@@ -1000,7 +1000,7 @@ namespace Gerle_Lib.UIReleated
 
         public static List<Power> SelectActionCards(Power[] actionPowers,
             ref ushort currentMana,
-            ref ushort enemyHealth,
+            ref short enemyHealth,
             ref ushort yourHealth,
             string enemyName)
         {
@@ -1029,7 +1029,7 @@ namespace Gerle_Lib.UIReleated
                 TemplateFightScene(
                     canSelectPowers: true,
                     enemyName: enemyName,
-                    enemyHealth: (ushort)updatedEnemyHealth,
+                    enemyHealth: (short)updatedEnemyHealth,
                     yourHealth: yourHealth,
                     yourMana: (ushort)remainingMana,
                     selectedPowerManaCost: (ushort)selectedPowerMana
@@ -1112,14 +1112,14 @@ namespace Gerle_Lib.UIReleated
                         selectedIndexes.Remove(currentIndex);
                         currentMana = (ushort)Math.Min(initialMana,
                             currentMana + actionPowers[currentIndex].Mana);
-                        enemyHealth = (ushort)Math.Min(initialEnemyHealth,
+                        enemyHealth = (short)Math.Min(initialEnemyHealth,
                             enemyHealth + actionPowers[currentIndex].Damage);
                     }
                     else if (actionPowers[currentIndex].Mana <= remainingMana)
                     {
                         selectedIndexes.Add(currentIndex);
                         currentMana -= actionPowers[currentIndex].Mana;
-                        enemyHealth = (ushort)Math.Max(0,
+                        enemyHealth = (short)Math.Max(0,
                             enemyHealth - actionPowers[currentIndex].Damage);
                     }
                 }
@@ -1139,12 +1139,12 @@ namespace Gerle_Lib.UIReleated
         public static List<Power> FightingUI(Power[] inputPowers,
             bool canSelectPowers,
             ushort currentMana,
-            ushort enemyHealth,
+            short enemyHealth,
             ushort yourHealth,
             string enemyName)
         {
             ushort dummyCurrentMana = currentMana;
-            ushort dummyEnemyHealth = enemyHealth;
+            short dummyEnemyHealth = enemyHealth;
             if (dummyEnemyHealth < 1)
             {
                 Console.Write("");
@@ -1161,7 +1161,7 @@ namespace Gerle_Lib.UIReleated
 
                 // Play the selected powers using dummy2 references
                 ushort replayCurrentMana = currentMana;
-                ushort replayEnemyHealth = enemyHealth;
+                short replayEnemyHealth = enemyHealth;
                 ushort replayYourHealth = yourHealth;
 
                 foreach (var power in selectedPowers)
@@ -1172,7 +1172,7 @@ namespace Gerle_Lib.UIReleated
                     if (replayEnemyHealth - power.Damage < 0)
                         replayEnemyHealth = 0;
                     else
-                        replayEnemyHealth -= power.Damage;
+                        replayEnemyHealth -= (short) power.Damage;
 
                     if (power.Damage != 0)
                     {

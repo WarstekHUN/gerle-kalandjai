@@ -15,7 +15,7 @@ namespace Gerle_Lib.BaseClasses
         public override List<Power> Think()
         {
             if (Actor.Powers != null && Actor.Powers.Length > 0)
-                return UI.FightingUI(Actor.Powers, true, Mana, Opponent.Health, Health, Opponent.Actor.Name);
+                return UI.FightingUI(Actor.Powers, true, Mana, (short)Opponent.Health, Health, Opponent.Actor.Name);
             else
                 throw new ActorIsNotFighterException();
         }
