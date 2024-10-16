@@ -161,7 +161,18 @@ public class FightingActor
     #endregion
     public virtual void RecieveDamage(ushort damage)
     {
-        Health -= damage;
+        short tempHealth = (short)Health;
+        short result = (short)(tempHealth - (short)damage);
+        if (result <= 0)
+        {
+            Health = 0;
+        }
+        else
+        {
+            Health = (ushort)result;
+        }
+
+
         //TODO: Hangeffekt lejátszás
         //throw new NotImplementedException("Hangeffekt-lejátszás hiányzik");
     }
