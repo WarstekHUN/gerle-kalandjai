@@ -195,8 +195,31 @@ namespace Gerle_Lib.Controllers
                     }
                     else
                     {
-                        //TODO: Meghalás UI
-
+                        // Show death UI and handle user choice
+                        var deathChoice = UI.DeathScreen("GAME OVER");
+                        
+                        if (deathChoice == UI.DeathScreenSelection.Restart)
+                        {
+                            // Restart from last checkpoint
+                            if (ProgressController.LoadFromSaveFile())
+                            {
+                                // Restart the game loop from the loaded checkpoint
+                                await PlayScenes();
+                                return;
+                            }
+                            else
+                            {
+                                // If no save file exists, restart from beginning
+                                CurrentCheckpoint = 0;
+                                await PlayScenes();
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            // Exit the game
+                            Environment.Exit(0);
+                        }
                     }
 
                 }
