@@ -53,7 +53,7 @@ namespace Gerle_Lib.Data
              new SpecialPower("Vakítás",80,false,"A furmányos kaller megvakítja scannerével Gerlét amitől az ő képességei közül kettő randomizáltan felcserélődik.", (SpecialPower thisPower, ref FightingActor current, ref FightingActor opp) =>
             {
                var powers = opp.Actor.Powers;
-                if (powers.Length > 1)
+                if (powers != null && powers.Length > 1)
                 {
                     Random rand = new Random();
                     int index1 = rand.Next(powers.Length);

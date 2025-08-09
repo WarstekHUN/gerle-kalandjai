@@ -102,7 +102,7 @@ namespace Gerle_Lib.UIReleated
         /// <summary>
         /// <c>LiveRefresher</c> metódus tesztadatokkal hívja meg a <c>CutsceneUI</c> metódust.
         /// </summary>
-        public static async void LiveRefresher()
+        public static void LiveRefresher()
         {
             while (true)
             {
@@ -1262,6 +1262,13 @@ namespace Gerle_Lib.UIReleated
             var grid = new Grid();
             grid.AddColumn(new GridColumn());
 
+            // Calculate timing to spread credits over the music duration
+            int totalCredits = credits.Length;
+            int delayPerCredit = totalCredits > 0 ? (musicDurationInSec * 1000) / totalCredits : 2000;
+            
+            // Ensure minimum delay of 1 second and maximum of 5 seconds per credit
+            delayPerCredit = Math.Max(1000, Math.Min(5000, delayPerCredit));
+
             foreach (var credit in credits)
             {
                 var roleText = new Text(credit.Role,
@@ -1277,7 +1284,7 @@ namespace Gerle_Lib.UIReleated
                 AnsiConsole.Clear();
                 AnsiConsole.Write(grid);
 
-                Thread.Sleep(2000); // Wait for 2 seconds before showing the next credit
+                Thread.Sleep(delayPerCredit); // Wait based on music duration
             }
         }
 

@@ -42,7 +42,7 @@ namespace Gerle_Lib.BaseClasses
             }
         }
 
-        public override async Task<SceneVersion> PlayScene()
+        public override Task<SceneVersion> PlayScene()
         {
             CancellationTokenSource tokenSource = new CancellationTokenSource();
 
@@ -57,7 +57,7 @@ namespace Gerle_Lib.BaseClasses
             
             tokenSource.Cancel();
 
-            return SceneVersion.BASE;
+            return Task.FromResult(SceneVersion.BASE);
         }
     }
 }
